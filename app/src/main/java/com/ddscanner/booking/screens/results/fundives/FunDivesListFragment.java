@@ -13,13 +13,14 @@ import android.view.ViewGroup;
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
+import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
 import com.ddscanner.booking.models.FunDiveDetails;
 import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
 
 import java.util.ArrayList;
 
-public class FunDivesListFragment extends Fragment {
+public class FunDivesListFragment extends BaseListFragment implements RecyclerViewScrolledListener {
 
     public RecyclerView list;
 
@@ -45,22 +46,53 @@ public class FunDivesListFragment extends Fragment {
         }
     };
 
+    private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
+        @Override
+        public void onSuccess(ArrayList<FunDiveDetails> result) {
+            funDivesListAdapter.setFunDives(result);
+            isLoading = false;
+        }
+
+        @Override
+        public void onConnectionFailure() {
+
+        }
+
+        @Override
+        public void onError(DDScannerRestClient.ErrorType errorType, Object errorData, String url, String errorMessage) {
+
+        }
+
+        @Override
+        public void onInternetConnectionClosed() {
+
+        }
+    };
+
     private FunDivesListAdapter funDivesListAdapter;
+    private int currentPage;
+
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_with_list, container, false);
-        list = view.findViewById(R.id.list);
-        list.setLayoutManager(new LinearLayoutManager(getContext()));
-        return view;
+        return super.onCreateView(inflater, container, savedInstanceState);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        currentPage = 1;
         funDivesListAdapter = new FunDivesListAdapter(item -> FunDiveDetailsActivity.show(getContext(), item.getId()));
         list.setAdapter(funDivesListAdapter);
-        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getFunDives(resultListener, 1);
+        setRecyclerViewScrolledListener(this);
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getFunDives(resultListener, currentPage);
     }
+
+    @Override
+    public void onScrolled() {
+        currentPage += 1;
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getFunDives(paginationResultListener, currentPage);
+    }
+
 }

@@ -23,6 +23,11 @@ public class DailyToursListAdapter extends RecyclerView.Adapter<DailyToursListAd
         this.dailyTourListItemClickListener = dailyTourListItemClickListener;
     }
 
+    public void addDailyTours(ArrayList<DailyTourDetails> dailyTours) {
+        this.dailyTours.addAll(dailyTours);
+        notifyDataSetChanged();
+    }
+
     @Override
     public DailyTourItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemDailyTourBinding itemDailyTourBinding = ItemDailyTourBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

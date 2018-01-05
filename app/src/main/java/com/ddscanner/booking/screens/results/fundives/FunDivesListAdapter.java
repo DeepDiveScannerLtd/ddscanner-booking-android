@@ -22,6 +22,11 @@ public class FunDivesListAdapter extends RecyclerView.Adapter<FunDivesListAdapte
         this.listItemClickListener = listItemClickListener;
     }
 
+    public void addFunDives(ArrayList<FunDiveDetails> funDives) {
+        this.funDives.addAll(funDives);
+        notifyDataSetChanged();
+    }
+
     public void setFunDives(ArrayList<FunDiveDetails> funDives) {
         this.funDives = funDives;
         notifyDataSetChanged();

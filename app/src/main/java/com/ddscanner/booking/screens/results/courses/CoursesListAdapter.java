@@ -27,6 +27,11 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
         notifyDataSetChanged();
     }
 
+    public void addCourses(ArrayList<CourseDetails> cources) {
+        this.cources.addAll(cources);
+        notifyDataSetChanged();
+    }
+
     @Override
     public CourseItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemCourcesListBinding itemCourcesListBinding = ItemCourcesListBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

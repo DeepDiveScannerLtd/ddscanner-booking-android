@@ -22,6 +22,28 @@ public class CoursesListFragment extends BaseListFragment implements RecyclerVie
         @Override
         public void onSuccess(ArrayList<CourseDetails> result) {
             coursesListAdapter.setCources(result);
+        }
+
+        @Override
+        public void onConnectionFailure() {
+
+        }
+
+        @Override
+        public void onError(DDScannerRestClient.ErrorType errorType, Object errorData, String url, String errorMessage) {
+
+        }
+
+        @Override
+        public void onInternetConnectionClosed() {
+
+        }
+    };
+
+    private DDScannerRestClient.ResultListener<ArrayList<CourseDetails>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<CourseDetails>>() {
+        @Override
+        public void onSuccess(ArrayList<CourseDetails> result) {
+            coursesListAdapter.addCourses(result);
             isLoading = false;
         }
 
@@ -62,6 +84,6 @@ public class CoursesListFragment extends BaseListFragment implements RecyclerVie
     @Override
     public void onScrolled() {
         currentPage += 1;
-        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCourses(resultListener, currentPage);
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCourses(paginationResultListener, currentPage);
     }
 }
