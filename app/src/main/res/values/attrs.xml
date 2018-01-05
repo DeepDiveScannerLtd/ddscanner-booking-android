@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="ContentBlockLinearLayout">
+        <attr name="top_divider" format="boolean" />
+        <attr name="bottom_divider" format="boolean" />
+    </declare-styleable>
+
+    <declare-styleable name="ContentBlockRelativeLayout">
+        <attr name="cbrl_top_divider" format="boolean" />
+        <attr name="cbrl_bottom_divider" format="boolean" />
+    </declare-styleable>
+
+</resources>

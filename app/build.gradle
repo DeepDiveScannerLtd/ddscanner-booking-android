@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        applicationId "com.ddscanner.booking"
+        minSdkVersion 19
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    dataBinding {
+        enabled = true
+    }
+    buildTypes {
+        debug {
+            applicationIdSuffix ".debug"
+            buildConfigField "boolean", "COLLECT_ANALYTICS_DATA", "true"
+            resValue "string", "appsflyer_dev_key", "5A7vyAMVwKT4RBiTaxrpSU"
+            resValue "string", "flurry_api_key", "DQ8GM2FPPSTBGK7QX4D8"
+            resValue "string", "google_maps_api_key", "AIzaSyDt6pJZggDyU-aQy2Ks6i7WgZd6ayKK-I8"
+            resValue "string", "server_api_address", "https://dev.ddscanner.xyz/"
+            resValue "string", "facebook_app_id", "1876585075891068"
+            resValue "string", "application_id", "com.ddscanner.debug"
+            resValue "string", "external_path", "Android/data/com.ddscanner.debug/files/Pictures"
+            resValue "string", "base_photo_url", "https://dev.ddscanner.xyz/v2_1/image/%1\$s?size=%2\$s"
+            resValue "string", "dds_server_id", "416"
+            resValue "string", "google_login_manager_key", "195706914618-ist9f8ins485k2gglbomgdp4l2pn57iq.apps.googleusercontent.com"
+        }
+        release {
+            buildConfigField "boolean", "COLLECT_ANALYTICS_DATA", "true"
+            resValue "string", "appsflyer_dev_key", "5A7vyAMVwKT4RBiTaxrpSU"
+            resValue "string", "flurry_api_key", "D45ZMHZZJWDVD8X6G55B"
+            resValue "string", "google_maps_api_key", "AIzaSyA5jpAj7uwrxA4oaYvI_bdV9IDbb7gUrZc"
+            resValue "string", "server_api_address", "https://api.ddscanner.com/"
+            resValue "string", "base_photo_url", "https://api.ddscanner.com/v2_1/image/%1\$s?size=%2\$s"
+            resValue "string", "facebook_app_id", "1691716511044593"
+            resValue "string", "application_id", "com.ddscanner"
+            resValue "string", "external_path", "Android/data/com.ddscanner/files/Pictures"
+            resValue "string", "dds_server_id", "416"
+            resValue "string", "google_login_manager_key", "195706914618-ist9f8ins485k2gglbomgdp4l2pn57iq.apps.googleusercontent.com"
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        targetCompatibility 1.8
+        sourceCompatibility 1.8
+    }
+}
+
+dependencies {
+    compile 'com.squareup:otto:1.3.8'
+    compile 'com.squareup.okhttp3:okhttp:3.8.1'
+    compile 'com.squareup.okhttp3:logging-interceptor:3.8.1'
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+    compile 'com.squareup.retrofit2:converter-gson:2.2.0'
+    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile 'com.google.code.gson:gson:2.8.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    compile 'at.blogc:expandabletextview:1.0.5'
+    compile 'com.github.rey5137:material:1.2.2'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+    implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'com.android.support.test:runner:1.0.1'
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+}
