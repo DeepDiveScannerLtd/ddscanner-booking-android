@@ -10,6 +10,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityCertificateDetailsBinding;
@@ -62,7 +63,7 @@ public class CertificateDetailsActivity extends BaseAppCompatActivity implements
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_certificate_details);
         setupToolbar(getIntent().getStringExtra(ARG_NAME), R.id.toolbar, true);
-//        DDScannerApplication.getInstance().getDdScannerRestClient(this).getCertificate(resultListener, getIntent().getLongExtra(ARG_ID, -1));
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCertficateDetails(resultListener, getIntent().getLongExtra(ARG_ID, -1));
     }
 
     private void setUi() {

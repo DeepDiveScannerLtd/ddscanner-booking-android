@@ -3,6 +3,7 @@ package com.ddscanner.booking.rest;
 import android.app.Activity;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
+import com.ddscanner.booking.models.Certificate;
 import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.models.DailyTour;
 import com.ddscanner.booking.models.DailyTourDetails;
@@ -29,6 +30,62 @@ public class DDScannerRestClient {
         paginationListRequest.setKeyPage(page);
         paginationListRequest.setLimit(10);
         return paginationListRequest;
+    }
+
+    public void getCertficateDetails(ResultListener<Certificate> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCertificateDetails(id);
+        call.enqueue(new ResponseEntityCallback<Certificate>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<Certificate> resultListener, String responseString) throws JSONException {
+                resultListener.onSuccess(gson.fromJson(responseString, Certificate.class));
+            }
+        });
+    }
+
+    public void getFunDive(ResultListener<FunDiveDetails> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getFunDiveDetails(id);
+        call.enqueue(new ResponseEntityCallback<FunDiveDetails>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<FunDiveDetails> resultListener, String responseString) throws JSONException {
+                resultListener.onSuccess(gson.fromJson(responseString, FunDiveDetails.class));
+            }
+        });
+    }
+
+    public void getDailyTour(ResultListener<DailyTourDetails> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getProductDetails(id);
+        call.enqueue(new ResponseEntityCallback<DailyTourDetails>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<DailyTourDetails> resultListener, String responseString) throws JSONException {
+                resultListener.onSuccess(gson.fromJson(responseString, DailyTourDetails.class));
+            }
+        });
+    }
+
+    public void getCourse(ResultListener<CourseDetails> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCourseDeatails(id);
+        call.enqueue(new ResponseEntityCallback<CourseDetails>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<CourseDetails> resultListener, String responseString) throws JSONException {
+                resultListener.onSuccess(gson.fromJson(responseString, CourseDetails.class));
+            }
+        });
     }
 
     public void getDailyTours(ResultListener<ArrayList<DailyTourDetails>> resultListener, int page) {

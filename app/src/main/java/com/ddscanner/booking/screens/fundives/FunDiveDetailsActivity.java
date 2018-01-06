@@ -17,6 +17,7 @@ import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityFunDiveDetailsBinding;
@@ -69,7 +70,7 @@ public class FunDiveDetailsActivity extends BaseAppCompatActivity implements Dia
         super.onCreate(savedInstanceState);
         binding = DataBindingUtil.setContentView(this, R.layout.activity_fun_dive_details);
         binding.setHandlers(this);
-//        DDScannerApplication.getInstance().getDdScannerRestClient(this).getFunDiveDetails(resultListener, getIntent().getLongExtra(ARG_ID, 0));
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getFunDive(resultListener, getIntent().getLongExtra(ARG_ID, 0));
     }
 
     private void toolbarSettings() {

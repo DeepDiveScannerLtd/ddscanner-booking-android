@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityCourseDetailsBinding;
@@ -62,7 +63,7 @@ public class CourseDetailsActivity extends BaseAppCompatActivity implements Dial
         binding = DataBindingUtil.setContentView(this, R.layout.activity_course_details);
         binding.setHandlers(this);
         setupToolbar(R.string.course_details, R.id.toolbar, true);
-//        DDScannerApplication.getInstance().getDdScannerRestClient(this).getCourseDetails(resultListener, getIntent().getLongExtra(ARG_ID, -1));
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCourse(resultListener, getIntent().getLongExtra(ARG_ID, -1));
     }
 
     @Override

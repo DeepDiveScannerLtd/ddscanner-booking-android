@@ -74,7 +74,7 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//        super.onViewCreated(view, savedInstanceState);
         currentPage = 1;
         dailyToursListAdapter = new DailyToursListAdapter(item -> {});
         list.setAdapter(dailyToursListAdapter);

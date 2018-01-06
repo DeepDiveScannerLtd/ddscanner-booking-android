@@ -22,8 +22,6 @@ import java.util.ArrayList;
 
 public class FunDivesListFragment extends BaseListFragment implements RecyclerViewScrolledListener {
 
-    public RecyclerView list;
-
     private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
         @Override
         public void onSuccess(ArrayList<FunDiveDetails> result) {
@@ -81,7 +79,7 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//        super.onViewCreated(view, savedInstanceState);
         currentPage = 1;
         funDivesListAdapter = new FunDivesListAdapter(item -> FunDiveDetailsActivity.show(getContext(), item.getId()));
         list.setAdapter(funDivesListAdapter);

@@ -73,7 +73,7 @@ public class CoursesListFragment extends BaseListFragment implements RecyclerVie
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
+//        super.onViewCreated(view, savedInstanceState);
         currentPage = 1;
         coursesListAdapter = new CoursesListAdapter(item -> CourseDetailsActivity.show(getContext(), item.getId()));
         list.setAdapter(coursesListAdapter);

@@ -11,14 +11,14 @@ public class BaseAppCompatActivity extends AppCompatActivity {
     public void setupToolbar(int titleresId, int toolbarId, boolean isNeedShowBackButton) {
         setSupportActionBar((Toolbar) findViewById(toolbarId));
         getSupportActionBar().setDisplayHomeAsUpEnabled(isNeedShowBackButton);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_3d_rotation_black_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ac_back);
         getSupportActionBar().setTitle(titleresId);
     }
 
     public void setupToolbar(String title, int toolbarId, boolean isNeedShowBackButton) {
         setSupportActionBar((Toolbar) findViewById(toolbarId));
         getSupportActionBar().setDisplayHomeAsUpEnabled(isNeedShowBackButton);
-        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_3d_rotation_black_24dp);
+        getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ac_back);
         getSupportActionBar().setTitle(title);
     }
 
