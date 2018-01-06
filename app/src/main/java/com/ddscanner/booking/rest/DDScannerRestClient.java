@@ -7,7 +7,10 @@ import com.ddscanner.booking.models.Certificate;
 import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.models.DailyTour;
 import com.ddscanner.booking.models.DailyTourDetails;
+import com.ddscanner.booking.models.DiveCenterProfile;
+import com.ddscanner.booking.models.DiveCentersResponseEntity;
 import com.ddscanner.booking.models.FunDiveDetails;
+import com.ddscanner.booking.models.requests.DiveSpotsRequestMap;
 import com.ddscanner.booking.models.requests.PaginationListRequest;
 import com.ddscanner.booking.utils.Helpers;
 import com.google.gson.Gson;
@@ -84,6 +87,25 @@ public class DDScannerRestClient {
             @Override
             void handleResponseString(ResultListener<CourseDetails> resultListener, String responseString) throws JSONException {
                 resultListener.onSuccess(gson.fromJson(responseString, CourseDetails.class));
+            }
+        });
+    }
+
+    public void getDiveCenters(ResultListener<ArrayList<DiveCenterProfile>> resultListener, DiveSpotsRequestMap diveSpotsRequestMap) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDiveCenters(diveSpotsRequestMap);
+        call.enqueue(new ResponseEntityCallback<ArrayList<DiveCenterProfile>>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<ArrayList<DiveCenterProfile>> resultListener, String responseString) throws JSONException {
+                DiveCentersResponseEntity diveCentersResponseEntity = gson.fromJson(responseString, DiveCentersResponseEntity.class);
+                if (diveCentersResponseEntity.getDiveCenters() == null) {
+                    resultListener.onSuccess(new ArrayList<DiveCenterProfile>());
+                } else {
+                    resultListener.onSuccess(diveCentersResponseEntity.getDiveCenters());
+                }
             }
         });
     }

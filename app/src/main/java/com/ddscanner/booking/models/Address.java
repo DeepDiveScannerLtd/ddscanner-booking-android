@@ -1,5 +1,6 @@
 package com.ddscanner.booking.models;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -29,9 +30,9 @@ public class Address implements Serializable {
         return lng;
     }
 
-//    public LatLng getPosition() {
-//        return new LatLng(lat, lng);
-//    }
+    public LatLng getPosition() {
+        return new LatLng(lat, lng);
+    }
 
     public void setName(String name) {
         this.name = name;

@@ -1,12 +1,14 @@
 package com.ddscanner.booking.models;
 
 import com.ddscanner.booking.PhotoAuthor;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.annotations.SerializedName;
+import com.google.maps.android.clustering.ClusterItem;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class DiveCenterProfile implements Serializable{
+public class DiveCenterProfile implements Serializable, ClusterItem {
 
     public enum DiveCenterServiceType {
         COMPANY, RESELLER
@@ -382,5 +384,10 @@ public class DiveCenterProfile implements Serializable{
 
     public void setEditedSpotsCount(int editedSpotsCount) {
         this.editedSpotsCount = editedSpotsCount;
+    }
+
+    @Override
+    public LatLng getPosition() {
+        return addresses.get(0).getPosition();
     }
 }
