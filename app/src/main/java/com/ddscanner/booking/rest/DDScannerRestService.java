@@ -45,5 +45,13 @@ public interface DDScannerRestService {
     @GET("v2_7/user.divecenter.profile.get")
     Call<ResponseBody> getDiveCenterInformation(@Query("id") String id, @Query("include_photo_details") int value);
 
+    @GET("v2_7/user.divecenter.fundives.get")
+    Call<ResponseBody> getDiveCeterFunDives(@Query("id") long id);
+
+    @GET("v2_7/user.divecenter.daily_tours.get")
+    Call<ResponseBody> getDiveCenterProducts(@Query("id") long id);
+
+    @GET("v2_7/user.divecenter.courses.get")
+    Call<ResponseBody> getDiveCenterCourses(@Query("id") long id);
 
 }

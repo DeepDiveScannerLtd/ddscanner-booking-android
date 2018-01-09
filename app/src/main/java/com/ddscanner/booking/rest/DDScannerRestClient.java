@@ -172,6 +172,24 @@ public class DDScannerRestClient {
         });
     }
 
+    public void getDiveCenterDailyTours(ResultListener<ArrayList<DailyTourDetails>> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDiveCenterProducts(id);
+        call.enqueue(new ResponseEntityCallback<ArrayList<DailyTourDetails>>(gson, resultListener) {
+
+            @Override
+            void handleResponseString(ResultListener<ArrayList<DailyTourDetails>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<DailyTourDetails>>(){}.getType();
+                ArrayList<DailyTourDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+                resultListener.onSuccess(dailyTourDetails);
+            }
+        });
+    }
+
     public void getFunDives(ResultListener<ArrayList<FunDiveDetails>> resultListener, int page) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();
@@ -190,6 +208,24 @@ public class DDScannerRestClient {
         });
     }
 
+    public void getDiveCenterFunDives(ResultListener<ArrayList<FunDiveDetails>> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDiveCeterFunDives(id);
+        call.enqueue(new ResponseEntityCallback<ArrayList<FunDiveDetails>>(gson, resultListener) {
+
+            @Override
+            void handleResponseString(ResultListener<ArrayList<FunDiveDetails>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<FunDiveDetails>>(){}.getType();
+                ArrayList<FunDiveDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+                resultListener.onSuccess(dailyTourDetails);
+            }
+        });
+    }
+
     public void getCourses(ResultListener<ArrayList<CourseDetails>> resultListener, int page) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();
@@ -197,6 +233,24 @@ public class DDScannerRestClient {
         }
 
         Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCourses(getPaginationListRequest(page));
+        call.enqueue(new ResponseEntityCallback<ArrayList<CourseDetails>>(gson, resultListener) {
+
+            @Override
+            void handleResponseString(ResultListener<ArrayList<CourseDetails>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<CourseDetails>>(){}.getType();
+                ArrayList<CourseDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+                resultListener.onSuccess(dailyTourDetails);
+            }
+        });
+    }
+
+    public void getDiveCenterCourses(ResultListener<ArrayList<CourseDetails>> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDiveCenterCourses(id);
         call.enqueue(new ResponseEntityCallback<ArrayList<CourseDetails>>(gson, resultListener) {
 
             @Override

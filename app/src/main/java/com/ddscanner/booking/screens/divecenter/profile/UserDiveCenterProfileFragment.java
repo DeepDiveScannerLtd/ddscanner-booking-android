@@ -20,6 +20,7 @@ import com.ddscanner.booking.databinding.FragmentDiveCenterProfileBinding;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.screens.course.CourseDetailsActivity;
 import com.ddscanner.booking.screens.dailytour.TourDetailsActivity;
+import com.ddscanner.booking.screens.divecenter.ListActivity;
 import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
 import com.ddscanner.booking.utils.Helpers;
 import com.google.android.gms.maps.model.LatLng;
@@ -130,7 +131,7 @@ public class UserDiveCenterProfileFragment extends Fragment {
     }
 
     public void showAllProducts(View view) {
-//        DailyToursActivity.show(getContext(), binding.getDiveCenterViewModel().getDiveCenterProfile().getId().toString());
+           ListActivity.show(getContext(), ListActivity.Source.DAILY_TOUR, binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
     }
 
     private void checkLines() {
@@ -162,11 +163,11 @@ public class UserDiveCenterProfileFragment extends Fragment {
     }
 
     public void showAllFunDives(View view) {
-//        FunDivesActivity.show(getContext(), binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
+        ListActivity.show(getContext(), ListActivity.Source.FUN_DIVE, binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
     }
 
     public void showAllCourses(View view) {
-//        CoursesListActivity.show(getContext(), binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
+        ListActivity.show(getContext(), ListActivity.Source.COURSE, binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
     }
 
 }

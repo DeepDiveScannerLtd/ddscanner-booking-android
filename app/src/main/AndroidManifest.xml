@@ -65,6 +65,8 @@
             android:name=".screens.divecenter.profile.UserProfileActivity" />
         <activity android:name=".screens.dailytour.TourDetailsActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".screens.divecenter.ListActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
