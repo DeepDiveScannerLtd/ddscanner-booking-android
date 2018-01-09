@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
+import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.rest.DDScannerRestClient;
@@ -19,7 +20,13 @@ public class DiveCentersListFragment extends BaseListFragment {
     DDScannerRestClient.ResultListener<ArrayList<DiveCenterProfile>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<DiveCenterProfile>>() {
         @Override
         public void onSuccess(ArrayList<DiveCenterProfile> result) {
-            diveSpotsMapDiveCenterListAdapter.setList(result);
+            hideProgressView();
+            if (result.size() > 0) {
+                showRecyclerView();
+                diveSpotsMapDiveCenterListAdapter.setList(result);
+            } else {
+                showNoDataView(getString(R.string.there_are_no_dive_centers));
+            }
         }
 
         @Override

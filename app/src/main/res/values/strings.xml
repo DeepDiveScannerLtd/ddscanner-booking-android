@@ -633,4 +633,8 @@
     <string name="title_activity_maps">Map</string>
     <string name="mapbox_server_api_url">https://api.mapbox.com/</string>
     <string name="see_all_dcs_pattern">SEE ALL %1$d DIVE CENTERS</string>
+    <string name="there_are_no_courses">No courses found in selected area</string>
+    <string name="there_are_no_daily_tours">No daily tours found in selected area</string>
+    <string name="there_are_no_fun_diving">No fun diving found in selected area</string>
+    <string name="there_are_no_dive_centers">No dive centers found in selected area</string>
 </resources>

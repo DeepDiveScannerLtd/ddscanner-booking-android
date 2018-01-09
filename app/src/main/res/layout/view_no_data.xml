@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout android:id="@+id/no_data"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:visibility="visible"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageView
+        android:id="@+id/sad"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_nospots" />
+
+    <TextView
+        android:id="@+id/text"
+        style="@style/ErrorsViewTitleStyle"
+        android:layout_below="@+id/sad"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/there_are_no_dive_spots_here" />
+
+    <TextView
+        android:id="@+id/subtext"
+        style="@style/ErrorsViewSubTitleStyle"
+        android:layout_below="@+id/text"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="@string/please_choose_another_location" />
+
+</RelativeLayout>

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
+import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
 import com.ddscanner.booking.models.DailyTourDetails;
@@ -23,7 +24,14 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
     private DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>>() {
         @Override
         public void onSuccess(ArrayList<DailyTourDetails> result) {
-            dailyToursListAdapter.setData(result);
+            hideProgressView();
+            if (result.size() < 1) {
+                showNoDataView(getString(R.string.there_are_no_daily_tours));
+            } else {
+                showRecyclerView();
+                dailyToursListAdapter.setData(result);
+            }
+
         }
 
         @Override

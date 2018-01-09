@@ -73,6 +73,34 @@
         <item name="android:textColor">@color/black_text</item>
     </style>
 
+    <style name="ErrorsViewTitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textColor">@color/black_text</item>
+    </style>
+
+    <style name="ErrorsViewSubTitleStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">5dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">#a3a3a3</item>
+    </style>
+
+    <style name="OrangeButtons" parent="Base.Widget.AppCompat.Button.Borderless">
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:layout_height">@dimen/button_height</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/black_text</item>
+        <item name="android:background">@drawable/border_button_orange_2px</item>
+        <item name="android:layout_centerHorizontal">true</item>
+    </style>
+
     <style name="DiveCenterProfileCharacteristicDesciption">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>

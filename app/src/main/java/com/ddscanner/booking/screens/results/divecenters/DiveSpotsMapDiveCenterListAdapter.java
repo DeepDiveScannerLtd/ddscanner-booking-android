@@ -41,13 +41,13 @@ public class DiveSpotsMapDiveCenterListAdapter extends RecyclerView.Adapter<Dive
     public void onBindViewHolder(DiveCenterMapListItemViewHolder holder, int position) {
         holder.dcName.setText(list.get(position).getName());
         holder.dcAddress.setText(list.get(position).getAddresses().get(0).getName());
-        Picasso.with(context).load(DDScannerBookingApplication.getInstance().getString(R.string.base_photo_url, list.get(position).getPhoto(), "1")).into(holder.dcLogo);
-//        if (list.get(position).getLanguagesString().isEmpty()) {
-//            holder.languagesBlock.setVisibility(View.GONE);
-//        } else {
-//            holder.languagesBlock.setVisibility(View.VISIBLE);
-//            holder.dcLanguages.setText(list.get(position).getLanguagesString());
-//        }
+        Picasso.with(context).load(DDScannerBookingApplication.getInstance().getString(R.string.base_photo_url, list.get(position).getPhoto(), "1")).error(R.drawable.avatar_dc_profile_def).into(holder.dcLogo);
+        if (list.get(position).getLanguagesString().isEmpty()) {
+            holder.languagesBlock.setVisibility(View.GONE);
+        } else {
+            holder.languagesBlock.setVisibility(View.VISIBLE);
+            holder.dcLanguages.setText(list.get(position).getLanguagesString());
+        }
     }
 
     @Override

@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
+import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
 import com.ddscanner.booking.models.CourseDetails;
@@ -21,7 +22,13 @@ public class CoursesListFragment extends BaseListFragment implements RecyclerVie
     private DDScannerRestClient.ResultListener<ArrayList<CourseDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<CourseDetails>>() {
         @Override
         public void onSuccess(ArrayList<CourseDetails> result) {
-            coursesListAdapter.setCources(result);
+            hideProgressView();
+            if (result.size() < 1) {
+                showNoDataView(getString(R.string.there_are_no_courses));
+            } else {
+                showRecyclerView();
+                coursesListAdapter.setCources(result);
+            }
         }
 
         @Override

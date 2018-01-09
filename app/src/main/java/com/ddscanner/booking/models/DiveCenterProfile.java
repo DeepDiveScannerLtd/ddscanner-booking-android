@@ -386,6 +386,22 @@ public class DiveCenterProfile implements Serializable, ClusterItem {
         this.editedSpotsCount = editedSpotsCount;
     }
 
+    public String getLanguagesString() {
+        String returnedString = "";
+        if (languages != null) {
+            for (String language : languages) {
+                if (languages.indexOf(language) == languages.size() -1) {
+                    returnedString = String.format("%s%s", returnedString, language);
+                } else {
+                    returnedString = String.format("%s%s, ", returnedString, language);
+                }
+            }
+            return returnedString;
+        } else {
+            return returnedString;
+        }
+    }
+
     @Override
     public LatLng getPosition() {
         return addresses.get(0).getPosition();

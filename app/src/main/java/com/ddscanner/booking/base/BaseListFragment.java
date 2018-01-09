@@ -14,7 +14,9 @@ import android.view.ViewGroup;
 
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
+import com.ddscanner.booking.views.NoDataView;
 import com.rey.material.widget.ProgressView;
+import com.rey.material.widget.TextView;
 
 public class BaseListFragment extends Fragment {
 
@@ -22,18 +24,36 @@ public class BaseListFragment extends Fragment {
     private static final int PAGE_SIZE = 10;
     public int currentPage;
     public RecyclerView list;
-    public ProgressView progressView;
+    public TextView noResultsFound;
     RecyclerViewScrolledListener recyclerViewScrolledListener;
     LinearLayoutManager linearLayoutManager;
+    public NoDataView noDataView;
+    public ProgressView progressView;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_with_list, container, false);
         list = view.findViewById(R.id.list);
+        noDataView = view.findViewById(R.id.no_data_view);
+        progressView = view.findViewById(R.id.progress_view);
         linearLayoutManager = new LinearLayoutManager(getContext());
         list.setLayoutManager(linearLayoutManager);
         return view;
+    }
+
+    public void showNoDataView(String text) {
+        list.setVisibility(View.GONE);
+        noDataView.setVisibility(View.VISIBLE);
+        noDataView.setMessageText(text);
+    }
+
+    public void hideProgressView() {
+        progressView.setVisibility(View.GONE);
+    }
+
+    public void showRecyclerView() {
+        list.setVisibility(View.VISIBLE);
     }
 
     public void setRecyclerViewScrolledListener(RecyclerViewScrolledListener recyclerViewScrolledListener) {

@@ -25,7 +25,13 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
     private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
         @Override
         public void onSuccess(ArrayList<FunDiveDetails> result) {
-            funDivesListAdapter.setFunDives(result);
+            hideProgressView();
+            if (result.size() > 0) {
+                showRecyclerView();
+                funDivesListAdapter.setFunDives(result);
+            } else {
+                showNoDataView(getString(R.string.there_are_no_fun_diving));
+            }
         }
 
         @Override
