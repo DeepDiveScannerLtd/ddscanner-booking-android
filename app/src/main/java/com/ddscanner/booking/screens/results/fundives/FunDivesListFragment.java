@@ -47,7 +47,7 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
     private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
         @Override
         public void onSuccess(ArrayList<FunDiveDetails> result) {
-            funDivesListAdapter.setFunDives(result);
+            funDivesListAdapter.addFunDives(result);
             isLoading = false;
         }
 

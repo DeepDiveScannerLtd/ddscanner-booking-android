@@ -24,8 +24,10 @@ public class DailyToursListAdapter extends RecyclerView.Adapter<DailyToursListAd
     }
 
     public void addDailyTours(ArrayList<DailyTourDetails> dailyTours) {
-        this.dailyTours.addAll(dailyTours);
-        notifyDataSetChanged();
+        for (DailyTourDetails dailyTourDetails : dailyTours) {
+            this.dailyTours.add(dailyTourDetails);
+            notifyItemInserted(this.dailyTours.size() -1);
+        }
     }
 
     @Override

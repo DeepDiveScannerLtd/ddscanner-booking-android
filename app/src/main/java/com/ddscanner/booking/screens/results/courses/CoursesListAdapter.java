@@ -28,9 +28,10 @@ public class CoursesListAdapter extends RecyclerView.Adapter<CoursesListAdapter.
     }
 
     public void addCourses(ArrayList<CourseDetails> cources) {
-        this.cources.addAll(cources);
-
-        notifyDataSetChanged();
+        for (CourseDetails courseDetails : cources) {
+            this.cources.add(courseDetails);
+            notifyItemInserted(this.cources.size() - 1);
+        }
     }
 
     @Override
