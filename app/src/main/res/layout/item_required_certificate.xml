@@ -12,7 +12,7 @@
         android:layout_height="40dp"
         android:id="@+id/logo"
         tools:src="@drawable/logo_padi"/>
-    <com.ddscanner.ui.views.ContentBlockRelativeLayout
+    <com.ddscanner.booking.views.ContentBlockRelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cbrl_bottom_divider="true"
@@ -31,5 +31,5 @@
             android:layout_marginRight="16dp"
             tools:text="Advanced Open Water"
             />
-    </com.ddscanner.ui.views.ContentBlockRelativeLayout>
+    </com.ddscanner.booking.views.ContentBlockRelativeLayout>
 </LinearLayout>

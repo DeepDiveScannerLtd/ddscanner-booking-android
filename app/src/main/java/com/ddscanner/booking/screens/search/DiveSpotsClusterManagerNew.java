@@ -213,7 +213,7 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
     }
 
     private boolean checkArea(LatLng southWest, LatLng northEast) {
-        return !(Math.abs(northEast.longitude - southWest.longitude) > 8 || Math.abs(northEast.latitude - southWest.latitude) > 8);
+        return !(Math.abs(northEast.longitude - southWest.longitude) > 20 || Math.abs(northEast.latitude - southWest.latitude) > 20);
     }
 
     public void requestDiveSpots(boolean isFromFilters) {

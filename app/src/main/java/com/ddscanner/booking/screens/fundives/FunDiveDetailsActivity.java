@@ -24,6 +24,7 @@ import com.ddscanner.booking.databinding.ActivityFunDiveDetailsBinding;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.FunDiveDetails;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
 import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 
 public class FunDiveDetailsActivity extends BaseAppCompatActivity implements DialogClosedListener {
@@ -112,7 +113,7 @@ public class FunDiveDetailsActivity extends BaseAppCompatActivity implements Dia
     }
 
     public void bookNowClicked(View view) {
-//        SendRequestActivity.showForFunDive(this, binding.getViewModel().getFunDiveDetails().getId());
+        SendRequestActivity.showForFunDive(this, binding.getViewModel().getFunDiveDetails().getId());
     }
 
     public void showMoreClicked(View view) {

@@ -10,4 +10,12 @@
         <attr name="cbrl_bottom_divider" format="boolean" />
     </declare-styleable>
 
+    <declare-styleable name="DiveCenterRequestInputView">
+        <attr name="title_name" format="string" />
+        <attr name="input_hint" format="string" />
+        <attr name="error_text" format="string" />
+        <attr name="length" format="integer" />
+        <attr name="lines" format="integer" />
+    </declare-styleable>
+
 </resources>

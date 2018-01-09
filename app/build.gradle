@@ -55,6 +55,7 @@ android {
 def playServicesVersion = "11.8.0"
 
 dependencies {
+    compile project(':ccp')
     implementation 'com.google.android.gms:play-services-maps:11.8.0'
     implementation 'com.google.android.gms:play-services-places:11.8.0'
     implementation 'com.google.android.gms:play-services-location:11.8.0'
@@ -69,10 +70,15 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     compile 'at.blogc:expandabletextview:1.0.5'
     compile 'com.github.rey5137:material:1.2.2'
+    compile 'com.afollestad.material-dialogs:core:0.9.4.5'
+    compile 'com.klinkerapps:link_builder:1.6.1'
+    compile 'jp.wasabeef:picasso-transformations:2.1.2'
+    compile 'com.beloo.widget:ChipsLayoutManager:0.3.7@aar'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation 'com.android.support:appcompat-v7:26.1.0'
     implementation 'com.android.support:design:26.1.0'
+    implementation 'com.android.support:percent:26.1.0'
     implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.1'

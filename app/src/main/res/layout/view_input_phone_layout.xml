@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    android:layout_marginTop="13dp"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/linearLayout">
+    <com.hbb20.CountryCodePicker
+        android:id="@+id/ccp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        app:ccp_defaultNameCode="TH"/>
+    <RelativeLayout
+        android:layout_marginLeft="15dp"
+        android:layout_toRightOf="@+id/ccp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    <EditText
+        android:id="@+id/edit_text"
+        android:maxLength="19"
+        android:layout_width="match_parent"
+        android:layout_height="33dp"
+        android:textSize="15sp"
+        android:hint="@string/phone"
+        android:inputType="phone"
+        android:background="@null"
+        android:layout_toLeftOf="@+id/ic_delete"
+        android:paddingRight="15dp"
+        />
+        <ImageView
+            android:visibility="gone"
+            android:id="@+id/ic_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:paddingHorizontal="15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#dedede"
+            android:layout_below="@+id/edit_text"/>
+
+    </RelativeLayout>
+    <TextView
+        android:layout_toRightOf="@+id/ccp"
+        android:layout_below="@+id/ccp"
+        android:layout_marginLeft="15dp"
+        android:text="@string/enter_a_valid_phone_number"
+        android:id="@+id/phone_error"
+        style="@style/ValidationErrorTextView" />
+</RelativeLayout>

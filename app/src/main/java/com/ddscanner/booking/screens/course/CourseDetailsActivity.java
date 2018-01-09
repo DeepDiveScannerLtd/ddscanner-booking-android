@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -17,6 +18,7 @@ import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.ddscanner.booking.screens.certificate.CertificateDetailsActivity;
+import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
 import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 
 
@@ -77,15 +79,21 @@ public class CourseDetailsActivity extends BaseAppCompatActivity implements Dial
             case android.R.id.home:
                 finish();
                 return true;
-//            case R.id.about:
-//                CertificateDetailsActivity.show(this, binding.getViewModel().getCourseDetails().getCrtificateId(), binding.getViewModel().getCourseDetails().getName());
-//                return true;
+            case R.id.about:
+                CertificateDetailsActivity.show(this, binding.getViewModel().getCourseDetails().getCrtificateId(), binding.getViewModel().getCourseDetails().getName());
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_course_details, menu);
+        return true;
+    }
+
     public void bookNowClicked(View view) {
-//        SendRequestActivity.showForCourse(this, binding.getViewModel().getCourseDetails().getId());
+        SendRequestActivity.showForCourse(this, binding.getViewModel().getCourseDetails().getId());
     }
 
 }

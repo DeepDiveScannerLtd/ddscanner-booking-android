@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class SearchLocationActivity extends BaseAppCompatActivity implements SearchView.OnQueryTextListener, GoogleApiClient.ConnectionCallbacks,  GoogleApiClient.OnConnectionFailedListener {
 
@@ -72,6 +74,8 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
     private Runnable sendingSearchRequestRunnable;
     private ArrayList<String> placeList = new ArrayList<>();
     MapboxRestClient mapboxRestClient =new MapboxRestClient();
+    @BindView(R.id.map_btn)
+    FloatingActionButton floatingActionButton;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -145,4 +149,10 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
     public void onConnectionSuspended(int i) {
         Log.d("321", "432");
     }
+
+    @OnClick(R.id.map_btn)
+    public void onMapButtonClicked(View view) {
+        MapsActivity.show(this);
+    }
+
 }

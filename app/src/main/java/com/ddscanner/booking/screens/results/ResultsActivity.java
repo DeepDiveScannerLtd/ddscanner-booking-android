@@ -7,7 +7,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.view.MenuItem;
 
+import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.screens.results.courses.CoursesListFragment;
@@ -45,10 +47,10 @@ public class ResultsActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         ButterKnife.bind(this);
+        latLngBounds = (LatLngBounds) getIntent().getParcelableExtra(ARG_BOUNDS);
+        DDScannerBookingApplication.getInstance().getDdScannerRestClient().setLatLngBounds(latLngBounds);
         resultsPagerAdapter = new ResultsPagerAdapter(getSupportFragmentManager());
         setupViewPager();
-        latLngBounds = (LatLngBounds) getIntent().getParcelableExtra(ARG_BOUNDS);
-
         setupToolbar("Result", R.id.toolbar, true);
     }
 
@@ -69,5 +71,14 @@ public class ResultsActivity extends BaseAppCompatActivity {
         tabLayout.getTabAt(3).setText("Courses");
     }
 
-
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 }

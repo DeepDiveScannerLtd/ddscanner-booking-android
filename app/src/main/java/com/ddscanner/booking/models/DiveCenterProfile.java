@@ -62,7 +62,7 @@ public class DiveCenterProfile implements Serializable, ClusterItem {
     @SerializedName("daily_tours")
     private ArrayList<DailyTour> products;
     @SerializedName("fundives")
-    private ArrayList<FunDive> funDives;
+    private ArrayList<FunDiveDetails> funDives;
     @SerializedName("fundives_count")
     private int funDivesCount;
     private ArrayList<CourseDetails> courses;
@@ -93,11 +93,11 @@ public class DiveCenterProfile implements Serializable, ClusterItem {
         this.funDivesCount = funDivesCount;
     }
 
-    public ArrayList<FunDive> getFunDives() {
+    public ArrayList<FunDiveDetails> getFunDives() {
         return funDives;
     }
 
-    public void setFunDives(ArrayList<FunDive> funDives) {
+    public void setFunDives(ArrayList<FunDiveDetails> funDives) {
         this.funDives = funDives;
     }
 

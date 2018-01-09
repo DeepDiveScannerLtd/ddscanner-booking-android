@@ -10,9 +10,11 @@ import com.ddscanner.booking.models.DailyTourDetails;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.models.DiveCentersResponseEntity;
 import com.ddscanner.booking.models.FunDiveDetails;
+import com.ddscanner.booking.models.requests.DiveCenterRequestBookingRequest;
 import com.ddscanner.booking.models.requests.DiveSpotsRequestMap;
 import com.ddscanner.booking.models.requests.PaginationListRequest;
 import com.ddscanner.booking.utils.Helpers;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -27,12 +29,54 @@ import retrofit2.Call;
 public class DDScannerRestClient {
 
     protected Gson gson = new Gson();
+    private LatLngBounds latLngBounds;
 
     private PaginationListRequest getPaginationListRequest(int page) {
         PaginationListRequest paginationListRequest = new PaginationListRequest();
         paginationListRequest.setKeyPage(page);
         paginationListRequest.setLimit(10);
+        paginationListRequest.putNorthEastLat(latLngBounds.northeast.latitude);
+        paginationListRequest.putNorthEastLng(latLngBounds.northeast.longitude);
+        paginationListRequest.putSouthWestLat(latLngBounds.southwest.latitude);
+        paginationListRequest.putSouthWestLng(latLngBounds.southwest.longitude);
         return paginationListRequest;
+    }
+
+    public DiveSpotsRequestMap getRequestMap() {
+        DiveSpotsRequestMap diveSpotsRequestMap = new DiveSpotsRequestMap();
+        diveSpotsRequestMap.putNorthEastLat(latLngBounds.northeast.latitude);
+        diveSpotsRequestMap.putNorthEastLng(latLngBounds.northeast.longitude);
+        diveSpotsRequestMap.putSouthWestLat(latLngBounds.southwest.latitude);
+        diveSpotsRequestMap.putSouthWestLng(latLngBounds.southwest.longitude);
+        return diveSpotsRequestMap;
+    }
+
+    public void getDiveCenterInformation(String id, final ResultListener<DiveCenterProfile> resultListener) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDiveCenterInformation(id, 1);
+        call.enqueue(new ResponseEntityCallback<DiveCenterProfile>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<DiveCenterProfile> resultListener, String responseString) throws JSONException {
+                DiveCenterProfile user = new Gson().fromJson(responseString, DiveCenterProfile.class);
+                resultListener.onSuccess(user);
+            }
+        });
+    }
+
+    public void requestBooking(DiveCenterRequestBookingRequest request, ResultListener<Void> resultListener) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().postRequestBooking(request);
+        call.enqueue(new NoResponseEntityCallback(gson, resultListener));
+    }
+
+    public void setLatLngBounds(LatLngBounds latLngBounds) {
+        this.latLngBounds = latLngBounds;
     }
 
     public void getCertficateDetails(ResultListener<Certificate> resultListener, long id) {

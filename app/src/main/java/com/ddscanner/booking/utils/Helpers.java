@@ -20,8 +20,12 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.models.BaseIdNamePhotoEntity;
 import com.google.gson.Gson;
+import com.google.i18n.phonenumbers.NumberParseException;
+import com.google.i18n.phonenumbers.PhoneNumberUtil;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -47,6 +51,31 @@ public class Helpers {
 
     private Helpers() {
 
+    }
+
+    public static ArrayList<BaseIdNamePhotoEntity> getAssociationsList() {
+        ArrayList<BaseIdNamePhotoEntity> associations = new ArrayList<>();
+        associations.add(new BaseIdNamePhotoEntity("1", "PADI"));
+        associations.add(new BaseIdNamePhotoEntity("2", "CMAS"));
+        associations.add(new BaseIdNamePhotoEntity("3", "SSI"));
+        associations.add(new BaseIdNamePhotoEntity("4", "IANTD"));
+        associations.add(new BaseIdNamePhotoEntity("5", "TDI"));
+        associations.add(new BaseIdNamePhotoEntity("6", "SDI"));
+        associations.add(new BaseIdNamePhotoEntity("7", "NDL"));
+        associations.add(new BaseIdNamePhotoEntity("8", "IDD"));
+        associations.add(new BaseIdNamePhotoEntity("9", "IDEA"));
+        associations.add(new BaseIdNamePhotoEntity("10", "NAUI"));
+        associations.add(new BaseIdNamePhotoEntity("11", "PSA"));
+        associations.add(new BaseIdNamePhotoEntity("12", "BSAC"));
+        associations.add(new BaseIdNamePhotoEntity("13", "DAN"));
+        return associations;
+    }
+
+    public static BaseIdNamePhotoEntity getAssociationByCode(int code) {
+        if (getAssociationsList().get(code - 1) == null) {
+            return null;
+        }
+        return getAssociationsList().get(code - 1);
     }
 
     public static void setMargins (View v, int l, int t, int r, int b) {
@@ -290,6 +319,29 @@ public class Helpers {
             }
         }
         return false;
+    }
+
+    public static MaterialDialog getMaterialDialog(Context context) {
+        MaterialDialog materialDialog;
+        materialDialog = new MaterialDialog.Builder(context)
+                .cancelable(false)
+                .content("Please wait...").progress(true, 0)
+                .contentColor(ContextCompat.getColor(context, R.color.black_text))
+                .widgetColor(ContextCompat.getColor(context, R.color.primary)).build();
+        return materialDialog;
+    }
+
+    public static boolean validCellPhone(String number, String coutryCode) {
+        PhoneNumberUtil util = PhoneNumberUtil.getInstance();
+        try {
+            return util.isValidNumber(util.parse(number, coutryCode));
+        } catch (NumberParseException exception) {
+            return false;
+        }
+//        if (number.length() > 7 && number.length() < 17) {
+//            return true;
+//        }
+//        return false;
     }
 
     public static void copyFileStream(File dest, Uri uri, Context context) throws IOException {

@@ -42,4 +42,43 @@
     </style>
 
 
+    <style name="ValidationErrorTextView">
+        <item name="android:layout_marginLeft">65dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/error</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_marginTop">4dp</item>
+        <item name="android:visibility">gone</item>
+    </style>
+
+    <style name="DividerStyleFull">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:scaleType">centerCrop</item>
+        <item name="android:src">@drawable/divider</item>
+    </style>
+
+
+    <style name="DiveCenterProfileCharacteristicIcon">
+        <item name="android:layout_width">63dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <style name="DiveCenterProfileCharacteristicName">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:textColor">@color/black_text</item>
+    </style>
+
+    <style name="DiveCenterProfileCharacteristicDesciption">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">@color/dive_center_charachteristic_color</item>
+        <item name="android:layout_marginTop">3dp</item>
+    </style>
+
 </resources>
