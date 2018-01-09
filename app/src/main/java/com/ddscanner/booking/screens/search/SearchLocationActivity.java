@@ -11,10 +11,14 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
@@ -36,7 +40,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class SearchLocationActivity extends BaseAppCompatActivity implements SearchView.OnQueryTextListener, GoogleApiClient.ConnectionCallbacks,  GoogleApiClient.OnConnectionFailedListener {
+public class SearchLocationActivity extends BaseAppCompatActivity implements GoogleApiClient.ConnectionCallbacks,  GoogleApiClient.OnConnectionFailedListener {
 
     DDScannerRestClient.ResultListener<FeatureSearchResponseEntity> resultListener = new DDScannerRestClient.ResultListener<FeatureSearchResponseEntity>() {
         @Override
@@ -74,8 +78,10 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
     private Runnable sendingSearchRequestRunnable;
     private ArrayList<String> placeList = new ArrayList<>();
     MapboxRestClient mapboxRestClient =new MapboxRestClient();
-    @BindView(R.id.map_btn)
-    FloatingActionButton floatingActionButton;
+    @BindView(R.id.select_area_layout)
+    LinearLayout selectAreaLayout;
+    @BindView(R.id.edit_text)
+    EditText searchInput;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -88,23 +94,26 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
         recyclerView.setAdapter(placesListAdapter);
         setSupportActionBar(toolbar);
         try {
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ac_back);
-            getSupportActionBar().setTitle(getString(R.string.search));
-        } catch (NullPointerException e) {
+            getSupportActionBar().setTitle("Select location");
+        } catch (NullPointerException ignored) {
 
         }
-    }
+        searchInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-    @Override
-    public boolean onQueryTextChange(String newText) {
-        tryToSendRquest(newText);
-        return false;
-    }
+            }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) {
-        return false;
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                tryToSendRquest(s.toString());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
     }
 
     private void tryToSendRquest(final String newText) {
@@ -117,17 +126,6 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
             }
         };
         handler.postDelayed(sendingSearchRequestRunnable, 630);
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_search_sealife, menu);
-        MenuItem item = menu.findItem(R.id.action_search);
-        item.setVisible(true);
-        SearchView searchView = (SearchView) MenuItemCompat.getActionView(item);
-        searchView.setIconified(false);
-        searchView.setQueryHint(getString(R.string.search));
-        searchView.setOnQueryTextListener(this);
-        return true;
     }
 
     @Override
@@ -150,7 +148,7 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Sea
         Log.d("321", "432");
     }
 
-    @OnClick(R.id.map_btn)
+    @OnClick(R.id.select_area_layout)
     public void onMapButtonClicked(View view) {
         MapsActivity.show(this);
     }

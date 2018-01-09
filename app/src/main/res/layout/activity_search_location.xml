@@ -1,37 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
     <include
-        android:id="@+id/top"
         layout="@layout/view_toolbar" />
+    <LinearLayout
+        android:id="@+id/select_area_layout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_map"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="14sp"
+            android:fontFamily="sans-serif-medium"
+            android:textStyle="normal"
+            android:textColor="#3b528b"
+            android:letterSpacing="0.02"
+            android:layout_marginLeft="10dp"
+            android:text="@string/select_area"
+            />
+    </LinearLayout>
+    <com.ddscanner.booking.views.ContentBlockLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        app:top_divider="true"
+        app:bottom_divider="true"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <ImageView
+            android:layout_marginLeft="12dp"
+            android:layout_marginRight="16dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_ac_search"/>
+        <EditText
+            android:id="@+id/edit_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:hint="Start typing a location..."
+            android:textSize="15sp"
+            android:textColor="@color/black_text"
+            android:paddingRight="16dp"
+            android:lines="1"
+            android:maxLines="1" />
+    </com.ddscanner.booking.views.ContentBlockLinearLayout>
     <com.rey.material.widget.ProgressView
-        android:layout_below="@+id/top"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:id="@+id/progress_view"
         android:layout_width="match_parent"
         android:layout_height="25dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         app:pv_autostart="true"
         app:pv_circular="true"
         app:pv_progressMode="indeterminate"
         android:visibility="gone"
         app:pv_progressStyle="@style/CircularProgress" />
     <android.support.v7.widget.RecyclerView
-        android:layout_below="@+id/top"
         android:id="@+id/places_list_recycler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/map_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_margin="14dp"
-        android:scaleType="center"
-        android:src="@drawable/ic_map_black_24dp"
-        app:backgroundTint="@color/white" />
-</RelativeLayout>
+</LinearLayout>

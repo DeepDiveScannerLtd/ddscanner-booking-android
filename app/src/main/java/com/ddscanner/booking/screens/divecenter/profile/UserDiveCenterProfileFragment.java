@@ -21,6 +21,7 @@ import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.screens.course.CourseDetailsActivity;
 import com.ddscanner.booking.screens.dailytour.TourDetailsActivity;
 import com.ddscanner.booking.screens.divecenter.ListActivity;
+import com.ddscanner.booking.screens.divecenter.location.DiveCenterLocationActivity;
 import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
 import com.ddscanner.booking.utils.Helpers;
 import com.google.android.gms.maps.model.LatLng;
@@ -168,6 +169,10 @@ public class UserDiveCenterProfileFragment extends Fragment {
 
     public void showAllCourses(View view) {
         ListActivity.show(getContext(), ListActivity.Source.COURSE, binding.getDiveCenterViewModel().getDiveCenterProfile().getId());
+    }
+
+    public void addressClicked(View view) {
+        DiveCenterLocationActivity.show(getContext(), binding.getDiveCenterViewModel().getDiveCenterProfile().getAddresses().get(0).getPosition());
     }
 
 }

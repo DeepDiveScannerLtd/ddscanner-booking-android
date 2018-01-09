@@ -67,6 +67,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.divecenter.ListActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".screens.divecenter.location.DiveCenterLocationActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

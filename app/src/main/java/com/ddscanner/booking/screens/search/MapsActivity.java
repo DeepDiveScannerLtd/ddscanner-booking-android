@@ -21,6 +21,7 @@ import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 import com.ddscanner.booking.screens.results.ResultsActivity;
 import com.ddscanner.booking.utils.Helpers;
 import com.ddscanner.booking.views.DiveCenterInfoView;
+import com.ddscanner.booking.views.DiveCentersFoundView;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -53,10 +54,10 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
             diveSpotsClusterManagerNew.updateDiveSpots(result);
             hideProgressView();
             if (result.size() > 0) {
-                dcsCount.setText(getString(R.string.see_all_dcs_pattern, result.size()));
-                dcsCount.setVisibility(View.VISIBLE);
+                diveCentersFoundView.setDiveCentersCount(result.size());
+                diveCentersFoundView.setVisibility(View.VISIBLE);
             } else {
-                dcsCount.setVisibility(View.GONE);
+                diveCentersFoundView.setVisibility(View.GONE);
             }
         }
 
@@ -87,9 +88,9 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     RelativeLayout toast;
     @BindView(R.id.request_progress)
     ProgressBar progressView;
-    @BindView(R.id.see_all_dc_view)
-    TextView dcsCount;
     private String lastDcId;
+    @BindView(R.id.found_view)
+    DiveCentersFoundView diveCentersFoundView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,8 +115,6 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
-        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(6.081, 95.960), new LatLng(19.21, 105.45));
-        mMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
         mMap.setOnMapLoadedCallback(this);
     }
 
@@ -126,12 +125,14 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
 
     @Override
     public void showDiveCenterInfo(Marker marker, DiveCenterProfile diveCenterProfile) {
+        diveCentersFoundView.animate().translationY(-diveSpotInfoHeight);
         diveCenterInfoView.show(diveCenterProfile, marker);
         lastDcId = diveCenterProfile.getId().toString();
     }
 
     @Override
     public void hideDiveCenterInfo() {
+        diveCentersFoundView.animate().translationY(0);
         diveCenterInfoView.hide(diveSpotInfoHeight);
     }
 
@@ -171,7 +172,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         }
     }
 
-    @OnClick(R.id.see_all_dc_view)
+    @OnClick(R.id.found_view)
     public void showDcs(View view) {
         ResultsActivity.show(this, mMap.getProjection().getVisibleRegion().latLngBounds);
     }

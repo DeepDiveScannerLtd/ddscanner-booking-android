@@ -55,20 +55,20 @@ public class ResultsActivity extends BaseAppCompatActivity {
     }
 
     private void setupViewPager() {
-        resultsPagerAdapter.addFragment(diveCentersListFragment, "Dive Centers");
         resultsPagerAdapter.addFragment(dailyToursListFragment, "Daily Tours");
         resultsPagerAdapter.addFragment(funDivesListFragment, "Fun Diving");
         resultsPagerAdapter.addFragment(coursesListFragment, "Courses");
+        resultsPagerAdapter.addFragment(diveCentersListFragment, "Dive Centers");
         viewPager.setAdapter(resultsPagerAdapter);
         tabLayout.setupWithViewPager(viewPager);
         setupTabLayout();
     }
 
     private void setupTabLayout() {
-        tabLayout.getTabAt(0).setText("Dive Centers");
-        tabLayout.getTabAt(1).setText("Daily Tours");
-        tabLayout.getTabAt(2).setText("Fun Diving");
-        tabLayout.getTabAt(3).setText("Courses");
+        tabLayout.getTabAt(3).setText("Dive Centers");
+        tabLayout.getTabAt(0).setText("Daily Tours");
+        tabLayout.getTabAt(1).setText("Fun Diving");
+        tabLayout.getTabAt(2).setText("Courses");
     }
 
     @Override

@@ -41,22 +41,14 @@ public class DiveCenterProfileFragmentViewModel {
                 view.setText("0");
                 return;
             }
-            if (viewModel.getDiveCenterProfile().getLanguages().size() == 2) {
-                view.setText(String.format("%s, %s", viewModel.getDiveCenterProfile().getLanguages().get(0), viewModel.getDiveCenterProfile().getLanguages().get(1)));
-                return;
-            }
-            if (viewModel.getDiveCenterProfile().getLanguages().size() == 1) {
-                view.setText(viewModel.getDiveCenterProfile().getLanguages().get(0));
-                return;
-            }
-            view.setText(String.valueOf(viewModel.getDiveCenterProfile().getLanguages().size()));
+            view.setText(viewModel.getDiveCenterProfile().getLanguagesString());
         }
     }
 
     @BindingAdapter({"loadImageFrom"})
     public static void loadProfileImage(ImageView view, DiveCenterProfileFragmentViewModel viewModel) {
         if (viewModel != null) {
-            Picasso.with(view.getContext()).load(DDScannerBookingApplication.getInstance().getString(R.string.base_photo_url, viewModel.getDiveCenterProfile().getPhoto(), "1")).resize(Math.round(Helpers.convertDpToPixel(65, view.getContext())), Math.round(Helpers.convertDpToPixel(65, view.getContext()))).placeholder(R.drawable.avatar_dc_profile_def).error(R.drawable.avatar_dc_profile_def).centerCrop().transform(new RoundedCornersTransformation(Math.round(Helpers.convertDpToPixel(2, view.getContext())), 0, RoundedCornersTransformation.CornerType.ALL)).into(view);
+            Picasso.with(view.getContext()).load(DDScannerBookingApplication.getInstance().getString(R.string.base_photo_url, viewModel.getDiveCenterProfile().getPhoto(), "1")).placeholder(R.drawable.avatar_dc_profile_def).error(R.drawable.avatar_dc_profile_def).into(view);
         }
     }
 

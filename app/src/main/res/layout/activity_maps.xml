@@ -60,22 +60,14 @@
             android:textSize="16sp" />
     </RelativeLayout>
 
-    <TextView
+    <com.ddscanner.booking.views.DiveCentersFoundView
         android:visibility="gone"
-        android:id="@+id/see_all_dc_view"
-        android:layout_width="wrap_content"
+        android:id="@+id/found_view"
+        android:layout_marginLeft="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="16dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginBottom="20dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/see_all_dc_background"
-        android:gravity="center"
-        android:paddingBottom="5dp"
-        android:paddingLeft="10dp"
-        android:paddingRight="10dp"
-        android:paddingTop="5dp"
-        android:text="@string/please_zoom_in_to_request_dive_spots"
-        android:textSize="16sp" />
+        android:layout_alignParentBottom="true"/>
 
 </RelativeLayout>
