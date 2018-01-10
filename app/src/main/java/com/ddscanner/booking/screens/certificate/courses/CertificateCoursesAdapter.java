@@ -7,9 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.databinding.ItemDiveCenterCertificateBinding;
 import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.screens.course.CourseDetailsActivity;
+import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
 
 import java.util.ArrayList;
@@ -46,6 +48,7 @@ public class CertificateCoursesAdapter extends RecyclerView.Adapter<CertificateC
         public CertificateCourseItemViewHolder(View itemView) {
             super(itemView);
             binding = DataBindingUtil.bind(itemView);
+            itemView.setOnClickListener(v -> UserProfileActivity.show(itemView.getContext(), courseDetails.get(getAdapterPosition()).getDiveCenterProfile().getId().toString(), 0, courseDetails.get(getAdapterPosition()).getDiveCenterProfile().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS));
             binding.inquiryBtn.setOnClickListener(v -> SendRequestActivity.showForCourse(itemView.getContext(), courseDetails.get(getAdapterPosition()).getId()));
             binding.deatilsBtn.setOnClickListener(v -> CourseDetailsActivity.show(itemView.getContext(), courseDetails.get(getAdapterPosition()).getId()));
         }
