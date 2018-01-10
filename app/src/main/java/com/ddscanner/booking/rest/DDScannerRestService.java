@@ -15,6 +15,9 @@ import retrofit2.http.QueryMap;
 
 public interface DDScannerRestService {
 
+    @GET("v2_8/certificates.get")
+    Call<ResponseBody> getCertificates(@QueryMap DiveSpotsRequestMap request);
+
     @GET("v2_6/daily_tours.get")
     Call<ResponseBody> getDailyTours(@QueryMap PaginationListRequest request);
 

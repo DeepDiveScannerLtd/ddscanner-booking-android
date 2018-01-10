@@ -19,6 +19,16 @@ public class Certificate implements Serializable {
     private ArrayList<Certificate> requiredCertificates;
     @SerializedName("association_type")
     private int associationType;
+    @SerializedName("price_from")
+    private String priceFrom;
+
+    public String getPriceFrom() {
+        return priceFrom;
+    }
+
+    public void setPriceFrom(String priceFrom) {
+        this.priceFrom = priceFrom;
+    }
 
     public int getAssociationType() {
         return associationType;

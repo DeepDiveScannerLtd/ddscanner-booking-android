@@ -51,6 +51,21 @@ public class DDScannerRestClient {
         return diveSpotsRequestMap;
     }
 
+    public void getCertificates(ResultListener<ArrayList<Certificate>> resultListener) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCertificates(getRequestMap());
+        call.enqueue(new ResponseEntityCallback<ArrayList<Certificate>>(gson, resultListener) {
+            @Override
+            void handleResponseString(ResultListener<ArrayList<Certificate>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<Certificate>>(){}.getType();
+                resultListener.onSuccess(gson.fromJson(responseString, listType));
+            }
+        });
+    }
+
     public void getDiveCenterInformation(String id, final ResultListener<DiveCenterProfile> resultListener) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();

@@ -13,6 +13,7 @@ import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
+import com.ddscanner.booking.screens.results.certificates.CertificateListFragment;
 import com.ddscanner.booking.screens.results.courses.CoursesListFragment;
 import com.ddscanner.booking.screens.results.dailytours.DailyToursListFragment;
 import com.ddscanner.booking.screens.results.divecenters.DiveCentersListFragment;
@@ -31,7 +32,7 @@ public class ResultsActivity extends BaseAppCompatActivity {
     @BindView(R.id.view_pager)
     ViewPager viewPager;
 
-    CoursesListFragment coursesListFragment = new CoursesListFragment();
+    CertificateListFragment coursesListFragment = new CertificateListFragment();
     FunDivesListFragment funDivesListFragment = new FunDivesListFragment();
     DailyToursListFragment dailyToursListFragment = new DailyToursListFragment();
     DiveCentersListFragment diveCentersListFragment = new DiveCentersListFragment();

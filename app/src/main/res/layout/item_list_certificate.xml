@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout>
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="viewModel"
+            type="com.ddscanner.booking.screens.results.certificates.CertificateListItemViewModel" />
+    </data>
+    <com.ddscanner.booking.views.ContentBlockRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:background="@color/white"
+        app:cbrl_top_divider="false"
+        app:cbrl_bottom_divider="true"
+        android:padding="16dp"
+        android:foreground="?attr/selectableItemBackground">
+        <ImageView
+            android:id="@+id/logo"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:src="@drawable/logo_padi"
+            app:loadAssociationLogo="@{viewModel}"/>
+        <LinearLayout
+            android:layout_marginLeft="16dp"
+            android:layout_toRightOf="@+id/logo"
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="16sp"
+                android:fontFamily="sans-serif-medium"
+                android:textStyle="normal"
+                android:textColor="#de000000"
+                android:lineSpacingExtra="5sp"
+                android:text="@{viewModel.certificate.name}"
+                tools:text="Advanced Open Water Diver"
+                />
+            <TextView
+                android:visibility="@{viewModel.certificate.priceFrom == null ? View.GONE : View.VISIBLE}"
+                android:layout_marginTop="4dp"
+                android:paddingVertical="5dp"
+                android:paddingHorizontal="8dp"
+                android:background="@drawable/price_background"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="15sp"
+                android:fontFamily="sans-serif"
+                android:textStyle="bold"
+                android:textColor="#212121"
+                android:letterSpacing="0.02"
+                android:text="@{viewModel.certificate.priceFrom}"
+                tools:text=" From 10900 B"
+                />
+        </LinearLayout>
+    </com.ddscanner.booking.views.ContentBlockRelativeLayout>
+</layout>
