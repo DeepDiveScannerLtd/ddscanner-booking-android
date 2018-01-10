@@ -138,6 +138,7 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
                                         placeList.add(prediction.getPlaceId());
 
                                     }
+                                    progressView.setVisibility(View.GONE);
                                     placesListAdapter.setPlaces(placeList);
                                 }
                             });
