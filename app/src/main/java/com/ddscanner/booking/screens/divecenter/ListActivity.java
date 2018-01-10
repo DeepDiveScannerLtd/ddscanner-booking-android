@@ -18,6 +18,7 @@ import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.models.DailyTourDetails;
 import com.ddscanner.booking.models.FunDiveDetails;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.certificate.courses.CertificateCoursesAdapter;
 import com.ddscanner.booking.screens.course.CourseDetailsActivity;
 import com.ddscanner.booking.screens.dailytour.TourDetailsActivity;
 import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
@@ -32,6 +33,29 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ListActivity extends BaseAppCompatActivity implements DialogClosedListener {
+
+    private DDScannerRestClient.ResultListener<ArrayList<CourseDetails>> certificateCoursesResultListener = new DDScannerRestClient.ResultListener<ArrayList<CourseDetails>>() {
+        @Override
+        public void onSuccess(ArrayList<CourseDetails> result) {
+            dataLoaded();
+            certificateCoursesAdapter.setCourseDetails(result);
+        }
+
+        @Override
+        public void onConnectionFailure() {
+
+        }
+
+        @Override
+        public void onError(DDScannerRestClient.ErrorType errorType, Object errorData, String url, String errorMessage) {
+
+        }
+
+        @Override
+        public void onInternetConnectionClosed() {
+
+        }
+    };
 
     private DDScannerRestClient.ResultListener<ArrayList<CourseDetails>> coursesResultListener = new DDScannerRestClient.ResultListener<ArrayList<CourseDetails>>() {
         @Override
@@ -113,7 +137,7 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
     }
 
     public enum Source {
-        DAILY_TOUR, FUN_DIVE, COURSE
+        DAILY_TOUR, FUN_DIVE, COURSE, CERTIFICATE_COURSS
     }
 
     @BindView(R.id.progressBar)
@@ -124,6 +148,7 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
     private DailyToursListAdapter dailyToursListAdapter;
     private FunDivesListAdapter funDivesListAdapter;
     private CoursesListAdapter coursesListAdapter;
+    private CertificateCoursesAdapter certificateCoursesAdapter;
     private long dcId;
 
     @Override
@@ -161,6 +186,12 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
                 dailyToursListAdapter = new DailyToursListAdapter(item -> TourDetailsActivity.show(this, item.getId()));
                 recyclerView.setAdapter(dailyToursListAdapter);
                 DDScannerBookingApplication.getInstance().getDdScannerRestClient().getDiveCenterDailyTours(dailyToursResultListener, dcId);
+                break;
+            case CERTIFICATE_COURSS:
+                setupToolbar(R.string.courses, R.id.toolbar, true);
+                certificateCoursesAdapter = new CertificateCoursesAdapter();
+                recyclerView.setAdapter(certificateCoursesAdapter);
+                DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCertificateCourses(certificateCoursesResultListener, dcId);
                 break;
         }
     }

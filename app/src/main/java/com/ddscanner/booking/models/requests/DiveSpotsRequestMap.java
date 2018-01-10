@@ -10,6 +10,7 @@ public class DiveSpotsRequestMap extends HashMap<String, Object> {
     public static final String KEY_RATING = "rating";
     public static final String KEY_VISIBILITY = "visibility";
     public static final String KEY_COUNTRY_CODE = "country_code";
+    public static final String KEY_ID = "id";
 
     /*
 currents (string, optional) - The currents filter
@@ -61,6 +62,10 @@ visibility (string, optional) - The Visibility filter
 
     public String getVisibility() {
         return (String) get(KEY_VISIBILITY);
+    }
+
+    public void setId(long id) {
+        put(KEY_ID, String.valueOf(id));
     }
 
     public void putSouthWestLat(double lat) {

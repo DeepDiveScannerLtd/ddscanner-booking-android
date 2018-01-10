@@ -12,6 +12,7 @@ import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.models.Certificate;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.divecenter.ListActivity;
 
 import java.util.ArrayList;
 
@@ -55,7 +56,8 @@ public class CertificateListFragment extends BaseListFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        certificateListAdapter = new CertificateListAdapter(item -> {});
+        certificateListAdapter = new CertificateListAdapter(item -> {
+            ListActivity.show(getContext(), ListActivity.Source.CERTIFICATE_COURSS, item.getId());});
         list.setAdapter(certificateListAdapter);
         DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCertificates(resultListener);
     }

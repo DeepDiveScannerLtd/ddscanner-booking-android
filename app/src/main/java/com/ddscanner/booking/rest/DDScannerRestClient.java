@@ -51,6 +51,8 @@ public class DDScannerRestClient {
         return diveSpotsRequestMap;
     }
 
+
+
     public void getCertificates(ResultListener<ArrayList<Certificate>> resultListener) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();
@@ -248,6 +250,26 @@ public class DDScannerRestClient {
         }
 
         Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCourses(getPaginationListRequest(page));
+        call.enqueue(new ResponseEntityCallback<ArrayList<CourseDetails>>(gson, resultListener) {
+
+            @Override
+            void handleResponseString(ResultListener<ArrayList<CourseDetails>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<CourseDetails>>(){}.getType();
+                ArrayList<CourseDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+                resultListener.onSuccess(dailyTourDetails);
+            }
+        });
+    }
+
+
+    public void getCertificateCourses(ResultListener<ArrayList<CourseDetails>> resultListener, long id) {
+        if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
+            resultListener.onInternetConnectionClosed();
+            return;
+        }
+        DiveSpotsRequestMap diveSpotsRequestMap = getRequestMap();
+        diveSpotsRequestMap.setId(id);
+        Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getCertificateCourses(diveSpotsRequestMap);
         call.enqueue(new ResponseEntityCallback<ArrayList<CourseDetails>>(gson, resultListener) {
 
             @Override

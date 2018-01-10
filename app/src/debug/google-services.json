@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "529407320336",
+    "firebase_url": "https://ddscanner-booking.firebaseio.com",
+    "project_id": "ddscanner-booking",
+    "storage_bucket": "ddscanner-booking.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:529407320336:android:8a4fc2586cce82a0",
+        "android_client_info": {
+          "package_name": "com.ddscanner.booking.debug"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "529407320336-dkc0u2k2a7m7cmt3ke29bqjd4v2vknbv.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.ddscanner.booking.debug",
+            "certificate_hash": "3e3bf2e3bab387c969a783694aeb12b9f816b951"
+          }
+        },
+        {
+          "client_id": "529407320336-7ks6tk9lnplga7l2n4gosfir9du8m7qd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAoDNXnF80PU-OscpCUVNz7LB5v0cCzeZo"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "529407320336-7ks6tk9lnplga7l2n4gosfir9du8m7qd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
