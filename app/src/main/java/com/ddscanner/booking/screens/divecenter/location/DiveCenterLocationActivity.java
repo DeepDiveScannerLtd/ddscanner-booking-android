@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,6 +21,7 @@ import com.google.android.gms.maps.model.MarkerOptions;
 public class DiveCenterLocationActivity extends BaseAppCompatActivity {
 
     public static void show(Context context, LatLng latLng) {
+        EventsTracker.trackAddressClicked();
         Intent intent = new Intent(context, DiveCenterLocationActivity.class);
         intent.putExtra(LATLNG, latLng);
         context.startActivity(intent);
@@ -40,7 +42,7 @@ public class DiveCenterLocationActivity extends BaseAppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_ac_back);
-        getSupportActionBar().setTitle(getResources().getString(R.string.diveSpot));
+        getSupportActionBar().setTitle(getResources().getString(R.string.dive_center));
         mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.google_map_fragment);
 
         mapFragment.getMapAsync(googleMap -> {

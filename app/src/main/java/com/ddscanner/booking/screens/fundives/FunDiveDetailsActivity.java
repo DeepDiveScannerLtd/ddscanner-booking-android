@@ -19,11 +19,13 @@ import android.view.WindowManager;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityFunDiveDetailsBinding;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.FunDiveDetails;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
 import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 
@@ -61,6 +63,7 @@ public class FunDiveDetailsActivity extends BaseAppCompatActivity implements Dia
     };
 
     public static void show(Context context, long id) {
+        EventsTracker.trackFunDiveDetailsScreen(id);
         Intent intent = new Intent(context, FunDiveDetailsActivity.class);
         intent.putExtra(ARG_ID, id);
         context.startActivity(intent);
@@ -127,7 +130,7 @@ public class FunDiveDetailsActivity extends BaseAppCompatActivity implements Dia
     }
 
     public void showDiveCenter(View view) {
-//        UserProfileActivity.show(this, binding.getViewModel().getFunDiveDetails().getDiveCenterProfile().getId().toString(), 0);
+        UserProfileActivity.show(this, binding.getViewModel().getFunDiveDetails().getDiveCenterProfile().getId().toString(), 0, binding.getViewModel().getFunDiveDetails().getDiveCenterProfile().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
     }
 
     private void checkLines() {

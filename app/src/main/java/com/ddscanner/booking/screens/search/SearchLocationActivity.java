@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.models.FeatureSearchResponseEntity;
 import com.ddscanner.booking.rest.DDScannerRestClient;
@@ -87,6 +88,7 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_location);
+        EventsTracker.trackSearchScreenView();
         ButterKnife.bind(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         placesListAdapter = new PlacesListAdapter(googleApiClient, item -> {

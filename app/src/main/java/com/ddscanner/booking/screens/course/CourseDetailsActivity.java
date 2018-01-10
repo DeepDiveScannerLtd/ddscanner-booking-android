@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityCourseDetailsBinding;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
@@ -52,6 +53,7 @@ public class CourseDetailsActivity extends BaseAppCompatActivity implements Dial
     private static final String ARG_ID = "id";
 
     public static void show(Context context, long courseId) {
+        EventsTracker.trackCourseDetailsScreen(courseId);
         Intent intent = new Intent(context, CourseDetailsActivity.class);
         intent.putExtra(ARG_ID, courseId);
         context.startActivity(intent);

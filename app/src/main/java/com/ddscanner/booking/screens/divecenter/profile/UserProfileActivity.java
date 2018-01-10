@@ -13,6 +13,7 @@ import android.view.View;
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.PhotoAuthor;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.DiveCenterProfile;
@@ -62,8 +63,9 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
 
     };
 
-    public static void show(Context context, String userId, int userType) {
+    public static void show(Context context, String userId, int userType, String name, EventsTracker.DiveCenterProfileScreenSource source) {
         Intent intent = new Intent(context, UserProfileActivity.class);
+        EventsTracker.trackDcProfileScreenView(name, userId, source);
         intent.putExtra(ARG_USER_ID, userId);
         intent.putExtra(ARG_TYPE, userType);
         context.startActivity(intent);

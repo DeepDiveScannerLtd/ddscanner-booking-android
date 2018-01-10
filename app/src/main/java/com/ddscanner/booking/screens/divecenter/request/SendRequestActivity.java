@@ -12,6 +12,7 @@ import android.view.MenuItem;
 import com.afollestad.materialdialogs.MaterialDialog;
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.requests.DiveCenterRequestBookingRequest;
@@ -31,6 +32,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
         @Override
         public void onSuccess(Void result) {
             materialDialog.dismiss();
+            EventsTracker.trackBookingRequestSent();
             UserActionInfoDialogFragment.showForActivityResult(getSupportFragmentManager(), R.string.success_booking_dialog_title, R.string.success_booking_dialog_text, 1, false);
         }
 
@@ -111,15 +113,19 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
             case NONE:
                 diveCenterId = getIntent().getStringExtra("dc_id");
                 diveSpotId = getIntent().getStringExtra("ds_id");
+                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.DIVE_CENTER_PROFILE);
                 break;
             case FUNDIVE:
                 funDiveId = getIntent().getLongExtra(ARG_PRODUCT_ID, -1);
+                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.PRODUCT_DETAILS);
                 break;
             case PRODUCT:
                 productId = getIntent().getLongExtra(ARG_PRODUCT_ID, -1);
+                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.PRODUCT_DETAILS);
                 break;
             case COURSE:
                 courseId = getIntent().getLongExtra(ARG_PRODUCT_ID, -1);
+                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.PRODUCT_DETAILS);
                 break;
         }
         materialDialog = Helpers.getMaterialDialog(this);
@@ -136,6 +142,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
+                EventsTracker.trackBookingCancelled();
                 return true;
             case R.id.send_request:
                 sendRequest();

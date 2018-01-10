@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.models.Address;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
@@ -96,17 +97,12 @@ public class DiveCenterProfileFragmentViewModel {
                 link.setTextColor(ContextCompat.getColor(view.getContext(), R.color.dive_center_charachteristic_color));
                 link.setOnLongClickListener(clickedText -> {
                     EmailIntentBuilder.from(view.getContext()).to(email).start();
-                    if (viewModel.getDiveCenterProfile().isForBooking()) {
-//                        EventsTracker.trackBookingEmailLongClck();
-                    } else {
-//                        EventsTracker.trackEmailLongClick();
-                    }
+                        EventsTracker.trackEmailLongClick();
+
                 });
                 link.setOnClickListener(clickedText -> {
+                    EventsTracker.trackBookingDcProfileEmailClick();
 //                    if (viewModel.getDiveCenterProfile().isForBooking()) {
-                    if (viewModel.getDiveCenterProfile().isForBooking()) {
-//                        EventsTracker.trackBookingDcProfileEmailClick();
-                    }
                         SendRequestActivity.show(view.getContext(), viewModel.getDiveCenterProfile().getDiveSpotBookingId(), viewModel.getDiveCenterProfile().getId());
 //                        return;
 //                    }
@@ -135,11 +131,7 @@ public class DiveCenterProfileFragmentViewModel {
                 link.setUnderlined(false);
                 link.setTextColor(ContextCompat.getColor(view.getContext(), R.color.dive_center_charachteristic_color));
                 link.setOnClickListener(clickedText -> {
-                    if (viewModel.getDiveCenterProfile().isForBooking()) {
-//                        EventsTracker.trackBookingDcProfilePhoneClick();
-                    } else {
-//                        EventsTracker.trackPhoneClick();
-                    }
+                  EventsTracker.trackPhoneClick();
                     PhoneCallIntentBuilder.from(view.getContext()).to(phone).start();
                 });
                 links.add(link);

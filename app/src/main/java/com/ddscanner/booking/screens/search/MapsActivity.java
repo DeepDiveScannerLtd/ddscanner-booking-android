@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.MapFragmentController;
 import com.ddscanner.booking.models.DiveCenterProfile;
@@ -44,6 +45,7 @@ import static java.security.AccessController.getContext;
 public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, MapFragmentController {
 
     public static void show(Context context) {
+        EventsTracker.trackMapScreenView(EventsTracker.MapScreenViewSource.SELECT_AREA_BTN);
         Intent intent = new Intent(context, MapsActivity.class);
         context.startActivity(intent);
     }
@@ -91,6 +93,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     private String lastDcId;
     @BindView(R.id.found_view)
     DiveCentersFoundView diveCentersFoundView;
+    private String lastDcName;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,6 +131,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         diveCentersFoundView.animate().translationY(-diveSpotInfoHeight);
         diveCenterInfoView.show(diveCenterProfile, marker);
         lastDcId = diveCenterProfile.getId().toString();
+        lastDcName = diveCenterProfile.getName();
     }
 
     @Override
@@ -174,12 +178,13 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
 
     @OnClick(R.id.found_view)
     public void showDcs(View view) {
+        EventsTracker.trackMapeResultViewClcked();
         ResultsActivity.show(this, mMap.getProjection().getVisibleRegion().latLngBounds);
     }
 
     @OnClick(R.id.dive_center_info_layout)
     public void showDcProfile(View view) {
-        UserProfileActivity.show(this, lastDcId, 0);
+        UserProfileActivity.show(this, lastDcId, 0, lastDcName, EventsTracker.DiveCenterProfileScreenSource.MAP);
     }
 
 }

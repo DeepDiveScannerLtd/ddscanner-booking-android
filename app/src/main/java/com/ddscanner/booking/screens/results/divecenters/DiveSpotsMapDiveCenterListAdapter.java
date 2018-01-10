@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 import com.squareup.picasso.Picasso;
@@ -75,7 +76,7 @@ public class DiveSpotsMapDiveCenterListAdapter extends RecyclerView.Adapter<Dive
 
         @Override
         public void onClick(View v) {
-            UserProfileActivity.show(context, String.valueOf(list.get(getAdapterPosition()).getId()), 0);
+            UserProfileActivity.show(context, String.valueOf(list.get(getAdapterPosition()).getId()), 0, list.get(getAdapterPosition()).getName(), EventsTracker.DiveCenterProfileScreenSource.DIVE_CENTERS_TAB);
         }
     }
 

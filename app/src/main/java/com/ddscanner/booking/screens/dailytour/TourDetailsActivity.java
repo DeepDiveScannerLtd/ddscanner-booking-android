@@ -20,6 +20,7 @@ import android.view.WindowManager;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.databinding.ActivityDailyTourDetailsBinding;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
@@ -71,6 +72,7 @@ public class TourDetailsActivity extends BaseAppCompatActivity implements Dialog
     public static void show(Context context, long productId) {
         Intent intent = new Intent(context, TourDetailsActivity.class);
         intent.putExtra(ARG_ID, productId);
+        EventsTracker.trackDailyTourDetailsScreen(productId);
         context.startActivity(intent);
     }
 
@@ -155,7 +157,7 @@ public class TourDetailsActivity extends BaseAppCompatActivity implements Dialog
     }
 
     public void showDiveCenter(View view) {
-        UserProfileActivity.show(this, binding.getViewModel().getDailyTourDetails().getDiveCenterProfile().getId().toString(), 0);
+        UserProfileActivity.show(this, binding.getViewModel().getDailyTourDetails().getDiveCenterProfile().getId().toString(), 0, binding.getViewModel().getDailyTourDetails().getDiveCenterProfile().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
     }
 
     @Override

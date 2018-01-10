@@ -11,6 +11,7 @@ import android.view.MenuItem;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.screens.results.courses.CoursesListFragment;
 import com.ddscanner.booking.screens.results.dailytours.DailyToursListFragment;
@@ -47,6 +48,7 @@ public class ResultsActivity extends BaseAppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_results);
         ButterKnife.bind(this);
+        EventsTracker.trackDailyToursTabView();
         latLngBounds = (LatLngBounds) getIntent().getParcelableExtra(ARG_BOUNDS);
         DDScannerBookingApplication.getInstance().getDdScannerRestClient().setLatLngBounds(latLngBounds);
         resultsPagerAdapter = new ResultsPagerAdapter(getSupportFragmentManager());
@@ -69,6 +71,35 @@ public class ResultsActivity extends BaseAppCompatActivity {
         tabLayout.getTabAt(0).setText("Daily Tours");
         tabLayout.getTabAt(1).setText("Fun Diving");
         tabLayout.getTabAt(2).setText("Courses");
+        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                switch (position) {
+                    case 0:
+                        EventsTracker.trackDailyToursTabView();
+                        break;
+                    case 1:
+                        EventsTracker.trackFunDivesTabView();
+                        break;
+                    case 2:
+                        EventsTracker.trackCoursesTabView();
+                        break;
+                    case 3:
+                        EventsTracker.trackDiveCentersTabView();
+                        break;
+                }
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
 
     @Override

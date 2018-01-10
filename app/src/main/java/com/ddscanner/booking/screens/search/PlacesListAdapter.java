@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.interfaces.ListItemClickListener;
 import com.ddscanner.booking.models.SearchFeature;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -65,6 +66,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
 
         @Override
         public void onClick(View v) {
+            EventsTracker.trackSearchPlaceChosen();
             listItemClickListener.onItemClick(places.get(getAdapterPosition()));
 //            DDScannerApplication.bus.post(new LocationChosedEvent(places.get(getAdapterPosition())));
         }
