@@ -54,7 +54,7 @@ public class ResultsActivity extends BaseAppCompatActivity {
         DDScannerBookingApplication.getInstance().getDdScannerRestClient().setLatLngBounds(latLngBounds);
         resultsPagerAdapter = new ResultsPagerAdapter(getSupportFragmentManager());
         setupViewPager();
-        setupToolbar("Result", R.id.toolbar, true);
+        setupToolbar("Search results", R.id.toolbar, true);
     }
 
     private void setupViewPager() {
@@ -63,6 +63,7 @@ public class ResultsActivity extends BaseAppCompatActivity {
         resultsPagerAdapter.addFragment(coursesListFragment, "Courses");
         resultsPagerAdapter.addFragment(diveCentersListFragment, "Dive Centers");
         viewPager.setAdapter(resultsPagerAdapter);
+        viewPager.setOffscreenPageLimit(4);
         tabLayout.setupWithViewPager(viewPager);
         setupTabLayout();
     }

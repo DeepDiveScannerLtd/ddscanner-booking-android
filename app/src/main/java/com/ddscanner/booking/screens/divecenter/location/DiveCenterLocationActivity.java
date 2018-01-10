@@ -47,7 +47,7 @@ public class DiveCenterLocationActivity extends BaseAppCompatActivity {
 
         mapFragment.getMapAsync(googleMap -> {
             googleMap.addMarker(new MarkerOptions().icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_dc)).position(latLng));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 7.0f));
+            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng, 10.0f));
         });
 
     }

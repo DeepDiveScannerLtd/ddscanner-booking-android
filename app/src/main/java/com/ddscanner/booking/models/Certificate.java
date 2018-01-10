@@ -22,6 +22,13 @@ public class Certificate implements Serializable {
     @SerializedName("price_from")
     private String priceFrom;
 
+    public String getStringFromPrice() {
+        if (priceFrom == null) {
+            return "";
+        }
+        return "From " + priceFrom;
+     }
+
     public String getPriceFrom() {
         return priceFrom;
     }

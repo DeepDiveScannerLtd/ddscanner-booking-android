@@ -14,5 +14,6 @@ public interface MapFragmentController {
     void hideDiveCenterInfo();
     void showProgressView();
     void hideProgressView();
+    void updateVisibleCount(int count);
 
 }

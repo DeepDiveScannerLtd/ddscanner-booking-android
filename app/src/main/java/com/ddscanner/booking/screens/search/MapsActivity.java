@@ -55,12 +55,6 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         public void onSuccess(ArrayList<DiveCenterProfile> result) {
             diveSpotsClusterManagerNew.updateDiveSpots(result);
             hideProgressView();
-            if (result.size() > 0) {
-                diveCentersFoundView.setDiveCentersCount(result.size());
-                diveCentersFoundView.setVisibility(View.VISIBLE);
-            } else {
-                diveCentersFoundView.setVisibility(View.GONE);
-            }
         }
 
         @Override
@@ -100,7 +94,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
-        setupToolbar("Map", R.id.toolbar, true);
+        setupToolbar("Select area", R.id.toolbar, true);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
         diveSpotInfoHeight = Math.round(Helpers.convertDpToPixel(93, this));
@@ -187,4 +181,13 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         UserProfileActivity.show(this, lastDcId, 0, lastDcName, EventsTracker.DiveCenterProfileScreenSource.MAP);
     }
 
+    @Override
+    public void updateVisibleCount(int count) {
+        if (count == 0) {
+            diveCentersFoundView.setVisibility(View.GONE);
+        } else {
+            diveCentersFoundView.setVisibility(View.VISIBLE);
+            diveCentersFoundView.setDiveCentersCount(count);
+        }
+    }
 }

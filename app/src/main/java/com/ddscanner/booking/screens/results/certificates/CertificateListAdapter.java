@@ -27,13 +27,6 @@ public class CertificateListAdapter extends RecyclerView.Adapter<CertificateList
         notifyDataSetChanged();
     }
 
-    public void addCourses(ArrayList<Certificate> certificates) {
-        for (Certificate Certificate : certificates) {
-            this.certificates.add(Certificate);
-            notifyItemInserted(this.certificates.size() - 1);
-        }
-    }
-
     @Override
     public CertificateItemViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         ItemListCertificateBinding itemListCertificateBinding = ItemListCertificateBinding.inflate(LayoutInflater.from(parent.getContext()), parent, false);

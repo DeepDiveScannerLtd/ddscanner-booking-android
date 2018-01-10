@@ -43,6 +43,7 @@ public class BaseListFragment extends Fragment {
     }
 
     public void showNoDataView(String text) {
+        progressView.setVisibility(View.GONE);
         list.setVisibility(View.GONE);
         noDataView.setVisibility(View.VISIBLE);
         noDataView.setMessageText(text);

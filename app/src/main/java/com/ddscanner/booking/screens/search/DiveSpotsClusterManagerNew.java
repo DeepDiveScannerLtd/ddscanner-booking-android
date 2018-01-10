@@ -120,6 +120,7 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
     @Override
     public void onCameraChange(CameraPosition cameraPosition) {
         super.onCameraChange(cameraPosition);
+        changeVisibleCount();
         if (lastZoom != googleMap.getCameraPosition().zoom && lastClickedMarker != null) {
             lastZoom = googleMap.getCameraPosition().zoom;
 //            DDScannerApplication.bus.post(new OnMapClickEvent(null, false));
@@ -167,8 +168,8 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
     @Override
     public boolean onClusterClick(Cluster<DiveCenterProfile> cluster) {
         LatLngBounds.Builder builder = new LatLngBounds.Builder();
-        for (DiveCenterProfile baseMapEntity : cluster.getItems()) {
-            builder.include(baseMapEntity.getPosition());
+        for (DiveCenterProfile DiveCenterProfile : cluster.getItems()) {
+            builder.include(DiveCenterProfile.getPosition());
         }
         LatLngBounds bounds = builder.build();
         CameraUpdate cu = CameraUpdateFactory.newLatLngBounds(bounds, 0);
@@ -186,30 +187,31 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
         deletedDiveSpotShorts.addAll(this.diveSpotShorts);
         deletedDiveSpotShorts.removeAll(diveSpotShorts);
         Log.i(TAG, "removing " + deletedDiveSpotShorts.size() + " dive spots");
-        for (DiveCenterProfile baseMapEntity : deletedDiveSpotShorts) {
-            removeDiveSpot(baseMapEntity);
+        for (DiveCenterProfile DiveCenterProfile : deletedDiveSpotShorts) {
+            removeDiveSpot(DiveCenterProfile);
         }
         Log.i(TAG, "adding " + newDiveSpotShorts.size() + " dive spots");
-        for (DiveCenterProfile baseMapEntity : newDiveSpotShorts) {
-            addNewItem(baseMapEntity);
+        for (DiveCenterProfile DiveCenterProfile : newDiveSpotShorts) {
+            addNewItem(DiveCenterProfile);
         }
         cluster();
+        changeVisibleCount();
     }
 
-    private void addNewItem(DiveCenterProfile baseMapEntity) {
-        if (baseMapEntity.getPosition() == null) {
-            Log.i(TAG, "addNewItem baseMapEntity.getPosition() == null");
+    private void addNewItem(DiveCenterProfile DiveCenterProfile) {
+        if (DiveCenterProfile.getPosition() == null) {
+            Log.i(TAG, "addNewItem DiveCenterProfile.getPosition() == null");
         } else {
-            addItem(baseMapEntity);
-            itemsMap.put(baseMapEntity.getPosition(), baseMapEntity);
-            diveSpotShorts.add(baseMapEntity);
+            addItem(DiveCenterProfile);
+            itemsMap.put(DiveCenterProfile.getPosition(), DiveCenterProfile);
+            diveSpotShorts.add(DiveCenterProfile);
         }
     }
 
-    private void removeDiveSpot(DiveCenterProfile baseMapEntity) {
-        removeItem(baseMapEntity);
-        itemsMap.remove(baseMapEntity.getPosition());
-        diveSpotShorts.remove(baseMapEntity);
+    private void removeDiveSpot(DiveCenterProfile DiveCenterProfile) {
+        removeItem(DiveCenterProfile);
+        itemsMap.remove(DiveCenterProfile.getPosition());
+        diveSpotShorts.remove(DiveCenterProfile);
     }
 
     private boolean checkArea(LatLng southWest, LatLng northEast) {
@@ -228,6 +230,18 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
             sendRequest(northeast, southwest);
         }
     }
+
+    public void changeVisibleCount() {
+        int count = 0;
+        ArrayList<DiveCenterProfile> newList = new ArrayList<>();
+        for (DiveCenterProfile DiveCenterProfile : allDiveSpots) {
+            if (isSpotVisibleOnScreen(DiveCenterProfile.getPosition().latitude, DiveCenterProfile.getPosition().longitude)) {
+                count += 1;
+            }
+        }
+        diveSpotMapFragmentController.updateVisibleCount(count);
+    }
+
 
     private class IconRenderer extends DefaultClusterRenderer<DiveCenterProfile> {
 
@@ -263,8 +277,8 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
         }
 
         @Override
-        protected void onClusterItemRendered(DiveCenterProfile baseMapEntity, final Marker marker) {
-            super.onClusterItemRendered(baseMapEntity, marker);
+        protected void onClusterItemRendered(DiveCenterProfile DiveCenterProfile, final Marker marker) {
+            super.onClusterItemRendered(DiveCenterProfile, marker);
             try {
                 marker.setIcon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_dc));
             } catch (Exception e) {
