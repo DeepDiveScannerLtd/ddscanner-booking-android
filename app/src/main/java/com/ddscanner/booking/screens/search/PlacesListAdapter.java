@@ -19,16 +19,16 @@ import java.util.ArrayList;
 
 public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.PlacesListViewHolder>{
 
-    private ArrayList<SearchFeature> places = new ArrayList<>();
+    private ArrayList<String> places = new ArrayList<>();
     private GoogleApiClient googleApiClient;
-    private ListItemClickListener<SearchFeature> listItemClickListener;
+    private ListItemClickListener<String> listItemClickListener;
 
-    public PlacesListAdapter(GoogleApiClient googleApiClient, ListItemClickListener<SearchFeature> listItemClickListener) {
+    public PlacesListAdapter(GoogleApiClient googleApiClient, ListItemClickListener<String> listItemClickListener) {
         this.googleApiClient = googleApiClient;
         this.listItemClickListener = listItemClickListener;
     }
 
-    public void setPlaces(ArrayList<SearchFeature> places) {
+    public void setPlaces(ArrayList<String> places) {
         this.places = places;
         notifyDataSetChanged();
     }
@@ -41,7 +41,17 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
 
     @Override
     public void onBindViewHolder(final PlacesListViewHolder holder, int position) {
-        holder.placeName.setText(places.get(position).getPlaceName());
+        Places.GeoDataApi.getPlaceById(googleApiClient, places.get(position)).setResultCallback(places -> {
+            if (places.getStatus().isSuccess()) {
+                try {
+                    Place place = places.get(0);
+                    holder.placeName.setText(place.getName());
+                } catch (IllegalStateException ignored) {
+
+                }
+            }
+            places.release();
+        });
     }
 
     @Override

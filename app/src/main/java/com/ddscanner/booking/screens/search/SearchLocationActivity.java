@@ -29,7 +29,10 @@ import com.ddscanner.booking.rest.MapboxRestClient;
 import com.ddscanner.booking.screens.results.ResultsActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.location.places.AutocompletePrediction;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.PlaceBuffer;
 import com.google.android.gms.location.places.Places;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
@@ -46,7 +49,7 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
     DDScannerRestClient.ResultListener<FeatureSearchResponseEntity> resultListener = new DDScannerRestClient.ResultListener<FeatureSearchResponseEntity>() {
         @Override
         public void onSuccess(FeatureSearchResponseEntity result) {
-            placesListAdapter.setPlaces(result.getFeatures());
+//            placesListAdapter.setPlaces(result.getFeatures());
             progressView.setVisibility(View.GONE);
             recyclerView.setVisibility(View.VISIBLE);
         }
@@ -91,10 +94,14 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
         EventsTracker.trackSearchScreenView();
         ButterKnife.bind(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        placesListAdapter = new PlacesListAdapter(googleApiClient, item -> {
-            ResultsActivity.show(this, item.getBounds());});
+        placesListAdapter = new PlacesListAdapter(googleApiClient, this::locationChosed);
         recyclerView.setAdapter(placesListAdapter);
         setSupportActionBar(toolbar);
+        googleApiClient = new GoogleApiClient
+                .Builder(this)
+                .addApi(Places.GEO_DATA_API)
+                .addApi(Places.PLACE_DETECTION_API)
+                .build();
         try {
             getSupportActionBar().setTitle("Select location");
         } catch (NullPointerException ignored) {
@@ -122,9 +129,19 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
         handler.removeCallbacks(sendingSearchRequestRunnable);
         sendingSearchRequestRunnable = () -> {
             if (!newText.isEmpty()) {
-                recyclerView.setVisibility(View.GONE);
                 progressView.setVisibility(View.VISIBLE);
-                mapboxRestClient.getArrayListOfFeatures(resultListener, newText);
+                    placeList = new ArrayList<String>();
+                    Places.GeoDataApi.getAutocompletePredictions(googleApiClient, newText, new LatLngBounds(new LatLng(-180, -180), new LatLng(180, 180)), null).setResultCallback(
+                            autocompletePredictions -> {
+                                if (autocompletePredictions.getStatus().isSuccess()) {
+                                    for (AutocompletePrediction prediction : autocompletePredictions) {
+                                        placeList.add(prediction.getPlaceId());
+
+                                    }
+                                    placesListAdapter.setPlaces(placeList);
+                                }
+                            });
+
             }
         };
         handler.postDelayed(sendingSearchRequestRunnable, 630);
@@ -133,6 +150,13 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
     @Override
     protected void onResume() {
         super.onResume();
+        if (googleApiClient == null) {
+            googleApiClient = new GoogleApiClient
+                    .Builder(this)
+                    .addApi(Places.GEO_DATA_API)
+                    .addApi(Places.PLACE_DETECTION_API)
+                    .build();
+        }
     }
 
     @Override
@@ -153,6 +177,26 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
     @OnClick(R.id.select_area_layout)
     public void onMapButtonClicked(View view) {
         MapsActivity.show(this);
+    }
+
+    private void locationChosed(String id) {
+        Places.GeoDataApi.getPlaceById(googleApiClient, id).setResultCallback(places -> {
+            if (places.getStatus().isSuccess()) {
+                try {
+                    Place place = places.get(0);
+                    if (place.getViewport() != null) {
+                        ResultsActivity.show(SearchLocationActivity.this, place.getViewport());
+                    } else {
+                        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(place.getLatLng().latitude - 0.2, place.getLatLng().longitude - 0.2), new LatLng(place.getLatLng().latitude + 0.2, place.getLatLng().longitude + 0.2) );
+                        ResultsActivity.show(SearchLocationActivity.this, latLngBounds);
+                    }
+                    // placeList.add(place);
+                } catch (IllegalStateException ignored) {
+
+                }
+            }
+            places.release();
+        });
     }
 
 }
