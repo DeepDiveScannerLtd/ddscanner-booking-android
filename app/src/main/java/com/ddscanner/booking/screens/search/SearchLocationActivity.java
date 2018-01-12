@@ -30,6 +30,7 @@ import com.ddscanner.booking.screens.results.ResultsActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
+import com.google.android.gms.location.places.AutocompleteFilter;
 import com.google.android.gms.location.places.AutocompletePrediction;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.PlaceBuffer;
@@ -139,7 +140,10 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
                 progressView.setVisibility(View.VISIBLE);
                     placeList = new ArrayList<>();
                     Log.i("SearchLocationActivity", "Places.GeoDataApi.getAutocompletePredictions");
-                    Places.GeoDataApi.getAutocompletePredictions(googleApiClient, newText, new LatLngBounds(new LatLng(-180, -180), new LatLng(180, 180)), null).setResultCallback(
+                AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                        .setTypeFilter(AutocompleteFilter.TYPE_FILTER_GEOCODE)
+                        .build();
+                Places.GeoDataApi.getAutocompletePredictions(googleApiClient, newText, new LatLngBounds(new LatLng(-180, -180), new LatLng(180, 180)), typeFilter).setResultCallback(
                             autocompletePredictions -> {
                                 Log.i("SearchLocationActivity", "autocompletePredictions callback, getStatus = " + autocompletePredictions.getStatus().isSuccess());
                                 if (autocompletePredictions.getStatus().isSuccess()) {
@@ -194,12 +198,12 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
             if (places.getStatus().isSuccess()) {
                 try {
                     Place place = places.get(0);
-                    if (place.getViewport() != null) {
-                        ResultsActivity.show(SearchLocationActivity.this, place.getViewport());
-                    } else {
-                        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(place.getLatLng().latitude - 0.2, place.getLatLng().longitude - 0.2), new LatLng(place.getLatLng().latitude + 0.2, place.getLatLng().longitude + 0.2) );
+//                    if (place.getViewport() != null) {
+//                        ResultsActivity.show(SearchLocationActivity.this, place.getViewport());
+//                    } else {
+                        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(place.getLatLng().latitude - 5, place.getLatLng().longitude - 5), new LatLng(place.getLatLng().latitude + 5, place.getLatLng().longitude + 5) );
                         ResultsActivity.show(SearchLocationActivity.this, latLngBounds);
-                    }
+//                    }
                     // placeList.add(place);
                 } catch (IllegalStateException ignored) {
 
