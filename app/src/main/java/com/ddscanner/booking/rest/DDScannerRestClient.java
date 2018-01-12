@@ -11,6 +11,7 @@ import com.ddscanner.booking.models.DailyTourWithDc;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.models.DiveCentersResponseEntity;
 import com.ddscanner.booking.models.FunDiveDetails;
+import com.ddscanner.booking.models.FunDiveWithDc;
 import com.ddscanner.booking.models.requests.DiveCenterRequestBookingRequest;
 import com.ddscanner.booking.models.requests.DiveSpotsRequestMap;
 import com.ddscanner.booking.models.requests.PaginationListRequest;
@@ -208,19 +209,19 @@ public class DDScannerRestClient {
         });
     }
 
-    public void getFunDives(ResultListener<ArrayList<FunDiveDetails>> resultListener, int page) {
+    public void getFunDives(ResultListener<ArrayList<FunDiveWithDc>> resultListener, int page) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();
             return;
         }
 
         Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getunDives(getPaginationListRequest(page));
-        call.enqueue(new ResponseEntityCallback<ArrayList<FunDiveDetails>>(gson, resultListener) {
+        call.enqueue(new ResponseEntityCallback<ArrayList<FunDiveWithDc>>(gson, resultListener) {
 
             @Override
-            void handleResponseString(ResultListener<ArrayList<FunDiveDetails>> resultListener, String responseString) throws JSONException {
-                Type listType = new TypeToken<ArrayList<FunDiveDetails>>(){}.getType();
-                ArrayList<FunDiveDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+            void handleResponseString(ResultListener<ArrayList<FunDiveWithDc>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<FunDiveWithDc>>(){}.getType();
+                ArrayList<FunDiveWithDc> dailyTourDetails = gson.fromJson(responseString, listType);
                 resultListener.onSuccess(dailyTourDetails);
             }
         });

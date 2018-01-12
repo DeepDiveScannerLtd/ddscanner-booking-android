@@ -14,7 +14,7 @@ import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
-import com.ddscanner.booking.models.FunDiveDetails;
+import com.ddscanner.booking.models.FunDiveWithDc;
 import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
 
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 
 public class FunDivesListFragment extends BaseListFragment implements RecyclerViewScrolledListener {
 
-    private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
+    private DDScannerRestClient.ResultListener<ArrayList<FunDiveWithDc>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveWithDc>>() {
         @Override
-        public void onSuccess(ArrayList<FunDiveDetails> result) {
+        public void onSuccess(ArrayList<FunDiveWithDc> result) {
             hideProgressView();
             if (result.size() > 0) {
                 showRecyclerView();
@@ -50,9 +50,9 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
         }
     };
 
-    private DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveDetails>>() {
+    private DDScannerRestClient.ResultListener<ArrayList<FunDiveWithDc>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<FunDiveWithDc>>() {
         @Override
-        public void onSuccess(ArrayList<FunDiveDetails> result) {
+        public void onSuccess(ArrayList<FunDiveWithDc> result) {
             funDivesListAdapter.addFunDives(result);
             isLoading = false;
         }
@@ -73,7 +73,7 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
         }
     };
 
-    private FunDivesListAdapter funDivesListAdapter;
+    private FunDivesWithDcListAdapter funDivesListAdapter;
     private int currentPage;
 
 
@@ -87,7 +87,7 @@ public class FunDivesListFragment extends BaseListFragment implements RecyclerVi
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);
         currentPage = 1;
-        funDivesListAdapter = new FunDivesListAdapter(item -> FunDiveDetailsActivity.show(getContext(), item.getId()));
+        funDivesListAdapter = new FunDivesWithDcListAdapter(item -> FunDiveDetailsActivity.show(getContext(), item.getId()));
         list.setAdapter(funDivesListAdapter);
         setRecyclerViewScrolledListener(this);
         DDScannerBookingApplication.getInstance().getDdScannerRestClient().getFunDives(resultListener, currentPage);
