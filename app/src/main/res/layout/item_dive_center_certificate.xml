@@ -1,203 +1,218 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
+
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="viewModel"
-            type="com.ddscanner.booking.screens.certificate.courses.CertificateCourseItemViewModel"/>
+            type="com.ddscanner.booking.screens.certificate.courses.CertificateCourseItemViewModel" />
     </data>
+
     <android.support.v7.widget.CardView
-        android:layout_marginVertical="6dp"
-        android:layout_marginHorizontal="12dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-<com.ddscanner.booking.views.ContentBlockLinearLayout android:background="@color/white"
-    android:orientation="vertical"
-    android:foreground="?android:attr/selectableItemBackground"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    app:top_divider="false"
-    app:bottom_divider="false">
-    <LinearLayout
-        android:paddingHorizontal="18dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:paddingBottom="12dp">
-        <RelativeLayout
-            android:layout_marginTop="16dp"
+        android:layout_marginHorizontal="12dp"
+        android:layout_marginVertical="6dp">
+
+        <com.ddscanner.booking.views.ContentBlockLinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <ImageView
-                android:layout_centerVertical="true"
-                android:id="@+id/dc_logo"
-                android:layout_width="37dp"
-                android:layout_height="37dp"
-                tools:src="@drawable/produc_def"
-                app:loadLogoFrom="@{viewModel.courseDetails.diveCenterProfile.photo}"/>
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:orientation="vertical"
+            app:bottom_divider="false"
+            app:top_divider="false">
+
             <LinearLayout
-                android:layout_centerVertical="true"
-                android:layout_marginLeft="15dp"
-                android:layout_toRightOf="@+id/dc_logo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                >
-                <TextView
-                    android:id="@+id/dc_name"
-                    android:lines="1"
-                    android:ellipsize="end"
-                    android:layout_width="wrap_content"
+                android:paddingBottom="12dp"
+                android:paddingHorizontal="18dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="16sp"
-                    android:fontFamily="sans-serif"
-                    android:textStyle="normal"
-                    android:textColor="#de000000"
-                    tools:text="Sharms Divers"
-                    android:text="@{viewModel.courseDetails.diveCenterProfile.name}"
-                    />
-                <TextView
-                    android:layout_width="wrap_content"
+                    android:layout_marginTop="16dp">
+
+                    <ImageView
+                        android:id="@+id/dc_logo"
+                        android:layout_width="37dp"
+                        android:layout_height="37dp"
+                        android:layout_centerVertical="true"
+                        app:loadLogoFrom="@{viewModel.courseDetails.diveCenterProfile.photo}"
+                        tools:src="@drawable/produc_def" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="15dp"
+                        android:layout_toRightOf="@+id/dc_logo"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/dc_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:fontFamily="sans-serif"
+                            android:lines="1"
+                            android:text="@{viewModel.courseDetails.diveCenterProfile.name}"
+                            android:textColor="#de000000"
+                            android:textSize="16sp"
+                            android:textStyle="normal"
+                            tools:text="Sharms Divers" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="sans-serif"
+                            android:letterSpacing="0.02"
+                            android:lineSpacingExtra="0.5sp"
+                            android:text="Dive center"
+                            android:textColor="#616161"
+                            android:textSize="13sp"
+                            android:textStyle="normal" />
+                    </LinearLayout>
+                </RelativeLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="13sp"
-                    android:fontFamily="sans-serif"
-                    android:textStyle="normal"
-                    android:textColor="#616161"
-                    android:letterSpacing="0.02"
-                    android:lineSpacingExtra="0.5sp"
-                    android:text="Dive center"
-                    />
+                    android:layout_marginTop="12dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_pr_location" />
+
+                    <TextView
+                        android:id="@+id/dc_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:ellipsize="end"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="6sp"
+                        android:lines="1"
+                        android:text="@{viewModel.courseDetails.diveCenterProfile.addresses.get(0).name}"
+                        android:textColor="#616161"
+                        android:textSize="13sp"
+                        android:textStyle="normal"
+                        tools:text="43/66 M.5 T. Rawai, A. Muang, Phuket 83130 (500m)" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/languages_block"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="12dp"
+                        android:layout_height="12dp"
+                        android:src="@drawable/ic_pr_lang" />
+
+                    <TextView
+                        android:id="@+id/dc_languages"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="8dp"
+                        android:fontFamily="sans-serif"
+                        android:lineSpacingExtra="6sp"
+                        android:text="@{viewModel.courseDetails.diveCenterProfile.languagesString}"
+                        android:textColor="#616161"
+                        android:textSize="13sp"
+                        android:textStyle="normal"
+                        tools:text="43/66 M.5 T. Rawai, A. Muang, Phuket 83130 (500m)" />
+                </LinearLayout>
             </LinearLayout>
-        </RelativeLayout>
-        <LinearLayout
-            android:layout_marginTop="12dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_pr_location" />
-            <TextView
-                android:id="@+id/dc_address"
-                android:lines="1"
-                android:ellipsize="end"
-                android:layout_marginLeft="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#616161"
-                android:lineSpacingExtra="6sp"
-                android:text="@{viewModel.courseDetails.diveCenterProfile.addresses.get(0).name}"
-                tools:text="43/66 M.5 T. Rawai, A. Muang, Phuket 83130 (500m)"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/languages_block"
-            android:layout_marginTop="3dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
-            <ImageView
-                android:layout_width="12dp"
-                android:layout_height="12dp"
-                android:src="@drawable/ic_pr_lang" />
-            <TextView
-                android:id="@+id/dc_languages"
-                android:layout_marginLeft="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="13sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="normal"
-                android:textColor="#616161"
-                android:lineSpacingExtra="6sp"
-                android:text="@{viewModel.courseDetails.diveCenterProfile.languagesString}"
-                tools:text="43/66 M.5 T. Rawai, A. Muang, Phuket 83130 (500m)"
-                />
-        </LinearLayout>
-    </LinearLayout>
-    <View
-        android:id="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/divider_color" />
-    <android.support.percent.PercentRelativeLayout
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:layout_below="@+id/divider"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
-        <LinearLayout
-            android:id="@+id/price_layout"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <TextView
-                android:visibility="@{viewModel.courseDetails.price == null ? View.GONE : View.VISIBLE}"
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center"
-                android:background="@drawable/price_background"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+            <View
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/divider_color" />
+
+            <android.support.percent.PercentRelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:letterSpacing="0.02"
-                tools:text="2500 B"
-                android:text="@{viewModel.courseDetails.price}"
-                />
-        </LinearLayout>
-        <LinearLayout
-            android:id="@+id/inquiry_btn"
-        android:layout_toRightOf="@+id/price_layout"
-            app:layout_widthPercent="50%"
-            android:layout_height="wrap_content">
+                android:layout_below="@+id/divider"
+                android:layout_marginBottom="5dp"
+                android:layout_marginTop="10dp">
+
+                <LinearLayout
+                    android:id="@+id/price_layout"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    app:layout_widthPercent="50%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/price_background"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:letterSpacing="0.02"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@{viewModel.courseDetails.price}"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:visibility="@{viewModel.courseDetails.price == null ? View.GONE : View.VISIBLE}"
+                        tools:text="2500 B" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/inquiry_btn"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@+id/price_layout"
+                    app:layout_widthPercent="50%">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:background="@drawable/price_background"
+                        android:fontFamily="sans-serif"
+                        android:gravity="center"
+                        android:letterSpacing="0.02"
+                        android:paddingBottom="5dp"
+                        android:paddingTop="5dp"
+                        android:text="@string/book_now_btn"
+                        android:textColor="#212121"
+                        android:textSize="16sp"
+                        android:textStyle="bold" />
+                </LinearLayout>
+
+            </android.support.percent.PercentRelativeLayout>
+
             <TextView
-                android:layout_marginLeft="16dp"
-                android:layout_marginRight="16dp"
-                android:gravity="center"
-                android:background="@drawable/price_background"
-                android:paddingTop="5dp"
-                android:paddingBottom="5dp"
+                android:id="@+id/deatils_btn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textSize="16sp"
-                android:fontFamily="sans-serif"
-                android:textStyle="bold"
-                android:textColor="#212121"
-                android:letterSpacing="0.02"
-                android:text="@string/book_now_btn"
-                />
-        </LinearLayout>
-
-    </android.support.percent.PercentRelativeLayout>
-
-    <TextView
-        android:id="@+id/deatils_btn"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="14sp"
-        android:paddingTop="10dp"
-        android:paddingBottom="10dp"
-        android:gravity="center"
-        android:fontFamily="sans-serif-medium"
-        android:textStyle="normal"
-        android:textColor="#3b528b"
-        android:lineSpacingExtra="7sp"
-        android:text="Course details"
-        />
-</com.ddscanner.booking.views.ContentBlockLinearLayout>
+                android:fontFamily="sans-serif-medium"
+                android:gravity="center"
+                android:lineSpacingExtra="7sp"
+                android:paddingBottom="10dp"
+                android:paddingTop="10dp"
+                android:text="Course details"
+                android:textColor="#3b528b"
+                android:textSize="14sp"
+                android:textStyle="normal" />
+        </com.ddscanner.booking.views.ContentBlockLinearLayout>
     </android.support.v7.widget.CardView>
 </layout>
