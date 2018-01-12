@@ -7,6 +7,7 @@ import com.ddscanner.booking.models.Certificate;
 import com.ddscanner.booking.models.CourseDetails;
 import com.ddscanner.booking.models.DailyTour;
 import com.ddscanner.booking.models.DailyTourDetails;
+import com.ddscanner.booking.models.DailyTourWithDc;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.models.DiveCentersResponseEntity;
 import com.ddscanner.booking.models.FunDiveDetails;
@@ -171,19 +172,19 @@ public class DDScannerRestClient {
         });
     }
 
-    public void getDailyTours(ResultListener<ArrayList<DailyTourDetails>> resultListener, int page) {
+    public void getDailyTours(ResultListener<ArrayList<DailyTourWithDc>> resultListener, int page) {
         if (!Helpers.hasConnection(DDScannerBookingApplication.getInstance())) {
             resultListener.onInternetConnectionClosed();
             return;
         }
 
         Call<ResponseBody> call = RestClient.getDdscannerServiceInstance().getDailyTours(getPaginationListRequest(page));
-        call.enqueue(new ResponseEntityCallback<ArrayList<DailyTourDetails>>(gson, resultListener) {
+        call.enqueue(new ResponseEntityCallback<ArrayList<DailyTourWithDc>>(gson, resultListener) {
 
             @Override
-            void handleResponseString(ResultListener<ArrayList<DailyTourDetails>> resultListener, String responseString) throws JSONException {
-                Type listType = new TypeToken<ArrayList<DailyTourDetails>>(){}.getType();
-                ArrayList<DailyTourDetails> dailyTourDetails = gson.fromJson(responseString, listType);
+            void handleResponseString(ResultListener<ArrayList<DailyTourWithDc>> resultListener, String responseString) throws JSONException {
+                Type listType = new TypeToken<ArrayList<DailyTourWithDc>>(){}.getType();
+                ArrayList<DailyTourWithDc> dailyTourDetails = gson.fromJson(responseString, listType);
                 resultListener.onSuccess(dailyTourDetails);
             }
         });

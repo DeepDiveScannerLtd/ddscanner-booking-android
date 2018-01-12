@@ -11,7 +11,7 @@ import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.base.BaseListFragment;
 import com.ddscanner.booking.interfaces.RecyclerViewScrolledListener;
-import com.ddscanner.booking.models.DailyTourDetails;
+import com.ddscanner.booking.models.DailyTourWithDc;
 import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.ddscanner.booking.screens.dailytour.TourDetailsActivity;
 
@@ -21,9 +21,9 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
 
     private int currentPage;
 
-    private DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>>() {
+    private DDScannerRestClient.ResultListener<ArrayList<DailyTourWithDc>> resultListener = new DDScannerRestClient.ResultListener<ArrayList<DailyTourWithDc>>() {
         @Override
-        public void onSuccess(ArrayList<DailyTourDetails> result) {
+        public void onSuccess(ArrayList<DailyTourWithDc> result) {
             hideProgressView();
             if (result.size() < 1) {
                 showNoDataView(getString(R.string.there_are_no_daily_tours));
@@ -50,9 +50,9 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
         }
     };
 
-    private DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<DailyTourDetails>>() {
+    private DDScannerRestClient.ResultListener<ArrayList<DailyTourWithDc>> paginationResultListener = new DDScannerRestClient.ResultListener<ArrayList<DailyTourWithDc>>() {
         @Override
-        public void onSuccess(ArrayList<DailyTourDetails> result) {
+        public void onSuccess(ArrayList<DailyTourWithDc> result) {
             dailyToursListAdapter.addDailyTours(result);
             isLoading = false;
         }
@@ -73,7 +73,7 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
         }
     };
 
-    private DailyToursListAdapter dailyToursListAdapter;
+    private DailyToursWithDcListAdapter dailyToursListAdapter;
 
     @Nullable
     @Override
@@ -85,7 +85,7 @@ public class DailyToursListFragment extends BaseListFragment implements Recycler
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);
         currentPage = 1;
-        dailyToursListAdapter = new DailyToursListAdapter(item -> {
+        dailyToursListAdapter = new DailyToursWithDcListAdapter(item -> {
             TourDetailsActivity.show(getContext(), item.getId());});
         list.setAdapter(dailyToursListAdapter);
         setRecyclerViewScrolledListener(this);
