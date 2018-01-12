@@ -88,20 +88,27 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
     EditText searchInput;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        googleApiClient.connect();
+    }
+
+    @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_location);
         EventsTracker.trackSearchScreenView();
         ButterKnife.bind(this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        placesListAdapter = new PlacesListAdapter(googleApiClient, this::locationChosed);
-        recyclerView.setAdapter(placesListAdapter);
         setSupportActionBar(toolbar);
         googleApiClient = new GoogleApiClient
                 .Builder(this)
                 .addApi(Places.GEO_DATA_API)
                 .addApi(Places.PLACE_DETECTION_API)
                 .build();
+        placesListAdapter = new PlacesListAdapter(googleApiClient, this::locationChosed);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(placesListAdapter);
         try {
             getSupportActionBar().setTitle("Select location");
         } catch (NullPointerException ignored) {
@@ -130,9 +137,11 @@ public class SearchLocationActivity extends BaseAppCompatActivity implements Goo
         sendingSearchRequestRunnable = () -> {
             if (!newText.isEmpty()) {
                 progressView.setVisibility(View.VISIBLE);
-                    placeList = new ArrayList<String>();
+                    placeList = new ArrayList<>();
+                    Log.i("SearchLocationActivity", "Places.GeoDataApi.getAutocompletePredictions");
                     Places.GeoDataApi.getAutocompletePredictions(googleApiClient, newText, new LatLngBounds(new LatLng(-180, -180), new LatLng(180, 180)), null).setResultCallback(
                             autocompletePredictions -> {
+                                Log.i("SearchLocationActivity", "autocompletePredictions callback, getStatus = " + autocompletePredictions.getStatus().isSuccess());
                                 if (autocompletePredictions.getStatus().isSuccess()) {
                                     for (AutocompletePrediction prediction : autocompletePredictions) {
                                         placeList.add(prediction.getPlaceId());
