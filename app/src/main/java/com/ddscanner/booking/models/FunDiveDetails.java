@@ -20,7 +20,7 @@ public class FunDiveDetails extends FunDive implements Serializable {
     private String initiary;
     private String requirements;
     @SerializedName("dive_center")
-    private DiveCenterProfile diveCenterProfile;
+    private DiveCenterShort diveCenterProfileShort;
 
     public String getDescription() {
         return description;
@@ -32,12 +32,12 @@ public class FunDiveDetails extends FunDive implements Serializable {
 
     private String description;
 
-    public DiveCenterProfile getDiveCenterProfile() {
-        return diveCenterProfile;
+    public DiveCenterShort getDiveCenterProfileShort() {
+        return diveCenterProfileShort;
     }
 
-    public void setDiveCenterProfile(DiveCenterProfile diveCenterProfile) {
-        this.diveCenterProfile = diveCenterProfile;
+    public void setDiveCenterProfileShort(DiveCenterShort diveCenterProfileShort) {
+        this.diveCenterProfileShort = diveCenterProfileShort;
     }
 
     public String getPriceByDivesCount() {

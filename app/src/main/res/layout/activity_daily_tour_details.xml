@@ -10,37 +10,38 @@
 
         <variable
             name="handlers"
-            type="com.ddscanner.booking.screens.dailytour.TourDetailsActivity"/>
+            type="com.ddscanner.booking.screens.dailytour.TourDetailsActivity" />
 
         <variable
             name="viewModel"
             type="com.ddscanner.booking.screens.dailytour.TourDetailsActivityViewModel" />
 
     </data>
-    <RelativeLayout
-        xmlns:tools="http://schemas.android.com/tools"
+
+    <RelativeLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+
         <android.support.design.widget.CoordinatorLayout
-            android:layout_above="@+id/button_show_divecenters"
             android:id="@+id/main_layout"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/button_show_divecenters">
 
             <android.support.design.widget.AppBarLayout
                 android:id="@+id/app_bar_layout"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
-                android:fitsSystemWindows="true">
+                android:fitsSystemWindows="true"
+                android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
                 <android.support.design.widget.CollapsingToolbarLayout
                     android:id="@+id/collapsing_toolbar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:fitsSystemWindows="true"
                     app:contentScrim="@color/primary"
-                    app:layout_scrollFlags="scroll|exitUntilCollapsed"
-                    android:fitsSystemWindows="true">
+                    app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -52,74 +53,76 @@
                             android:layout_width="match_parent"
                             android:layout_height="200dp"
                             android:fitsSystemWindows="true"
+                            android:onClick="@{handlers::showSliderActivity}"
                             android:scaleType="centerCrop"
                             android:src="@drawable/produc_def"
-                            android:onClick="@{handlers::showSliderActivity}"
-                            app:loadMainPhotoFrom="@{viewModel.dailyTourDetails.images}"
-                            />
+                            app:loadMainPhotoFrom="@{viewModel.dailyTourDetails.images}" />
+
                         <LinearLayout
-                            android:layout_alignParentBottom="true"
                             android:id="@+id/price_block"
-                            android:layout_alignParentLeft="true"
-                            android:paddingHorizontal="10dp"
-                            android:paddingVertical="5dp"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_alignParentBottom="true"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginLeft="16dp"
                             android:background="@drawable/price_background"
                             android:orientation="vertical"
-                            android:layout_marginLeft="16dp"
-                            android:layout_marginBottom="12dp">
+                            android:paddingHorizontal="10dp"
+                            android:paddingVertical="5dp">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="11sp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
                                 android:letterSpacing="0.02"
                                 android:text="From"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="11sp"
+                                android:textStyle="normal" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="16sp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="bold"
-                                android:textColor="#212121"
                                 android:letterSpacing="0.02"
                                 android:text="@{viewModel.dailyTourDetails.price}"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="16sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
+
                         <LinearLayout
-                            android:visibility="@{viewModel.dailyTourDetails.images == null ? View.GONE : View.VISIBLE}"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:layout_marginRight="16dp"
-                            android:layout_marginBottom="12dp"
                             android:layout_alignParentBottom="true"
                             android:layout_alignParentRight="true"
-                            android:gravity="center_vertical">
+                            android:layout_marginBottom="12dp"
+                            android:layout_marginRight="16dp"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="@{viewModel.dailyTourDetails.images == null ? View.GONE : View.VISIBLE}">
+
                             <ImageView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:src="@drawable/ic_ph_small"/>
+                                android:src="@drawable/ic_ph_small" />
+
                             <TextView
-                                android:text="@{viewModel.dailyTourDetails.photosCount}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="4dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:gravity="end"
+                                android:letterSpacing="0.02"
                                 android:shadowColor="#80000000"
                                 android:shadowDy="1"
                                 android:shadowRadius="6"
-                                android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
+                                android:text="@{viewModel.dailyTourDetails.photosCount}"
                                 android:textColor="#f6f6f6"
-                                android:letterSpacing="0.02"
-                                android:gravity="end"
-                                tools:text="15"
-                                />
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                tools:text="15" />
                         </LinearLayout>
                     </RelativeLayout>
 
@@ -131,6 +134,7 @@
                 </android.support.design.widget.CollapsingToolbarLayout>
 
             </android.support.design.widget.AppBarLayout>
+
             <com.ddscanner.booking.views.FlingableNestedScrollView
                 android:id="@+id/scroll_view"
                 android:layout_width="match_parent"
@@ -144,11 +148,12 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <com.rey.material.widget.ProgressView
                         android:id="@+id/progressBar"
                         android:layout_width="match_parent"
-                        android:layout_marginTop="25dp"
                         android:layout_height="25dp"
+                        android:layout_marginTop="25dp"
                         app:pv_autostart="true"
                         app:pv_circular="true"
                         app:pv_progressMode="indeterminate"
@@ -164,315 +169,316 @@
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            app:bottom_divider="true"
-                            app:top_divider="false"
-                            android:paddingTop="16dp"
                             android:orientation="vertical"
+                            android:paddingBottom="12dp"
                             android:paddingHorizontal="16dp"
-                            android:paddingBottom="12dp">
+                            android:paddingTop="16dp"
+                            app:bottom_divider="false"
+                            app:top_divider="false">
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="18sp"
                                 android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
                                 android:letterSpacing="0.01"
                                 android:text="@{viewModel.dailyTourDetails.name}"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="18sp"
+                                android:textStyle="normal" />
 
                             <TextView
-                                android:visibility="@{viewModel.dailyTourDetails.numberOfDives == null ? View.GONE : View.VISIBLE}"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#a3a3a3"
                                 android:letterSpacing="0.01"
                                 android:text="@{viewModel.dailyTourDetails.numberOfDivesString}"
-                                />
+                                android:textColor="#a3a3a3"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:visibility="@{viewModel.dailyTourDetails.numberOfDives == null ? View.GONE : View.VISIBLE}" />
 
                             <at.blogc.android.views.ExpandableTextView
-                                android:visibility="@{viewModel.dailyTourDetails.description == null ? View.GONE : View.VISIBLE}"
-                                android:layout_marginTop="8dp"
+                                android:id="@+id/description"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
-                                android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
-                                android:lineSpacingExtra="6sp"
+                                android:layout_marginTop="8dp"
                                 android:ellipsize="end"
+                                android:fontFamily="sans-serif"
+                                android:lineSpacingExtra="6sp"
                                 android:maxLines="3"
                                 android:text="@{viewModel.dailyTourDetails.description}"
-                                app:animation_duration="750"
-                                android:id="@+id/description"
-                                />
-                            <TextView
-                                android:layout_marginTop="4dp"
-                                android:onClick="@{handlers::showMoreClicked}"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
+                                android:textColor="#212121"
+                                android:textSize="15sp"
                                 android:textStyle="normal"
-                                android:textColor="#3b528b"
-                                android:lineSpacingExtra="7sp"
-                                android:text="@string/show_more"
+                                android:visibility="@{viewModel.dailyTourDetails.description == null ? View.GONE : View.VISIBLE}"
+                                app:animation_duration="750" />
+
+                            <TextView
                                 android:id="@+id/show_more"
-                                android:visibility="gone"
-                                />
-                            <RelativeLayout
-                                android:onClick="@{handlers::showDiveCenter}"
-                                android:paddingVertical="8dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:lineSpacingExtra="7sp"
+                                android:onClick="@{handlers::showMoreClicked}"
+                                android:text="@string/show_more"
+                                android:textColor="#3b528b"
+                                android:textSize="14sp"
+                                android:textStyle="normal"
+                                android:visibility="gone" />
+                        </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
+                        <com.ddscanner.booking.views.ContentBlockLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            app:bottom_divider="true"
+                            app:top_divider="true">
+
+                            <FrameLayout
                                 android:layout_width="match_parent"
-                                android:layout_height="wrap_content">
-                                <ImageView
-                                    android:id="@+id/arrow"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:src="@drawable/ic_arrow"
-                                    android:layout_alignParentRight="true"
-                                    android:layout_centerVertical="true"/>
-                                <TextView
-                                    android:layout_toLeftOf="@+id/arrow"
-                                    android:layout_width="match_parent"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="14sp"
-                                    android:fontFamily="sans-serif"
-                                    android:textStyle="normal"
-                                    android:textColor="#a3a3a3"
-                                    android:letterSpacing="0.01"
-                                    android:text="@{viewModel.dailyTourDetails.diveCenterProfile.name}"
-                                    />
-                            </RelativeLayout>
+                                android:layout_height="wrap_content"
+                                android:onClick="@{handlers::showDiveCenter}">
+
+                                <include
+                                    layout="@layout/view_dive_center_info_short"
+                                    app:diveCenter="@{viewModel.dailyTourDetails.diveCenterProfileShort}" />
+                            </FrameLayout>
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
+                            android:padding="16dp"
                             android:visibility="@{viewModel.dailyTourDetails.initiary == null ? View.GONE : View.VISIBLE}"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
                             app:bottom_divider="true"
-                            app:top_divider="false"
-                            android:orientation="vertical"
-                            android:padding="16dp">
+                            app:top_divider="true">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
                                 android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#313131"
                                 android:text="@string/initiary"
-                                />
+                                android:textColor="#313131"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
-                                android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
-                                android:lineSpacingExtra="10sp"
                                 android:layout_marginTop="4dp"
+                                android:fontFamily="sans-serif-medium"
+                                android:lineSpacingExtra="10sp"
                                 android:text="@{viewModel.dailyTourDetails.initiary}"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
-                            android:visibility="@{viewModel.dailyTourDetails.schedule == null ? View.GONE : View.VISIBLE}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            android:padding="16dp"
+                            android:visibility="@{viewModel.dailyTourDetails.schedule == null ? View.GONE : View.VISIBLE}"
                             app:bottom_divider="true"
-                            app:top_divider="false"
-                            android:padding="16dp">
+                            app:top_divider="true">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
                                 android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#313131"
                                 android:text="@string/available"
-                                />
+                                android:textColor="#313131"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+
                             <TextView
-                                android:layout_marginTop="4dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
                                 android:lineSpacingExtra="10sp"
                                 android:text="@{viewModel.dailyTourDetails.schedule}"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
-                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:padding="16dp"
-                            app:top_divider="false"
+                            android:visibility="gone"
                             app:bottom_divider="true"
-                            android:orientation="vertical">
+                            app:top_divider="true">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
                                 android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#313131"
                                 android:text="@string/meetin_point"
-                                />
+                                android:textColor="#313131"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+
                             <TextView
-                                android:layout_marginTop="4dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
                                 android:lineSpacingExtra="10sp"
                                 android:text="Bungalow Bay and Siam Bay is located in the West side of Racha Yai Island. Both hard have coral gardens and great spots for beginners."
-                                />
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:padding="16dp"
-                            app:bottom_divider="true"
-                            app:top_divider="false"
                             android:orientation="vertical"
-                            android:visibility="@{viewModel.dailyTourDetails.whatsIncluded == null ? View.GONE : View.VISIBLE}">
+                            android:padding="16dp"
+                            android:visibility="@{viewModel.dailyTourDetails.whatsIncluded == null ? View.GONE : View.VISIBLE}"
+                            app:bottom_divider="true"
+                            app:top_divider="true">
+
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="15sp"
                                 android:fontFamily="sans-serif-medium"
-                                android:textStyle="normal"
-                                android:textColor="#313131"
                                 android:text="@string/inslusions"
-                                />
+                                android:textColor="#313131"
+                                android:textSize="15sp"
+                                android:textStyle="normal" />
+
                             <TextView
-                                android:layout_marginTop="4dp"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:textSize="14sp"
+                                android:layout_marginTop="4dp"
                                 android:fontFamily="sans-serif"
-                                android:textStyle="normal"
-                                android:textColor="#212121"
                                 android:lineSpacingExtra="10sp"
                                 android:text="@{viewModel.dailyTourDetails.whatsIncluded}"
-                                />
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:padding="16dp"
                             app:bottom_divider="true"
-                            app:top_divider="false">
+                            app:top_divider="true">
+
                             <android.support.percent.PercentRelativeLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content">
+
                                 <LinearLayout
                                     android:id="@+id/diver_price"
-                                    app:layout_widthPercent="50%"
                                     android:layout_height="wrap_content"
-                                    android:orientation="vertical">
+                                    android:orientation="vertical"
+                                    app:layout_widthPercent="50%">
+
                                     <TextView
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textSize="14sp"
                                         android:fontFamily="sans-serif"
-                                        android:textStyle="normal"
-                                        android:textColor="#212121"
                                         android:text="Diver"
-                                        />
-                                    <TextView
-                                        android:layout_marginTop="4dp"
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="16sp"
-                                        android:fontFamily="sans-serif"
-                                        android:textStyle="bold"
-                                        android:textColor="#526cae"
-                                        tools:text="3200 B"
-                                        android:text="@{viewModel.dailyTourDetails.priceDiver}"
-                                        />
-                                </LinearLayout>
-                                <LinearLayout
-                                    android:visibility="@{viewModel.dailyTourDetails.priceNonDiver == null ? View.GONE : View.VISIBLE}"
-                                    android:layout_toRightOf="@+id/diver_price"
-                                    app:layout_widthPercent="50%"
-                                    android:layout_height="wrap_content"
-                                    android:orientation="vertical">
-                                    <TextView
-                                        android:layout_width="wrap_content"
-                                        android:layout_height="wrap_content"
-                                        android:textSize="14sp"
-                                        android:fontFamily="sans-serif"
-                                        android:textStyle="normal"
                                         android:textColor="#212121"
-                                        android:text="Non diver"
-                                        />
+                                        android:textSize="14sp"
+                                        android:textStyle="normal" />
+
                                     <TextView
-                                        android:layout_marginTop="4dp"
                                         android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
-                                        android:textSize="16sp"
+                                        android:layout_marginTop="4dp"
                                         android:fontFamily="sans-serif"
-                                        android:textStyle="bold"
+                                        android:text="@{viewModel.dailyTourDetails.priceDiver}"
                                         android:textColor="#526cae"
-                                        tools:text="3200 B"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        tools:text="3200 B" />
+                                </LinearLayout>
+
+                                <LinearLayout
+                                    android:layout_height="wrap_content"
+                                    android:layout_toRightOf="@+id/diver_price"
+                                    android:orientation="vertical"
+                                    android:visibility="@{viewModel.dailyTourDetails.priceNonDiver == null ? View.GONE : View.VISIBLE}"
+                                    app:layout_widthPercent="50%">
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:fontFamily="sans-serif"
+                                        android:text="Non diver"
+                                        android:textColor="#212121"
+                                        android:textSize="14sp"
+                                        android:textStyle="normal" />
+
+                                    <TextView
+                                        android:layout_width="wrap_content"
+                                        android:layout_height="wrap_content"
+                                        android:layout_marginTop="4dp"
+                                        android:fontFamily="sans-serif"
                                         android:text="@{viewModel.dailyTourDetails.priceNonDiver}"
-                                        />
+                                        android:textColor="#526cae"
+                                        android:textSize="16sp"
+                                        android:textStyle="bold"
+                                        tools:text="3200 B" />
                                 </LinearLayout>
                             </android.support.percent.PercentRelativeLayout>
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
                         <com.ddscanner.booking.views.ContentBlockLinearLayout
-                            android:visibility="@{viewModel.dailyTourDetails.priceEquipment == null ? View.GONE : View.VISIBLE}"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:padding="16dp"
+                            android:visibility="@{viewModel.dailyTourDetails.priceEquipment == null ? View.GONE : View.VISIBLE}"
                             app:bottom_divider="true"
-                            app:top_divider="false"
-                            android:orientation="vertical">
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="14sp"
-                                    android:fontFamily="sans-serif"
-                                    android:textStyle="normal"
-                                    android:textColor="#212121"
-                                    android:text="@string/equipment_rental"
-                                    />
-                                <TextView
-                                    android:layout_marginTop="4dp"
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:textSize="16sp"
-                                    android:fontFamily="sans-serif"
-                                    android:textStyle="bold"
-                                    android:textColor="#526cae"
-                                    tools:text="3200 B"
-                                    android:text="@{viewModel.dailyTourDetails.priceEquipment}"
-                                    />
+                            app:top_divider="true">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:fontFamily="sans-serif"
+                                android:text="@string/equipment_rental"
+                                android:textColor="#212121"
+                                android:textSize="14sp"
+                                android:textStyle="normal" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="4dp"
+                                android:fontFamily="sans-serif"
+                                android:text="@{viewModel.dailyTourDetails.priceEquipment}"
+                                android:textColor="#526cae"
+                                android:textSize="16sp"
+                                android:textStyle="bold"
+                                tools:text="3200 B" />
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </com.ddscanner.booking.views.FlingableNestedScrollView>
 
         </android.support.design.widget.CoordinatorLayout>
-    <Button
-        android:layout_alignParentBottom="true"
-        android:id="@+id/button_show_divecenters"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:background="@drawable/contact_dive_center_background"
-        android:text="@string/book_now_btn"
-        android:visibility="gone"
-        android:textColor="@color/black_text"
-        android:onClick="@{handlers::bookNowClicked}" />
 
-</RelativeLayout>
+        <Button
+            android:id="@+id/button_show_divecenters"
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/contact_dive_center_background"
+            android:onClick="@{handlers::bookNowClicked}"
+            android:text="@string/book_now_btn"
+            android:textColor="@color/black_text"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 </layout>

@@ -48,18 +48,16 @@
 
         <activity
             android:name=".screens.search.MapsActivity"
-            android:label="@string/title_activity_maps"
             android:screenOrientation="portrait">
-        </activity>
-        <activity android:name=".screens.search.SearchLocationActivity"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".screens.search.SearchLocationActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".screens.divecenter.request.SendRequestActivity"
             android:screenOrientation="portrait"/>
         <activity

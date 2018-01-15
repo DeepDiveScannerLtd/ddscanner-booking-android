@@ -25,6 +25,8 @@ import com.ddscanner.booking.screens.fundives.FunDiveDetailsActivity;
 import com.ddscanner.booking.screens.results.courses.CoursesListAdapter;
 import com.ddscanner.booking.screens.results.dailytours.DailyToursListAdapter;
 import com.ddscanner.booking.screens.results.fundives.FunDivesListAdapter;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.LatLngBounds;
 import com.rey.material.widget.ProgressView;
 
 import java.util.ArrayList;
@@ -159,6 +161,32 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
         source = (Source) getIntent().getSerializableExtra(ARG_SOURCE);
         dcId = getIntent().getLongExtra(ARG_ID, -1);
         setupUi();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        LatLngBounds bounds = DDScannerBookingApplication.getInstance().getDdScannerRestClient().getLatLngBounds();
+        if (bounds != null) {
+            outState.putBoolean("contains_bounds", true);
+            outState.putDouble("latLngBounds.northeast.latitude", bounds.northeast.latitude);
+            outState.putDouble("latLngBounds.northeast.longitude", bounds.northeast.longitude);
+            outState.putDouble("latLngBounds.southwest.latitude", bounds.southwest.latitude);
+            outState.putDouble("latLngBounds.southwest.longitude", bounds.southwest.longitude);
+        }
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        if (savedInstanceState.containsKey("contains_bounds")) {
+            LatLng southwest = new LatLng(savedInstanceState.getDouble("latLngBounds.southwest.latitude"), savedInstanceState.getDouble("latLngBounds.southwest.longitude"));
+            LatLng northeast = new LatLng(savedInstanceState.getDouble("latLngBounds.northeast.latitude"), savedInstanceState.getDouble("latLngBounds.northeast.longitude"));
+            LatLngBounds bounds = new LatLngBounds(southwest, northeast);
+            DDScannerBookingApplication.getInstance().getDdScannerRestClient().setLatLngBounds(bounds);
+        }
     }
 
     private void dataLoaded() {

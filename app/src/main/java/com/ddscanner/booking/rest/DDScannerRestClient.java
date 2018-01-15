@@ -94,6 +94,10 @@ public class DDScannerRestClient {
         call.enqueue(new NoResponseEntityCallback(gson, resultListener));
     }
 
+    public LatLngBounds getLatLngBounds() {
+        return latLngBounds;
+    }
+
     public void setLatLngBounds(LatLngBounds latLngBounds) {
         this.latLngBounds = latLngBounds;
     }

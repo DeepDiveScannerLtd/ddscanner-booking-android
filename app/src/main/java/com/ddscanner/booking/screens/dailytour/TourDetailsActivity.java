@@ -157,7 +157,7 @@ public class TourDetailsActivity extends BaseAppCompatActivity implements Dialog
     }
 
     public void showDiveCenter(View view) {
-        UserProfileActivity.show(this, binding.getViewModel().getDailyTourDetails().getDiveCenterProfile().getId().toString(), 0, binding.getViewModel().getDailyTourDetails().getDiveCenterProfile().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
+        UserProfileActivity.show(this, binding.getViewModel().getDailyTourDetails().getDiveCenterProfileShort().getId().toString(), 0, binding.getViewModel().getDailyTourDetails().getDiveCenterProfileShort().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
     }
 
     @Override

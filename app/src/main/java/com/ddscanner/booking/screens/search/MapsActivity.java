@@ -4,6 +4,9 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -23,6 +26,11 @@ import com.ddscanner.booking.screens.results.ResultsActivity;
 import com.ddscanner.booking.utils.Helpers;
 import com.ddscanner.booking.views.DiveCenterInfoView;
 import com.ddscanner.booking.views.DiveCentersFoundView;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -90,11 +98,18 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     private String lastDcName;
 
     @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_map, menu);
+        return true;
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
         ButterKnife.bind(this);
-        setupToolbar("Select area", R.id.toolbar, true);
+        setupToolbar("Select area", R.id.toolbar, false);
         mapView.onCreate(null);
         mapView.getMapAsync(this);
         diveSpotInfoHeight = Math.round(Helpers.convertDpToPixel(93, this));
@@ -108,7 +123,6 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     }
 
 
-
     @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
@@ -118,6 +132,8 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     @Override
     public void onMapLoaded() {
         diveSpotsClusterManagerNew = new DiveSpotsClusterManagerNew(this, mMap, this);
+        LatLngBounds latLngBounds = new LatLngBounds(new LatLng(6.081, 95.960), new LatLng(19.21, 105.45));
+        mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
     }
 
     @Override
@@ -161,13 +177,22 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        Log.i("MapsActivity", "onContextItemSelected, item id = " + item.getItemId() + " case item id = " + R.id.search);
         switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
+            case R.id.search:
+                try {
+                    Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                            .build(this);
+                    startActivityForResult(intent, 1);
+                } catch (GooglePlayServicesRepairableException e) {
+                    // TODO: Handle the error.
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    // TODO: Handle the error.
+                }
                 return true;
-            default:
-                return super.onOptionsItemSelected(item);
         }
+
+        return super.onContextItemSelected(item);
     }
 
     @OnClick(R.id.found_view)
@@ -179,6 +204,38 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     @OnClick(R.id.dive_center_info_layout)
     public void showDcProfile(View view) {
         UserProfileActivity.show(this, lastDcId, 0, lastDcName, EventsTracker.DiveCenterProfileScreenSource.MAP);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        switch (requestCode) {
+            case 1:
+                // TODO Center map
+                if (resultCode == RESULT_OK) {
+                    Place place = PlaceAutocomplete.getPlace(this, data);
+                    final LatLngBounds bounds;
+                    try {
+                        if (place.getViewport() != null) {
+                            bounds = place.getViewport();
+                        } else {
+                            bounds = new LatLngBounds(new LatLng(place.getLatLng().latitude - 0.2, place.getLatLng().longitude - 0.2), new LatLng(place.getLatLng().latitude + 0.2, place.getLatLng().longitude + 0.2));
+                        }
+                        diveSpotsClusterManagerNew.moveCamera(bounds);
+                    } catch (IllegalStateException ignored) {
+
+                    }
+                } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                    Status status;
+                    status = PlaceAutocomplete.getStatus(this, data);
+                    // TODO: Handle the error.
+                    Log.i("MapsActivity", status.getStatusMessage());
+
+                } else if (resultCode == RESULT_CANCELED) {
+                    // The user canceled the operation.
+                }
+        }
     }
 
     @Override

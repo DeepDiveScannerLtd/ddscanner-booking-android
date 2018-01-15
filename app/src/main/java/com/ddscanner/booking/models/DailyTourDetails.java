@@ -18,7 +18,7 @@ public class DailyTourDetails extends DailyTour implements Serializable{
     private String description;
     private String photosCount;
     @SerializedName("dive_center")
-    private DiveCenterProfile diveCenterProfile;
+    private DiveCenterShort diveCenterProfileShort;
     @SerializedName("itinerary")
     private String initiary;
     @SerializedName("price_diver")
@@ -60,14 +60,6 @@ public class DailyTourDetails extends DailyTour implements Serializable{
         this.initiary = initiary;
     }
 
-    public DiveCenterProfile getDiveCenterProfile() {
-        return diveCenterProfile;
-    }
-
-    public void setDiveCenterProfile(DiveCenterProfile diveCenterProfile) {
-        this.diveCenterProfile = diveCenterProfile;
-    }
-
     public ArrayList<String> getImages() {
         return images;
     }
@@ -82,6 +74,14 @@ public class DailyTourDetails extends DailyTour implements Serializable{
 
     public void setWhatsIncluded(String whatsIncluded) {
         this.whatsIncluded = whatsIncluded;
+    }
+
+    public DiveCenterShort getDiveCenterProfileShort() {
+        return diveCenterProfileShort;
+    }
+
+    public void setDiveCenterProfileShort(DiveCenterShort diveCenterProfileShort) {
+        this.diveCenterProfileShort = diveCenterProfileShort;
     }
 
     public String getSchedule() {

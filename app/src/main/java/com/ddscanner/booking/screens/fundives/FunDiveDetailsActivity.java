@@ -130,7 +130,7 @@ public class FunDiveDetailsActivity extends BaseAppCompatActivity implements Dia
     }
 
     public void showDiveCenter(View view) {
-        UserProfileActivity.show(this, binding.getViewModel().getFunDiveDetails().getDiveCenterProfile().getId().toString(), 0, binding.getViewModel().getFunDiveDetails().getDiveCenterProfile().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
+        UserProfileActivity.show(this, binding.getViewModel().getFunDiveDetails().getDiveCenterProfileShort()   .getId().toString(), 0, binding.getViewModel().getFunDiveDetails().getDiveCenterProfileShort().getName(), EventsTracker.DiveCenterProfileScreenSource.PRODUCT_DETAILS);
     }
 
     private void checkLines() {
