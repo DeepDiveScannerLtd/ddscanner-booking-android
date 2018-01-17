@@ -862,9 +862,8 @@ public class EventsTracker {
 //        trackEventWithoutParameters(EVENT_NAME_REVIEWER_CHECK_INS_VIEW);
     }
 
-    public static void trackUnknownServerError(String url, int errorCode, String errorMessage) {
+    public static void trackUnknownServerError(String url, String errorMessage) {
         Map<String, String> map = new HashMap<>();
-        map.put(EVENT_PARAMETER_NAME_RESPONSE_CODE, String.valueOf(errorCode));
         map.put(EVENT_PARAMETER_NAME_ERROR_TEXT, errorMessage);
         map.put(EVENT_PARAMETER_NAME_ERROR_URL, url);
         trackEventWithParameters(map, EVENT_NAME_UNKNOWN_SERVER_ERROR);
