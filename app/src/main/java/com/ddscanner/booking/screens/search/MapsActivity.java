@@ -180,13 +180,12 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         Log.i("MapsActivity", "onContextItemSelected, item id = " + item.getItemId() + " case item id = " + R.id.search);
         switch (item.getItemId()) {
             case R.id.search:
+                EventsTracker.trackSearchBtnClicked();
                 try {
                     Intent intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
                             .build(this);
                     startActivityForResult(intent, 1);
-                } catch (GooglePlayServicesRepairableException e) {
-                    // TODO: Handle the error.
-                } catch (GooglePlayServicesNotAvailableException e) {
+                } catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e) {
                     // TODO: Handle the error.
                 }
                 return true;
@@ -212,8 +211,8 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
 
         switch (requestCode) {
             case 1:
-                // TODO Center map
                 if (resultCode == RESULT_OK) {
+                    EventsTracker.trackSearchPlaceChosen();
                     Place place = PlaceAutocomplete.getPlace(this, data);
                     final LatLngBounds bounds;
                     try {

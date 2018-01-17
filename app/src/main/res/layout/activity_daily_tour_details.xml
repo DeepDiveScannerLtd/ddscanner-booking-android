@@ -170,6 +170,24 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:orientation="vertical"
+                            app:bottom_divider="true"
+                            app:top_divider="true">
+
+                            <FrameLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:onClick="@{handlers::showDiveCenter}">
+
+                                <include
+                                    layout="@layout/view_dive_center_info_short"
+                                    app:diveCenter="@{viewModel.dailyTourDetails.diveCenterProfileShort}" />
+                            </FrameLayout>
+                        </com.ddscanner.booking.views.ContentBlockLinearLayout>
+
+                        <com.ddscanner.booking.views.ContentBlockLinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical"
                             android:paddingBottom="12dp"
                             android:paddingHorizontal="16dp"
                             android:paddingTop="16dp"
@@ -235,15 +253,6 @@
                             app:bottom_divider="true"
                             app:top_divider="true">
 
-                            <FrameLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:onClick="@{handlers::showDiveCenter}">
-
-                                <include
-                                    layout="@layout/view_dive_center_info_short"
-                                    app:diveCenter="@{viewModel.dailyTourDetails.diveCenterProfileShort}" />
-                            </FrameLayout>
                         </com.ddscanner.booking.views.ContentBlockLinearLayout>
 
                         <com.ddscanner.booking.views.ContentBlockLinearLayout

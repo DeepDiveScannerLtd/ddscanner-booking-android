@@ -57,7 +57,7 @@ public class CertificateListFragment extends BaseListFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         certificateListAdapter = new CertificateListAdapter(item -> {
-            ListActivity.show(getContext(), ListActivity.Source.CERTIFICATE_COURSS, item.getId());});
+            ListActivity.show(getContext(), ListActivity.Source.CERTIFICATE_COURSS, item.getId(), item.getName());});
         list.setAdapter(certificateListAdapter);
         DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCertificates(resultListener);
     }

@@ -101,6 +101,7 @@ public class DiveCenterProfileFragmentViewModel {
 
                 });
                 link.setOnClickListener(clickedText -> {
+                    EventsTracker.trackEmailClick();
                     EventsTracker.trackBookingDcProfileEmailClick();
 //                    if (viewModel.getDiveCenterProfile().isForBooking()) {
                         SendRequestActivity.show(view.getContext(), viewModel.getDiveCenterProfile().getDiveSpotBookingId(), viewModel.getDiveCenterProfile().getId());

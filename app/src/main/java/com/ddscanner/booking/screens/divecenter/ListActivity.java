@@ -7,11 +7,13 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.CourseDetails;
@@ -130,11 +132,20 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
 
     private static final String ARG_SOURCE = "source";
     private static final String ARG_ID = "id";
+    private static final String ARG_NAME = "name";
 
     public static void show(Context context, Source source, long id) {
         Intent intent = new Intent(context, ListActivity.class);
         intent.putExtra(ARG_SOURCE, source);
         intent.putExtra(ARG_ID, id);
+        context.startActivity(intent);
+    }
+
+    public static void show(Context context, Source source, long id, String name) {
+        Intent intent = new Intent(context, ListActivity.class);
+        intent.putExtra(ARG_SOURCE, source);
+        intent.putExtra(ARG_ID, id);
+        intent.putExtra(ARG_NAME, name);
         context.startActivity(intent);
     }
 
@@ -152,6 +163,7 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
     private CoursesListAdapter coursesListAdapter;
     private CertificateCoursesAdapter certificateCoursesAdapter;
     private long dcId;
+    private String name;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -160,6 +172,7 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
         ButterKnife.bind(this);
         source = (Source) getIntent().getSerializableExtra(ARG_SOURCE);
         dcId = getIntent().getLongExtra(ARG_ID, -1);
+        name = getIntent().getStringExtra(ARG_NAME);
         setupUi();
     }
 
@@ -216,6 +229,8 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
                 DDScannerBookingApplication.getInstance().getDdScannerRestClient().getDiveCenterDailyTours(dailyToursResultListener, dcId);
                 break;
             case CERTIFICATE_COURSS:
+                Log.i("Certificate courses", "Tracked certificate courses screen, id = " + dcId + " name = " + name);
+                EventsTracker.trackEventNameCertificateDiveCentersScreenView(dcId, name);
                 setupToolbar(R.string.courses, R.id.toolbar, true);
                 certificateCoursesAdapter = new CertificateCoursesAdapter();
                 recyclerView.setAdapter(certificateCoursesAdapter);

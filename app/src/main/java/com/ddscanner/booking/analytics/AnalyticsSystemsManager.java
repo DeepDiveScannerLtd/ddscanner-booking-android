@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import com.ddscanner.booking.BuildConfig;
 import com.ddscanner.booking.R;
 import com.flurry.android.FlurryAgent;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.firebase.iid.FirebaseInstanceId;
 

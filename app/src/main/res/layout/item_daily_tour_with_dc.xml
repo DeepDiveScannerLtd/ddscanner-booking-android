@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="105dp"
                 android:scaleType="centerCrop"
-                app:loadPhotoFrom="@{viewModel.dailyTour.photo}" />
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"

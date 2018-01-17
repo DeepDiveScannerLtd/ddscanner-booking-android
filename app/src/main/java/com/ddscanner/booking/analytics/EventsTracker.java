@@ -1,6 +1,7 @@
 package com.ddscanner.booking.analytics;
 
 import android.os.Bundle;
+import android.util.Log;
 
 import com.ddscanner.booking.BuildConfig;
 import com.flurry.android.FlurryAgent;
@@ -85,9 +86,12 @@ public class EventsTracker {
     private static final String EVENT_NAME_DC_EDITED_VIEW = "dc_edited_view";
     private static final String EVENT_NAME_DC_SPOTS_VIEW = "dc_dive_spots_view";
     private static final String EVENT_NAME_PHONE_CLICK = "phone_click";
+    private static final String EVENT_NAME_EMAIL_CLICK = "email_click";
     private static final String EVENT_NAME_EMAIL_LONG_CLICK = "email_long_click";
     private static final String EVENT_NAME_SEARCH_SCREEN_VIEW = "search_screen_view";
+    private static final String EVENT_NAME_SEARCH_BTN_CLICKED = "search_btn_clicked";
     private static final String EVENT_NAME_SEARCH_PLACE_CHOSEN = "search_place_chosen";
+    private static final String EVENT_NAME_CERTIFICATE_DIVE_CENTERS_SCREEN_VIEW = "certificate_dive_centers_screen_view";
     private static final String EVENT_NAME_MAP_SCREEN_VIEW = "map_screen_view";
     private static final String EVENT_NAME_MAP_RESULT_VIEW_CLICKED = "map_result_view_clicked";
     private static final String EVENT_NAME_DAILY_TOURS_TAB_VIEW = "daily_tours_tab_view";
@@ -104,8 +108,11 @@ public class EventsTracker {
     private static final String EVENT_NAME_DC_PROFILE_SCREEN_VIEW = "dc_profile_screen_view";
     private static final String EVENT_PARAMETER_NAME_DIVE_CENTER_ID = "dive_center_id";
     private static final String EVENT_PARAMETER_NAME_DIVE_CENTER_NAME = "dive_center_name";
+    private static final String EVENT_PARAMETER_NAME_CERTIFICATE_ID = "certificate_id";
+    private static final String EVENT_PARAMETER_NAME_CERTIFICATE_NAME = "certificate_name";
 
     public static void trackDcProfileScreenView(String name, String id, DiveCenterProfileScreenSource source) {
+        Log.i("EventsTracker", "trackDcProfileScreenView + name = " + name + " id = " + id + " source = " + source);
         Map<String, String> map = new HashMap<>();
         map.put(EVENT_PARAMETER_NAME_DIVE_CENTER_ID, id);
         map.put(EVENT_PARAMETER_NAME_DIVE_CENTER_NAME, name);
@@ -167,6 +174,7 @@ public class EventsTracker {
     }
 
     public static void trackAddressClicked() {
+        Log.i("EventsTracker", "trackAddressClicked");
         trackEventWithoutParameters(EVEN_NAME_ADDRESS_CLICK);
     }
 
@@ -201,9 +209,7 @@ public class EventsTracker {
     }
 
     public static void trackMapScreenView(MapScreenViewSource mapScreenViewSource) {
-        Map<String, String> map = new HashMap<>();
-        map.put(EVENT_PARAMETER_NAME_SOURCE, mapScreenViewSource.getSource());
-        trackEventWithParameters(map, EVENT_NAME_MAP_SCREEN_VIEW);
+        trackEventWithoutParameters(EVENT_NAME_MAP_SCREEN_VIEW);
     }
 
     public static void trackMapeResultViewClcked() {
@@ -214,16 +220,34 @@ public class EventsTracker {
         trackEventWithoutParameters(EVENT_NAME_SEARCH_SCREEN_VIEW);
     }
 
+    public static void trackSearchBtnClicked() {
+        trackEventWithoutParameters(EVENT_NAME_SEARCH_BTN_CLICKED);
+    }
+
     public static void trackSearchPlaceChosen() {
         trackEventWithoutParameters(EVENT_NAME_SEARCH_PLACE_CHOSEN);
     }
 
+    public static void trackEventNameCertificateDiveCentersScreenView(Long certificateId, String certificateName) {
+        Map<String, String> map = new HashMap<>();
+        map.put(EVENT_PARAMETER_NAME_CERTIFICATE_ID, certificateId.toString());
+        map.put(EVENT_PARAMETER_NAME_CERTIFICATE_NAME, certificateName);
+        trackEventWithParameters(map, EVENT_NAME_CERTIFICATE_DIVE_CENTERS_SCREEN_VIEW);
+    }
+
     public static void trackPhoneClick() {
+        Log.i("EventsTracker", "trackPhoneClick");
         trackEventWithoutParameters(EVENT_NAME_PHONE_CLICK);
     }
 
     public static void trackEmailLongClick() {
+        Log.i("EventsTracker", "trackEmailLongClick");
         trackEventWithoutParameters(EVENT_NAME_EMAIL_LONG_CLICK);
+    }
+
+    public static void trackEmailClick() {
+        Log.i("EventsTracker", "trackEmailClick");
+        trackEventWithoutParameters(EVENT_NAME_EMAIL_CLICK);
     }
 
     public static void trackDcLanguagesView() {
@@ -462,6 +486,7 @@ public class EventsTracker {
     }
 
     public static void trackBookingDcProfileEmailClick() {
+        Log.i("EventsTracker", "trackBookingDcProfileEmailClick");
         trackEventWithoutParameters(EVENT_NAME_BOOKING_DC_PROFILE_EMAIL_CLICK);
     }
 
