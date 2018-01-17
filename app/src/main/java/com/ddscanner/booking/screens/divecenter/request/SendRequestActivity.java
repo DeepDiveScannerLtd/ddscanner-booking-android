@@ -66,7 +66,17 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
     private long funDiveId;
 
     enum RequestSource {
-        PRODUCT, NONE, FUNDIVE, COURSE
+        PRODUCT("product_details"), NONE("none"), COURSE("course_list_item"), FUNDIVE("fun_dive");
+
+        private String source;
+
+        RequestSource(String source) {
+            this.source = source;
+        }
+
+        public String getSource() {
+            return source;
+        }
     }
 
     public static void show(Context context, String diveSpotId, int diveCenterId) {
@@ -94,7 +104,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
     public static void showForCourse(Context context, long funDiveId) {
         Intent intent = new Intent(context, SendRequestActivity.class);
         intent.putExtra(ARG_PRODUCT_ID, funDiveId);
-        intent.putExtra(ARG_SOURCE, RequestSource.FUNDIVE);
+        intent.putExtra(ARG_SOURCE, RequestSource.COURSE);
         context.startActivity(intent);
     }
 
@@ -125,7 +135,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
                 break;
             case COURSE:
                 courseId = getIntent().getLongExtra(ARG_PRODUCT_ID, -1);
-                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.PRODUCT_DETAILS);
+                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.CURSE_LIST_ITEM);
                 break;
         }
         materialDialog = Helpers.getMaterialDialog(this);
@@ -142,13 +152,18 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
         switch (item.getItemId()) {
             case android.R.id.home:
                 onBackPressed();
-                EventsTracker.trackBookingCancelled();
                 return true;
             case R.id.send_request:
                 sendRequest();
                 return true;
         }
         return false;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        EventsTracker.trackBookingCancelled();
     }
 
     private void sendRequest() {

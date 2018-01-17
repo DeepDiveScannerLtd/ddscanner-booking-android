@@ -1,6 +1,7 @@
 package com.ddscanner.booking.rest;
 
 
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.models.errors.Field;
 import com.ddscanner.booking.models.errors.GeneralError;
 import com.ddscanner.booking.models.errors.ValidationError;
@@ -119,6 +120,7 @@ abstract class BaseCallback<T> implements Callback<ResponseBody> {
                 try {
                     generalError = gson.fromJson(json, GeneralError.class);
                     resultListener.onError(DDScannerRestClient.ErrorType.SERVER_INTERNAL_ERROR_500, generalError, call.request().url().toString(), generalError.getMessage());
+                    EventsTracker.trackUnknownServerError(call.request().url().toString(), generalError.getMessage());
                 } catch (JsonSyntaxException e) {
                     resultListener.onError(DDScannerRestClient.ErrorType.JSON_SYNTAX_EXCEPTION, null, call.request().url().toString(), e.getMessage());
                 }

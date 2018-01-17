@@ -141,7 +141,7 @@ public class EventsTracker {
     }
 
     public enum InquiryViewSource {
-        PRODUCT_DETAILS("product_details"), DIVE_CENTER_PROFILE("dive_center_profile");
+        PRODUCT_DETAILS("product_details"), DIVE_CENTER_PROFILE("dive_center_profile"), CURSE_LIST_ITEM("course_list_item");
 
         private String source;
 
