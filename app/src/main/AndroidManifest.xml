@@ -28,9 +28,12 @@
                 <!--<category android:name="android.intent.category.LAUNCHER" />-->
             <!--</intent-filter>-->
         </activity>
-        <activity android:name=".screens.fundives.FunDiveDetailsActivity" />
-        <activity android:name=".screens.course.CourseDetailsActivity" />
-        <activity android:name=".screens.certificate.CertificateDetailsActivity" />
+        <activity android:name=".screens.fundives.FunDiveDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.course.CourseDetailsActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".screens.certificate.CertificateDetailsActivity"
+            android:screenOrientation="portrait"/>
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").
