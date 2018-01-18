@@ -4,6 +4,7 @@
         <variable name="diveCenter" type="com.ddscanner.booking.models.DiveCenterShort"/>
     </data>
     <LinearLayout
+        android:id="@+id/dc_info_layout"
         android:background="@color/white"
         android:orientation="vertical"
         android:foreground="?android:attr/selectableItemBackground"

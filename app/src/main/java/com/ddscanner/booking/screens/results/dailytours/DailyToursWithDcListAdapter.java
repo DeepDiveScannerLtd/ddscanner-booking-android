@@ -6,10 +6,14 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 
+import com.ddscanner.booking.R;
+import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.databinding.ItemDailyTourWithDcBinding;
 import com.ddscanner.booking.interfaces.ListItemClickListener;
 import com.ddscanner.booking.models.DailyTourWithDc;
+import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 
 import java.util.ArrayList;
 
@@ -55,11 +59,14 @@ public class DailyToursWithDcListAdapter extends RecyclerView.Adapter<DailyTours
     class DailyTourItemViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         private ItemDailyTourWithDcBinding binding;
+        private LinearLayout dcInfoLayout;
 
         public DailyTourItemViewHolder(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             binding = DataBindingUtil.bind(itemView);
+            dcInfoLayout = itemView.findViewById(R.id.dc_info_layout);
+            dcInfoLayout.setOnClickListener(v -> UserProfileActivity.show(itemView.getContext(), dailyTours.get(getAdapterPosition()).getDiveCenter().getId().toString(), 0, dailyTours.get(getAdapterPosition()).getDiveCenter().getName(), EventsTracker.DiveCenterProfileScreenSource.MAP));
         }
 
         @Override
