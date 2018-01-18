@@ -64,7 +64,7 @@ public class FunDivesWithDcListAdapter extends RecyclerView.Adapter<FunDivesWith
             itemView.setOnClickListener(this);
             binding = DataBindingUtil.bind(itemView);
             dcInfoLayout = itemView.findViewById(R.id.dc_info_layout);
-            dcInfoLayout.setOnClickListener(v -> UserProfileActivity.show(itemView.getContext(), funDives.get(getAdapterPosition()).getDiveCenter().getId().toString(), 0, funDives.get(getAdapterPosition()).getDiveCenter().getName(), EventsTracker.DiveCenterProfileScreenSource.MAP));
+            dcInfoLayout.setOnClickListener(v -> UserProfileActivity.show(itemView.getContext(), funDives.get(getAdapterPosition()).getDiveCenter().getId().toString(), 0, funDives.get(getAdapterPosition()).getDiveCenter().getName(), EventsTracker.DiveCenterProfileScreenSource.FUN_DIVE_LIST_ITEM));
 
         }
 
