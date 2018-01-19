@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.PhotoAuthor;
@@ -18,6 +19,7 @@ import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
 import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
@@ -36,7 +38,13 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
     private static final String ARG_DIVE_SPOT_ID = "divespot_id";
     private static final String ARG_TYPE = "type";
     private static final String ARG_USER_ID = "user_id";
+    private static final String ARG_COURSE_NAME = "course_name";
+    private static final String ARG_COURSE_ID = "course_id";
+    private boolean isForCourses = false;
+    private long courseId;
+    private String courseName;
     private LatLng diveCeneterLocation;
+    private Button inquiyBtn;
 
 
     private DDScannerRestClient.ResultListener<DiveCenterProfile> diveCenterProfileResultListener = new DDScannerRestClient.ResultListener<DiveCenterProfile>() {
@@ -44,6 +52,9 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         public void onSuccess(DiveCenterProfile result) {
             progressView.setVisibility(View.GONE);
             setupFragment(0, result);
+            if (isForCourses) {
+                inquiyBtn.setVisibility(View.VISIBLE);
+            }
         }
 
         @Override
@@ -71,6 +82,16 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         context.startActivity(intent);
     }
 
+    public static void showForCourseInquiry(Context context, String userId, String name, String courseName, long courseId) {
+        Intent intent = new Intent(context, UserProfileActivity.class);
+        EventsTracker.trackDcProfileScreenView(name, userId, EventsTracker.DiveCenterProfileScreenSource.COURSES_LIST);
+        intent.putExtra(ARG_USER_ID, userId);
+        intent.putExtra(ARG_TYPE, 0);
+        intent.putExtra(ARG_COURSE_NAME, courseName);
+        intent.putExtra(ARG_COURSE_ID, courseId);
+        context.startActivity(intent);
+    }
+
     public static void showForBooking(Context context, String userId, int userType, String diveSpotId) {
         Intent intent = new Intent(context, UserProfileActivity.class);
         intent.putExtra(ARG_USER_ID, userId);
@@ -87,6 +108,14 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         setContentView(R.layout.activity_user_profile);
         progressView = findViewById(R.id.progress_view);
         setupToolbar(R.string.profile, R.id.toolbar, true);
+        isForCourses = getIntent().getLongExtra(ARG_COURSE_ID, -1 ) != -1;
+        if (isForCourses) {
+            courseId = getIntent().getLongExtra(ARG_COURSE_ID, -1 );
+            courseName = getIntent().getStringExtra(ARG_COURSE_NAME);
+            inquiyBtn = findViewById(R.id.inquiry_btn);
+            inquiyBtn.setText(getString(R.string.inquiry_course_pattern, courseName));
+            inquiyBtn.setOnClickListener(v -> SendRequestActivity.showForCourse(this, courseId));
+        }
         switch (userType) {
             case 0:
                 if (getIntent().getStringExtra(ARG_DIVE_SPOT_ID) == null) {

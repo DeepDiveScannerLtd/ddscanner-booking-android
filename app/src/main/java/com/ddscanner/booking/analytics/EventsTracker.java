@@ -121,7 +121,7 @@ public class EventsTracker {
     }
 
     public enum DiveCenterProfileScreenSource {
-        DIVE_CENTERS_TAB("dive_centers_tab"), PRODUCT_DETAILS("product_details"), MAP("map"), FUN_DIVE_LIST_ITEM("fun_dives_tab"), DAILY_TOUR_LIST_ITEM("daily_tours_tab");
+        DIVE_CENTERS_TAB("dive_centers_tab"), PRODUCT_DETAILS("product_details"), MAP("map"), FUN_DIVE_LIST_ITEM("fun_dives_tab"), DAILY_TOUR_LIST_ITEM("daily_tours_tab"), COURSES_LIST("courses_list");
 
         private String source;
 
