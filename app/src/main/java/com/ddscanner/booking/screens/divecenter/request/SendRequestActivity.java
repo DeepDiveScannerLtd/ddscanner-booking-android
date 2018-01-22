@@ -17,6 +17,7 @@ import com.ddscanner.booking.base.BaseAppCompatActivity;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.requests.DiveCenterRequestBookingRequest;
 import com.ddscanner.booking.rest.DDScannerRestClient;
+import com.ddscanner.booking.screens.search.MapsActivity;
 import com.ddscanner.booking.screens.search.SearchLocationActivity;
 import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 import com.ddscanner.booking.utils.Helpers;
@@ -79,10 +80,11 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
         }
     }
 
-    public static void show(Context context, String diveSpotId, int diveCenterId) {
+    public static void show(Context context, int diveCenterId, EventsTracker.InquiryViewSource source) {
         Intent intent = new Intent(context, SendRequestActivity.class);
         intent.putExtra("dc_id", String.valueOf(diveCenterId));
-        intent.putExtra("ds_id", diveSpotId);
+//        intent.putExtra("ds_id", diveSpotId);
+        EventsTracker.trackInquiryView(source);
         intent.putExtra(ARG_SOURCE, RequestSource.NONE);
         context.startActivity(intent);
     }
@@ -122,8 +124,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
         switch (requestSource) {
             case NONE:
                 diveCenterId = getIntent().getStringExtra("dc_id");
-                diveSpotId = getIntent().getStringExtra("ds_id");
-                EventsTracker.trackInquiryView(EventsTracker.InquiryViewSource.DIVE_CENTER_PROFILE);
+//                diveSpotId = getIntent().getStringExtra("ds_id");
                 break;
             case FUNDIVE:
                 funDiveId = getIntent().getLongExtra(ARG_PRODUCT_ID, -1);
@@ -184,7 +185,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
                 break;
             case NONE:
                 diveCenterRequestBookingRequest.setDiveCenterId(diveCenterId);
-                diveCenterRequestBookingRequest.setDiveSpotId(diveSpotId);
+//                diveCenterRequestBookingRequest.setDiveSpotId(diveSpotId);
                 break;
             case COURSE:
                 diveCenterRequestBookingRequest.setCourseId(courseId);
@@ -234,7 +235,7 @@ public class SendRequestActivity extends BaseAppCompatActivity implements Dialog
 
     @Override
     public void onDialogClosed(int requestCode) {
-        Intent intent  = new Intent(this, SearchLocationActivity.class);
+        Intent intent  = new Intent(this, MapsActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
     }

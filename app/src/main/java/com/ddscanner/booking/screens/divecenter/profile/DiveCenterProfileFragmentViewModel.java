@@ -9,6 +9,7 @@ import android.widget.TextView;
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.analytics.EventsTracker;
+import com.ddscanner.booking.events.EmailClickedEvent;
 import com.ddscanner.booking.models.Address;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.screens.divecenter.request.SendRequestActivity;
@@ -17,6 +18,7 @@ import com.ddscanner.booking.utils.Helpers;
 import com.ddscanner.booking.utils.PhoneCallIntentBuilder;
 import com.klinker.android.link_builder.Link;
 import com.klinker.android.link_builder.LinkBuilder;
+import com.squareup.otto.Bus;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -102,9 +104,10 @@ public class DiveCenterProfileFragmentViewModel {
                 });
                 link.setOnClickListener(clickedText -> {
                     EventsTracker.trackEmailClick();
-                    EventsTracker.trackBookingDcProfileEmailClick();
+                    DDScannerBookingApplication.bus.post(new EmailClickedEvent());
+//                    EventsTracker.trackBookingDcProfileEmailClick();
 //                    if (viewModel.getDiveCenterProfile().isForBooking()) {
-                        SendRequestActivity.show(view.getContext(), viewModel.getDiveCenterProfile().getDiveSpotBookingId(), viewModel.getDiveCenterProfile().getId());
+//                        SendRequestActivity.show(view.getContext(), viewModel.getDiveCenterProfile().getDiveSpotBookingId(), viewModel.getDiveCenterProfile().getId());
 //                        return;
 //                    }
 //                    EmailIntentBuilder.from(view.getContext()).to(email).start();

@@ -110,6 +110,7 @@ public class EventsTracker {
     private static final String EVENT_PARAMETER_NAME_DIVE_CENTER_NAME = "dive_center_name";
     private static final String EVENT_PARAMETER_NAME_CERTIFICATE_ID = "certificate_id";
     private static final String EVENT_PARAMETER_NAME_CERTIFICATE_NAME = "certificate_name";
+    private static final String EVENT_PARAMETER_NAME_PLACE = "place";
 
     public static void trackDcProfileScreenView(String name, String id, DiveCenterProfileScreenSource source) {
         Log.i("EventsTracker", "trackDcProfileScreenView + name = " + name + " id = " + id + " source = " + source);
@@ -141,7 +142,7 @@ public class EventsTracker {
     }
 
     public enum InquiryViewSource {
-        PRODUCT_DETAILS("product_details"), DIVE_CENTER_PROFILE("dive_center_profile"), CURSE_LIST_ITEM("course_list_item");
+        PRODUCT_DETAILS("product_details"), DIVE_CENTER_PROFILE_INQUIRY("dive_center_profile_inquiry"),DIVE_CENTER_PROFILE_EMAIL("dive_center_profile_email") , CURSE_LIST_ITEM("course_list_item"), ;
 
         private String source;
 
@@ -224,8 +225,10 @@ public class EventsTracker {
         trackEventWithoutParameters(EVENT_NAME_SEARCH_BTN_CLICKED);
     }
 
-    public static void trackSearchPlaceChosen() {
-        trackEventWithoutParameters(EVENT_NAME_SEARCH_PLACE_CHOSEN);
+    public static void trackSearchPlaceChosen(String place) {
+        Map<String, String> map = new HashMap<>();
+        map.put(EVENT_PARAMETER_NAME_PLACE, place);
+        trackEventWithParameters(map, EVENT_NAME_SEARCH_PLACE_CHOSEN);
     }
 
     public static void trackEventNameCertificateDiveCentersScreenView(Long certificateId, String certificateName) {

@@ -66,7 +66,7 @@ public class DailyToursWithDcListAdapter extends RecyclerView.Adapter<DailyTours
             itemView.setOnClickListener(this);
             binding = DataBindingUtil.bind(itemView);
             dcInfoLayout = itemView.findViewById(R.id.dc_info_layout);
-            dcInfoLayout.setOnClickListener(v -> UserProfileActivity.show(itemView.getContext(), dailyTours.get(getAdapterPosition()).getDiveCenter().getId().toString(), 0, dailyTours.get(getAdapterPosition()).getDiveCenter().getName(), EventsTracker.DiveCenterProfileScreenSource.DAILY_TOUR_LIST_ITEM));
+            dcInfoLayout.setOnClickListener(v -> UserProfileActivity.showDailyTourInquiry(itemView.getContext(), dailyTours.get(getAdapterPosition()).getDiveCenter().getId().toString(), dailyTours.get(getAdapterPosition()).getDiveCenter().getName(), dailyTours.get(getAdapterPosition()).getName(), dailyTours.get(getAdapterPosition()).getId()));
         }
 
         @Override

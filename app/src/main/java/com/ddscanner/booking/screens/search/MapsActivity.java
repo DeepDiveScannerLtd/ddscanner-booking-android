@@ -212,8 +212,8 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         switch (requestCode) {
             case 1:
                 if (resultCode == RESULT_OK) {
-                    EventsTracker.trackSearchPlaceChosen();
                     Place place = PlaceAutocomplete.getPlace(this, data);
+                    EventsTracker.trackSearchPlaceChosen(place.getName().toString());
                     final LatLngBounds bounds;
                     try {
                         if (place.getViewport() != null) {

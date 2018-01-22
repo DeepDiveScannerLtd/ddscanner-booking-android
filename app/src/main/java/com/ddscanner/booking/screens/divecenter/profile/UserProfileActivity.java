@@ -16,6 +16,7 @@ import com.ddscanner.booking.PhotoAuthor;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
+import com.ddscanner.booking.events.EmailClickedEvent;
 import com.ddscanner.booking.interfaces.DialogClosedListener;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.rest.DDScannerRestClient;
@@ -24,6 +25,7 @@ import com.ddscanner.booking.ui.dialogs.UserActionInfoDialogFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.gson.Gson;
 import com.rey.material.widget.ProgressView;
+import com.squareup.otto.Bus;
 import com.squareup.otto.Subscribe;
 
 
@@ -35,26 +37,25 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
     private PhotoAuthor photoAuthor;
     private int userType;
     private boolean isDiveCenterLegacy = false;
+    private static final String ARG_SOURCE = "source";
     private static final String ARG_DIVE_SPOT_ID = "divespot_id";
     private static final String ARG_TYPE = "type";
     private static final String ARG_USER_ID = "user_id";
-    private static final String ARG_COURSE_NAME = "course_name";
-    private static final String ARG_COURSE_ID = "course_id";
-    private boolean isForCourses = false;
-    private long courseId;
-    private String courseName;
+    private static final String ARG_INQUIRY_NAME = "course_name";
+    private static final String ARG_INQUIRY_ID = "course_id";
+    private EventsTracker.DiveCenterProfileScreenSource source;
+    private boolean isForInquiry = false;
+    private long inquiryId;
+    private String inquiryName;
     private LatLng diveCeneterLocation;
     private Button inquiyBtn;
-
 
     private DDScannerRestClient.ResultListener<DiveCenterProfile> diveCenterProfileResultListener = new DDScannerRestClient.ResultListener<DiveCenterProfile>() {
         @Override
         public void onSuccess(DiveCenterProfile result) {
             progressView.setVisibility(View.GONE);
             setupFragment(0, result);
-            if (isForCourses) {
-                inquiyBtn.setVisibility(View.VISIBLE);
-            }
+            inquiyBtn.setVisibility(View.VISIBLE);
         }
 
         @Override
@@ -79,16 +80,40 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         EventsTracker.trackDcProfileScreenView(name, userId, source);
         intent.putExtra(ARG_USER_ID, userId);
         intent.putExtra(ARG_TYPE, userType);
+        intent.putExtra(ARG_SOURCE, source);
         context.startActivity(intent);
     }
 
-    public static void showForCourseInquiry(Context context, String userId, String name, String courseName, long courseId) {
+    public static void showForCourseInquiry(Context context, String userId, String name, String inquiryName, long inquiryId) {
         Intent intent = new Intent(context, UserProfileActivity.class);
         EventsTracker.trackDcProfileScreenView(name, userId, EventsTracker.DiveCenterProfileScreenSource.COURSES_LIST);
         intent.putExtra(ARG_USER_ID, userId);
         intent.putExtra(ARG_TYPE, 0);
-        intent.putExtra(ARG_COURSE_NAME, courseName);
-        intent.putExtra(ARG_COURSE_ID, courseId);
+        intent.putExtra(ARG_INQUIRY_NAME, inquiryName);
+        intent.putExtra(ARG_INQUIRY_ID, inquiryId);
+        intent.putExtra(ARG_SOURCE,EventsTracker.DiveCenterProfileScreenSource.COURSES_LIST);
+        context.startActivity(intent);
+    }
+    
+    public static void showForFunDiveInquiry(Context context, String userId, String name, String inquiryName, long inquiryId) {
+        Intent intent = new Intent(context, UserProfileActivity.class);
+        EventsTracker.trackDcProfileScreenView(name, userId, EventsTracker.DiveCenterProfileScreenSource.FUN_DIVE_LIST_ITEM);
+        intent.putExtra(ARG_USER_ID, userId);
+        intent.putExtra(ARG_TYPE, 0);
+        intent.putExtra(ARG_INQUIRY_NAME, inquiryName);
+        intent.putExtra(ARG_INQUIRY_ID, inquiryId);
+        intent.putExtra(ARG_SOURCE,EventsTracker.DiveCenterProfileScreenSource.FUN_DIVE_LIST_ITEM);
+        context.startActivity(intent);
+    }
+    
+    public static void showDailyTourInquiry(Context context, String userId, String name, String inquiryName, long inquiryId) {
+        Intent intent = new Intent(context, UserProfileActivity.class);
+        EventsTracker.trackDcProfileScreenView(name, userId, EventsTracker.DiveCenterProfileScreenSource.DAILY_TOUR_LIST_ITEM);
+        intent.putExtra(ARG_USER_ID, userId);
+        intent.putExtra(ARG_TYPE, 0);
+        intent.putExtra(ARG_INQUIRY_NAME, inquiryName);
+        intent.putExtra(ARG_INQUIRY_ID, inquiryId);
+        intent.putExtra(ARG_SOURCE,EventsTracker.DiveCenterProfileScreenSource.DAILY_TOUR_LIST_ITEM);
         context.startActivity(intent);
     }
 
@@ -106,15 +131,16 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         userId = getIntent().getStringExtra(ARG_USER_ID);
         userType = getIntent().getIntExtra(ARG_TYPE, 0);
         setContentView(R.layout.activity_user_profile);
+        source = (EventsTracker.DiveCenterProfileScreenSource) getIntent().getSerializableExtra(ARG_SOURCE);
         progressView = findViewById(R.id.progress_view);
         setupToolbar(R.string.profile, R.id.toolbar, true);
-        isForCourses = getIntent().getLongExtra(ARG_COURSE_ID, -1 ) != -1;
-        if (isForCourses) {
-            courseId = getIntent().getLongExtra(ARG_COURSE_ID, -1 );
-            courseName = getIntent().getStringExtra(ARG_COURSE_NAME);
-            inquiyBtn = findViewById(R.id.inquiry_btn);
-            inquiyBtn.setText(getString(R.string.inquiry_course_pattern, courseName));
-            inquiyBtn.setOnClickListener(v -> SendRequestActivity.showForCourse(this, courseId));
+        isForInquiry = getIntent().getLongExtra(ARG_INQUIRY_ID, -1 ) != -1;
+        inquiyBtn = findViewById(R.id.inquiry_btn);
+        inquiyBtn.setOnClickListener(this::inquiryClicked);
+        if (isForInquiry) {
+            inquiryId = getIntent().getLongExtra(ARG_INQUIRY_ID, -1 );
+            inquiryName = getIntent().getStringExtra(ARG_INQUIRY_NAME);
+            inquiyBtn.setText(getString(R.string.inquiry_course_pattern, inquiryName));
         }
         switch (userType) {
             case 0:
@@ -169,13 +195,51 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
     @Override
     protected void onStart() {
         super.onStart();
+        DDScannerBookingApplication.bus.register(this);
 //        DDScannerApplication.bus.register(this);
     }
 
     @Override
     protected void onStop() {
         super.onStop();
+        DDScannerBookingApplication.bus.unregister(this);
 //        DDScannerApplication.bus.unregister(this);
+    }
+
+    public void inquiryClicked(View view) {
+        switch (source) {
+            case COURSES_LIST:
+                SendRequestActivity.showForCourse(this, inquiryId);
+                break;
+            case FUN_DIVE_LIST_ITEM:
+                SendRequestActivity.showForFunDive(this, inquiryId);
+                break;
+            case DAILY_TOUR_LIST_ITEM:
+                SendRequestActivity.showForProduct(this, inquiryId);
+                break;
+                default:
+                    SendRequestActivity.show(this, Integer.parseInt(userId), EventsTracker.InquiryViewSource.DIVE_CENTER_PROFILE_INQUIRY);
+                    break;
+        }
+    }
+
+    @Subscribe
+    public void emailClicked(EmailClickedEvent emailClickedEvent) {
+        if (isForInquiry) {
+            switch (source) {
+                case COURSES_LIST:
+                    SendRequestActivity.showForCourse(this, inquiryId);
+                    break;
+                case FUN_DIVE_LIST_ITEM:
+                    SendRequestActivity.showForFunDive(this, inquiryId);
+                    break;
+                case DAILY_TOUR_LIST_ITEM:
+                    SendRequestActivity.showForProduct(this, inquiryId);
+                    break;
+            }
+        } else {
+            SendRequestActivity.show(this, Integer.parseInt(userId), EventsTracker.InquiryViewSource.DIVE_CENTER_PROFILE_EMAIL);
+        }
     }
 
 }
