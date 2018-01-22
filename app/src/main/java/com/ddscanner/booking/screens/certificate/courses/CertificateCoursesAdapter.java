@@ -50,7 +50,7 @@ public class CertificateCoursesAdapter extends RecyclerView.Adapter<CertificateC
             binding = DataBindingUtil.bind(itemView);
             itemView.setOnClickListener(v -> UserProfileActivity.showForCourseInquiry(itemView.getContext(), courseDetails.get(getAdapterPosition()).getDiveCenterProfile().getId().toString(), courseDetails.get(getAdapterPosition()).getDiveCenterProfile().getName(), courseDetails.get(getAdapterPosition()).getName(), courseDetails.get(getAdapterPosition()).getId()));
             binding.inquiryBtn.setOnClickListener(v -> SendRequestActivity.showForCourse(itemView.getContext(), courseDetails.get(getAdapterPosition()).getId()));
-            binding.deatilsBtn.setOnClickListener(v -> CourseDetailsActivity.show(itemView.getContext(), courseDetails.get(getAdapterPosition()).getId()));
+            binding.detailsBtn.setOnClickListener(v -> CourseDetailsActivity.show(itemView.getContext(), courseDetails.get(getAdapterPosition()).getId()));
         }
     }
 

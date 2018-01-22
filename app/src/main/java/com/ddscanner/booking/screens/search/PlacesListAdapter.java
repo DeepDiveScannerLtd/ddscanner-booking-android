@@ -76,7 +76,7 @@ public class PlacesListAdapter extends RecyclerView.Adapter<PlacesListAdapter.Pl
 
         @Override
         public void onClick(View v) {
-            EventsTracker.trackSearchPlaceChosen();
+//            EventsTracker.trackSearchPlaceChosen();
             listItemClickListener.onItemClick(places.get(getAdapterPosition()));
 //            DDScannerApplication.bus.post(new LocationChosedEvent(places.get(getAdapterPosition())));
         }

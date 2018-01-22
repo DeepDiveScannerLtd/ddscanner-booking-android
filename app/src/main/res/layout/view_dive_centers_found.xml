@@ -27,7 +27,7 @@
         android:textSize="12sp"
         android:fontFamily="sans-serif-medium"
         android:textStyle="normal"
-        android:textColor="#212121"
+        android:textColor="#80212121"
         android:letterSpacing="0.02"
         android:gravity="center_horizontal"
         android:textAllCaps="true"

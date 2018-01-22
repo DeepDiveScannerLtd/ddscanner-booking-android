@@ -1,7 +1,12 @@
 package com.ddscanner.booking.screens.search;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Location;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -9,6 +14,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -17,6 +24,7 @@ import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.analytics.EventsTracker;
 import com.ddscanner.booking.base.BaseAppCompatActivity;
+import com.ddscanner.booking.interfaces.LocationEnabledListener;
 import com.ddscanner.booking.interfaces.MapFragmentController;
 import com.ddscanner.booking.models.DiveCenterProfile;
 import com.ddscanner.booking.models.requests.DiveSpotsRequestMap;
@@ -24,10 +32,14 @@ import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.ddscanner.booking.screens.divecenter.profile.UserProfileActivity;
 import com.ddscanner.booking.screens.results.ResultsActivity;
 import com.ddscanner.booking.utils.Helpers;
+import com.ddscanner.booking.utils.LocationHelper;
+import com.ddscanner.booking.utils.PermissionUtils;
 import com.ddscanner.booking.views.DiveCenterInfoView;
 import com.ddscanner.booking.views.DiveCentersFoundView;
+import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
 import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
@@ -50,7 +62,18 @@ import butterknife.OnClick;
 
 import static java.security.AccessController.getContext;
 
-public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, MapFragmentController {
+public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCallback, GoogleMap.OnMapLoadedCallback, MapFragmentController, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener, ActivityCompat.OnRequestPermissionsResultCallback, LocationEnabledListener {
+
+
+    private GoogleApiClient mGoogleApiClient;
+
+    double latitude;
+    double longitude;
+
+    // list of permissions
+
+    ArrayList<String> permissions=new ArrayList<>();
+    PermissionUtils permissionUtils;
 
     public static void show(Context context) {
         EventsTracker.trackMapScreenView(EventsTracker.MapScreenViewSource.SELECT_AREA_BTN);
@@ -95,7 +118,16 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     private String lastDcId;
     @BindView(R.id.found_view)
     DiveCentersFoundView diveCentersFoundView;
+    @BindView(R.id.go_to_my_location)
+    ImageView button;
     private String lastDcName;
+    private Location lastLocation;
+    @BindView(R.id.zoom_minus)
+    ImageView zoomMinus;
+    @BindView(R.id.zoom_plus)
+    ImageView zoomPlus;
+
+    LocationHelper locationHelper;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -114,12 +146,18 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         mapView.getMapAsync(this);
         diveSpotInfoHeight = Math.round(Helpers.convertDpToPixel(93, this));
         diveCenterInfoView.hide(diveSpotInfoHeight);
+        locationHelper=new LocationHelper(this, this);
+        locationHelper.checkpermission();
+        button.setOnClickListener(this::goToMyLocation);
+        zoomMinus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomMinus());
+        zoomPlus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomPlus());
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
+        locationHelper.checkPlayServices();
     }
 
 
@@ -245,5 +283,36 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
             diveCentersFoundView.setVisibility(View.VISIBLE);
             diveCentersFoundView.setDiveCentersCount(count);
         }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        locationHelper.onRequestPermissionsResult(requestCode,permissions,grantResults);
+    }
+
+
+    @Override
+    public void onConnected(@Nullable Bundle bundle) {
+        lastLocation = locationHelper.getLocation();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        locationHelper.connectApiClient();
+    }
+
+    @Override
+    public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
+
+    }
+
+    public void goToMyLocation(View view) {
+        locationHelper.checkpermission();
+        locationHelper.buildGoogleApiClient();
+    }
+
+    @Override
+    public void onLocationEnabled() {
+        diveSpotsClusterManagerNew.moveCameraToUserLocation(locationHelper.getLocation());
     }
 }

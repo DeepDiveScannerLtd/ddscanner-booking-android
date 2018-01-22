@@ -12,19 +12,13 @@
             type="com.ddscanner.booking.screens.certificate.courses.CertificateCourseItemViewModel" />
     </data>
 
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="12dp"
-        android:layout_marginVertical="6dp">
-
         <com.ddscanner.booking.views.ContentBlockLinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:foreground="?android:attr/selectableItemBackground"
             android:orientation="vertical"
-            app:bottom_divider="false"
+            app:bottom_divider="true"
             app:top_divider="false">
 
             <LinearLayout
@@ -32,7 +26,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
                 android:paddingBottom="12dp"
-                android:paddingHorizontal="18dp">
+                android:paddingHorizontal="16dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -53,6 +47,7 @@
                         android:layout_centerVertical="true"
                         android:layout_marginLeft="15dp"
                         android:layout_toRightOf="@+id/dc_logo"
+                        android:layout_toLeftOf="@+id/price_layout"
                         android:orientation="vertical">
 
                         <TextView
@@ -78,6 +73,32 @@
                             android:textColor="#616161"
                             android:textSize="13sp"
                             android:textStyle="normal" />
+                    </LinearLayout>
+                    <LinearLayout
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/price_layout"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_width="wrap_content">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:paddingLeft="8dp"
+                            android:paddingRight="8dp"
+                            android:background="@drawable/price_background"
+                            android:fontFamily="sans-serif"
+                            android:gravity="center"
+                            android:letterSpacing="0.02"
+                            android:paddingBottom="4dp"
+                            android:paddingTop="4dp"
+                            android:text="@{viewModel.courseDetails.price}"
+                            android:textColor="#212121"
+                            android:textSize="15sp"
+                            android:textStyle="bold"
+                            android:visibility="@{viewModel.courseDetails.price == null ? View.GONE : View.VISIBLE}"
+                            tools:text="2500 B" />
                     </LinearLayout>
                 </RelativeLayout>
 
@@ -147,43 +168,17 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/divider"
-                android:layout_marginBottom="5dp"
+                android:layout_marginBottom="17dp"
                 android:layout_marginTop="10dp">
-
-                <LinearLayout
-                    android:id="@+id/price_layout"
-                    android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    app:layout_widthPercent="50%">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="16dp"
-                        android:layout_marginRight="16dp"
-                        android:background="@drawable/price_background"
-                        android:fontFamily="sans-serif"
-                        android:gravity="center"
-                        android:letterSpacing="0.02"
-                        android:paddingBottom="5dp"
-                        android:paddingTop="5dp"
-                        android:text="@{viewModel.courseDetails.price}"
-                        android:textColor="#212121"
-                        android:textSize="16sp"
-                        android:textStyle="bold"
-                        android:visibility="@{viewModel.courseDetails.price == null ? View.GONE : View.VISIBLE}"
-                        tools:text="2500 B" />
-                </LinearLayout>
 
                 <LinearLayout
                     android:id="@+id/inquiry_btn"
                     android:layout_height="wrap_content"
-                    android:layout_toRightOf="@+id/price_layout"
                     app:layout_widthPercent="50%">
 
                     <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
+                        android:layout_height="46dp"
                         android:layout_marginLeft="16dp"
                         android:layout_marginRight="16dp"
                         android:background="@drawable/price_background"
@@ -194,25 +189,35 @@
                         android:paddingTop="5dp"
                         android:text="@string/book_now_btn"
                         android:textColor="#212121"
-                        android:textSize="16sp"
+                        android:textSize="14sp"
                         android:textStyle="bold" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_toRightOf="@+id/inquiry_btn"
+                    android:id="@+id/details_btn"
+                    android:layout_height="wrap_content"
+                    app:layout_widthPercent="50%">
+
+                    <TextView
+                        android:layout_marginLeft="16dp"
+                        android:layout_marginRight="16dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="46dp"
+                        android:textSize="14sp"
+                        android:fontFamily="sans-serif"
+                        android:textStyle="bold"
+                        android:textColor="#1b294b"
+                        android:letterSpacing="0.02"
+                        android:lineSpacingExtra="4.5sp"
+                        android:gravity="center"
+                        android:text="DETAILS"
+                        android:background="@drawable/course_details_bg"
+                        />
                 </LinearLayout>
 
             </android.support.percent.PercentRelativeLayout>
 
-            <TextView
-                android:id="@+id/deatils_btn"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:fontFamily="sans-serif-medium"
-                android:gravity="center"
-                android:lineSpacingExtra="7sp"
-                android:paddingBottom="10dp"
-                android:paddingTop="10dp"
-                android:text="Course details"
-                android:textColor="#3b528b"
-                android:textSize="14sp"
-                android:textStyle="normal" />
+
         </com.ddscanner.booking.views.ContentBlockLinearLayout>
-    </android.support.v7.widget.CardView>
 </layout>

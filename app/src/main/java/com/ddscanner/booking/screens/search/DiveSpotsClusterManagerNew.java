@@ -3,6 +3,7 @@ package com.ddscanner.booking.screens.search;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.location.Location;
 import android.support.v4.app.FragmentActivity;
 import android.text.TextUtils;
 import android.util.Log;
@@ -329,27 +330,40 @@ public class DiveSpotsClusterManagerNew extends ClusterManager<DiveCenterProfile
         googleMap.animateCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
     }
 
-//    public void setUserLocation(LatLng latLng) {
-//        CameraPosition cameraPosition = new CameraPosition.Builder()
-//                .target(latLng)
-//                .zoom(12)
-//                .build();
-//        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
-//        if (circle == null) {
-//            userCurrentLocationMarker = googleMap.addMarker(new MarkerOptions()
-//                    .position(latLng)
-//                    .anchor(0.5f, 0.5f)
-//                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_me)));
-//            CircleOptions circleOptions = new CircleOptions()
-//                    .center(latLng)
-//                    .radius(200)
-//                    .strokeColor(android.R.color.transparent)
-//                    .fillColor(Color.parseColor("#1A0668a1"));
-//            circle = googleMap.addCircle(circleOptions);
-//        } else {
-//            circle.setCenter(latLng);
-//            userCurrentLocationMarker.setPosition(latLng);
-//        }
-//    }
+    public void moveCameraToUserLocation(Location location) {
+//        googleMap.animateCamera(CameraUpdateFactory.newLatLng(new LatLng(location.getLatitude(), location.getLongitude())));
+        setUserLocation(new LatLng(location.getLatitude(), location.getLongitude()));
+    }
+
+    public void setUserLocation(LatLng latLng) {
+        CameraPosition cameraPosition = new CameraPosition.Builder()
+                .target(latLng)
+                .zoom(12)
+                .build();
+        googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition), 2000, null);
+        if (circle == null) {
+            userCurrentLocationMarker = googleMap.addMarker(new MarkerOptions()
+                    .position(latLng)
+                    .anchor(0.5f, 0.5f)
+                    .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_me)));
+            CircleOptions circleOptions = new CircleOptions()
+                    .center(latLng)
+                    .radius(200)
+                    .strokeColor(android.R.color.transparent)
+                    .fillColor(Color.parseColor("#1A0668a1"));
+            circle = googleMap.addCircle(circleOptions);
+        } else {
+            circle.setCenter(latLng);
+            userCurrentLocationMarker.setPosition(latLng);
+        }
+    }
+
+    public void zoomPlus() {
+        googleMap.animateCamera(CameraUpdateFactory.zoomIn());
+    }
+
+    public void zoomMinus() {
+        googleMap.animateCamera(CameraUpdateFactory.zoomOut());
+    }
 
 }
