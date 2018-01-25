@@ -35,6 +35,9 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".screens.certificate.CertificateDetailsActivity"
             android:screenOrientation="portrait"/>
+        <meta-data
+            android:name="io.fabric.ApiKey"
+            android:value="ed7107427d4db24c8d8509e14cd4e3e30daf7805" />
         <!--
              The API key for Google Maps-based APIs is defined as a string resource.
              (See the file "res/values/google_maps_api.xml").

@@ -231,7 +231,7 @@ public class ListActivity extends BaseAppCompatActivity implements DialogClosedL
             case CERTIFICATE_COURSS:
                 Log.i("Certificate courses", "Tracked certificate courses screen, id = " + dcId + " name = " + name);
                 EventsTracker.trackEventNameCertificateDiveCentersScreenView(dcId, name);
-                setupToolbar(R.string.courses, R.id.toolbar, true);
+                setupToolbar(name, R.id.toolbar, true);
                 certificateCoursesAdapter = new CertificateCoursesAdapter();
                 recyclerView.setAdapter(certificateCoursesAdapter);
                 DDScannerBookingApplication.getInstance().getDdScannerRestClient().getCertificateCourses(certificateCoursesResultListener, dcId);

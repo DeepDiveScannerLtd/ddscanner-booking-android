@@ -5,7 +5,8 @@
       <module fileurl="file://C:\android\studio_projects\github\ddscanner-booking\DDScannerBooking.iml" filepath="C:\android\studio_projects\github\ddscanner-booking\DDScannerBooking.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/ccp/ccp.iml" filepath="$PROJECT_DIR$/ccp/ccp.iml" />
-      <module fileurl="file://$PROJECT_DIR$/ddscanner-booking.iml" filepath="$PROJECT_DIR$/ddscanner-booking.iml" />
+      <module fileurl="file://C:\Users\Lenovo\Documents\ddscanner-booking-android-new\ddscanner-booking.iml" filepath="C:\Users\Lenovo\Documents\ddscanner-booking-android-new\ddscanner-booking.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ddscanner-booking-android-new.iml" filepath="$PROJECT_DIR$/ddscanner-booking-android-new.iml" />
     </modules>
   </component>
 </project>

@@ -3,9 +3,12 @@ package com.ddscanner.booking;
 
 import android.app.Application;
 
+import com.crashlytics.android.Crashlytics;
 import com.ddscanner.booking.analytics.AnalyticsSystemsManager;
 import com.ddscanner.booking.rest.DDScannerRestClient;
 import com.squareup.otto.Bus;
+
+import io.fabric.sdk.android.Fabric;
 
 public class DDScannerBookingApplication extends Application {
 
@@ -24,7 +27,7 @@ public class DDScannerBookingApplication extends Application {
         super.onCreate();
         instance = this;
         ddScannerRestClient = new DDScannerRestClient();
-
+        Fabric.with(this, new Crashlytics());
         AnalyticsSystemsManager.initAnalyticsSystems(this);
     }
 

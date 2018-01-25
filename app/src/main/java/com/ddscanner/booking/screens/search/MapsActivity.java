@@ -148,9 +148,6 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         diveCenterInfoView.hide(diveSpotInfoHeight);
         locationHelper=new LocationHelper(this, this);
         locationHelper.checkpermission();
-        button.setOnClickListener(this::goToMyLocation);
-        zoomMinus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomMinus());
-        zoomPlus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomPlus());
     }
 
     @Override
@@ -172,6 +169,9 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         diveSpotsClusterManagerNew = new DiveSpotsClusterManagerNew(this, mMap, this);
         LatLngBounds latLngBounds = new LatLngBounds(new LatLng(6.081, 95.960), new LatLng(19.21, 105.45));
         mMap.moveCamera(CameraUpdateFactory.newLatLngBounds(latLngBounds, 0));
+        button.setOnClickListener(this::goToMyLocation);
+        zoomMinus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomMinus());
+        zoomPlus.setOnClickListener(v -> diveSpotsClusterManagerNew.zoomPlus());
     }
 
     @Override

@@ -638,6 +638,6 @@
     <string name="there_are_no_fun_diving">No fun diving found in selected area</string>
     <string name="there_are_no_dive_centers">No dive centers found in selected area</string>
     <string name="select_area">SELECT AREA</string>
-    <string name="check_out_best_offers">Check out best offers</string>
+    <string name="check_out_best_offers">Check out the best offers</string>
     <string name="inquiry_course_pattern">INQUIRY: %1$s</string>
 </resources>
