@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.location.Location;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
@@ -20,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.apptentive.android.sdk.Apptentive;
 import com.ddscanner.booking.DDScannerBookingApplication;
 import com.ddscanner.booking.R;
 import com.ddscanner.booking.analytics.EventsTracker;
@@ -76,7 +78,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     PermissionUtils permissionUtils;
 
     public static void show(Context context) {
-        EventsTracker.trackMapScreenView(EventsTracker.MapScreenViewSource.SELECT_AREA_BTN);
+//        EventsTracker.trackMapScreenView(EventsTracker.MapScreenViewSource.SELECT_AREA_BTN);
         Intent intent = new Intent(context, MapsActivity.class);
         context.startActivity(intent);
     }
@@ -104,6 +106,8 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         }
     };
 
+    @BindView(R.id.support)
+    ImageView floatingActionButton;
     private GoogleMap mMap;
     @BindView(R.id.map_fragment)
     MapView mapView;
@@ -140,6 +144,7 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
+        EventsTracker.trackMapScreenView();
         ButterKnife.bind(this);
         setupToolbar("Select area", R.id.toolbar, false);
         mapView.onCreate(null);
@@ -148,9 +153,17 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
         diveCenterInfoView.hide(diveSpotInfoHeight);
         locationHelper=new LocationHelper(this, this);
         locationHelper.checkpermission();
+        Apptentive.canShowMessageCenter(canShowMessageCenter -> {
+            if (canShowMessageCenter) {
+                floatingActionButton.setVisibility(View.VISIBLE);
+                floatingActionButton.setOnClickListener(v -> Apptentive.showMessageCenter(MapsActivity.this));
+            } else {
+                floatingActionButton.setVisibility(View.GONE);
+            }
+        });
     }
 
-    @Override
+        @Override
     protected void onResume() {
         super.onResume();
         mapView.onResume();
@@ -315,4 +328,13 @@ public class MapsActivity extends BaseAppCompatActivity implements OnMapReadyCal
     public void onLocationEnabled() {
         diveSpotsClusterManagerNew.moveCameraToUserLocation(locationHelper.getLocation());
     }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (true) {
+            Apptentive.engage(this, "main_activity_focused");
+        }
+    }
+
 }

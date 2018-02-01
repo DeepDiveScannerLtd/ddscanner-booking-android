@@ -242,4 +242,11 @@ public class UserProfileActivity extends BaseAppCompatActivity implements Dialog
         }
     }
 
+    @Override
+    public void onBackPressed() {
+        if (source == EventsTracker.DiveCenterProfileScreenSource.MAP) {
+            EventsTracker.trackMapScreenView();
+        }
+        finish();
+    }
 }

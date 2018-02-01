@@ -1,13 +1,27 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
         <item name="windowActionBar">false</item>
         <item name="colorAccent">@color/accent</item>
         <item name="android:actionMenuTextColor">@color/orange</item>
         <item name="colorControlActivated">@color/primary</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
         <item name="colorControlHighlight">@color/spinner_triangle_color</item>
+    </style>
+
+    <style name="ApptentiveThemeOverride">
+        <item name="apptentiveToolbarTheme">@style/ApptentiveToolbarOverride</item>
+        <item name="android:colorBackground">#f9f9f9</item>
+        <item name="android:textColorSecondary">#a3a3a3</item>
+    </style>
+
+    <style name="ApptentiveToolbarOverride" parent="ThemeOverlay.AppCompat.ActionBar">
+        <item name="android:textColorPrimary">@color/white</item>
+        <item name="colorPrimary">@color/primary</item>
+        <item name="colorPrimaryDark">@color/primary_dark</item>
     </style>
 
     <style name="AppTheme.NoActionBar">

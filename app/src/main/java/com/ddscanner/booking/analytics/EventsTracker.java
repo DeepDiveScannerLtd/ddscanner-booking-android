@@ -209,7 +209,7 @@ public class EventsTracker {
         }
     }
 
-    public static void trackMapScreenView(MapScreenViewSource mapScreenViewSource) {
+    public static void trackMapScreenView() {
         trackEventWithoutParameters(EVENT_NAME_MAP_SCREEN_VIEW);
     }
 
